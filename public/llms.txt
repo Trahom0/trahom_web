@@ -1,0 +1,14 @@
+# Trahom
+> Gaza-based humanitarian organization delivering food, clean water, medical relief, and orphan sponsorship across Palestine.
+
+## Site
+- https://trahom.org/
+
+## Content focus
+- Gaza humanitarian aid
+- Palestine relief programs
+- Orphan sponsorship
+- Food, water, and medical support
+
+## Contact
+- info@trahom.org

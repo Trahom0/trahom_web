@@ -1,20 +1,15 @@
-const IMAGEKIT_PRIVATE_KEY = process.env.IMAGEKIT_PRIVATE_KEY;
-const IMAGEKIT_VIDEO_FOLDER = process.env.IMAGEKIT_VIDEO_FOLDER ?? '/Videos';
+const CDN_API_URL = process.env.CDN_API_URL;
+const CDN_API_KEY = process.env.CDN_API_KEY;
+// تم ضبط الافتراضي على 'videos'
+const CDN_TARGET_FOLDER = process.env.CDN_TARGET_FOLDER ?? 'videos'; 
 
-type ImageKitFile = {
-  fileId: string;
+type HostingerFile = {
   name: string;
-  filePath: string;
+  project: string;
+  rel_path: string;
   url: string;
-  fileType?: string;
-  mime?: string;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-const buildAuthHeader = (privateKey: string) => {
-  const token = Buffer.from(`${privateKey}:`).toString('base64');
-  return `Basic ${token}`;
+  time: number;
+  is_video: boolean;
 };
 
 export default async function handler(req: any, res: any) {
@@ -23,46 +18,53 @@ export default async function handler(req: any, res: any) {
     return;
   }
 
-  if (!IMAGEKIT_PRIVATE_KEY) {
-    res.status(500).json({ error: 'ImageKit private key is missing' });
+  if (!CDN_API_URL || !CDN_API_KEY) {
+    res.status(500).json({ error: 'CDN configuration is missing in environment variables' });
     return;
   }
 
   try {
     const params = new URLSearchParams({
-      path: IMAGEKIT_VIDEO_FOLDER,
-      fileType: 'video',
-      limit: '1000',
-      skip: '0'
+      api: 'true',
+      api_key: CDN_API_KEY,
+      action: 'get_files',
+      folder: CDN_TARGET_FOLDER
     });
 
-    const response = await fetch(`https://api.imagekit.io/v1/files?${params.toString()}`, {
-      headers: {
-        Authorization: buildAuthHeader(IMAGEKIT_PRIVATE_KEY)
-      }
-    });
+    const response = await fetch(`${CDN_API_URL}?${params.toString()}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error from CDN! status: ${response.status}`);
+    }
 
     const data = await response.json();
-    if (!response.ok) {
-      res.status(response.status).json({ error: data?.message ?? 'Failed to list ImageKit files' });
+
+    if (data.status !== 'success') {
+      res.status(500).json({ error: data.message ?? 'Failed to list files from CDN' });
       return;
     }
 
-    const files = Array.isArray(data) ? (data as ImageKitFile[]) : [];
-    res.status(200).json({
-      files: files.map((file) => ({
-        fileId: file.fileId,
+    const cdnFiles = Array.isArray(data.data) ? (data.data as HostingerFile[]) : [];
+
+    const formattedFiles = cdnFiles.map((file) => {
+      const isoDate = new Date(file.time * 1000).toISOString();
+      
+      return {
+        fileId: Buffer.from(file.rel_path).toString('base64'),
         name: file.name,
-        filePath: file.filePath,
+        filePath: `/${file.rel_path}`,
         url: file.url,
-        fileType: file.fileType,
-        mime: file.mime,
-        createdAt: file.createdAt,
-        updatedAt: file.updatedAt
-      }))
+        fileType: file.is_video ? 'video' : 'image',
+        mime: file.is_video ? 'video/mp4' : 'image/jpeg', 
+        createdAt: isoDate,
+        updatedAt: isoDate
+      };
     });
+
+    res.status(200).json({ files: formattedFiles });
+    
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Failed to list ImageKit files';
+    const message = error instanceof Error ? error.message : 'Failed to connect to Custom CDN';
     res.status(500).json({ error: message });
   }
 }

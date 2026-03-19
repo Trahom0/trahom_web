@@ -1,5 +1,8 @@
-const imagekitBaseUrl = 'https://ik.imagekit.io/c3c8rilyq';
-const imagekitVideoFolder = '/Videos';
+// تم تحديث الرابط ليتطابق مع استضافتك الرسمية
+const customCdnBaseUrl = 'https://trahom.io/uploads';
+
+// تم تحديد المجلد الذي يحتوي على الفيديوهات
+const customVideoFolder = '/videos'; 
 
 export const galleryListUrl = '/api/imagekit-list';
 
@@ -8,13 +11,15 @@ const ensureMp4Extension = (value: string) => (value.toLowerCase().endsWith('.mp
 const encodeFilename = (value: string) => encodeURIComponent(value);
 
 export const makeCloudinaryVideoUrl = (publicId: string) => {
-  const folder = ensureLeadingSlash(imagekitVideoFolder);
+  const folder = ensureLeadingSlash(customVideoFolder);
   const filename = encodeFilename(ensureMp4Extension(publicId));
-  return `${imagekitBaseUrl}${folder}/${filename}`;
+  
+  // النتيجة ستكون مطابقة تماماً لرابطك: https://trahom.io/uploads/videos/اسم-الفيديو.mp4
+  return `${customCdnBaseUrl}${folder}/${filename}`;
 };
 
 export const cloudinaryVideoPublicIds = {
-  donorsFilm: 'film-0m25-1m25',
+  donorsFilm: 'film', // قمت بتعديل هذا كمثال ليطابق الرابط الذي أرسلته (film.mp4)
   homeGalleryFeature: 'film total',
   homeGalleryTikiya: 'tikiya 200',
   homeGalleryWater2: 'water 2',

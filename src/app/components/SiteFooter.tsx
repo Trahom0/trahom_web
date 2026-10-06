@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import logoImage from '../../assets/logo and qr code.svg';
 import { content } from '../../content';
 import { actionPaths, getPathForPage, localizePath, type LanguageCode, type PageKey } from '../routes';
@@ -56,17 +56,9 @@ export function SiteFooter({ onNavigate, language }: SiteFooterProps) {
           <div>
             <h4 className="mb-4">{footerContent.sections.connect.title}</h4>
             <ul className="space-y-2 text-sm text-foreground/60">
-              <li className="flex items-center gap-2 hidden">
-                <Phone className="w-4 h-4" />
-                <a href={footerContent.sections.connect.phone.href} className="hover:text-foreground transition-colors">{footerContent.sections.connect.phone.label}</a>
-              </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 <a href={footerContent.sections.connect.email.href} className="hover:text-foreground transition-colors">{footerContent.sections.connect.email.label}</a>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span className="leading-relaxed">{footerContent.sections.connect.location}</span>
               </li>
             </ul>
             

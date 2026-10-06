@@ -23,15 +23,10 @@ export const footer = {
     },
     connect: {
       title: 'Connect',
-      phone: {
-        label: '+1 (555) 123-4567',
-        href: 'tel:+1-555-123-4567'
-      },
       email: {
         label: 'info@trahom.org',
         href: 'mailto:info@trahom.org'
       },
-      location: 'Palestine - Gaza',
       followUsTitle: 'Follow Us'
     }
   },

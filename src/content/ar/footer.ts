@@ -23,15 +23,10 @@ export const footer = {
     },
     "connect": {
       "title": "تواصل",
-      "phone": {
-        "label": "+1 (555) 123-4567",
-        "href": "tel:+1-555-123-4567"
-      },
       "email": {
         "label": "info@trahom.org",
         "href": "mailto:info@trahom.org"
       },
-      "location": "فلسطين – غزة",
       "followUsTitle": "تابعنا"
     }
   },

@@ -50,7 +50,6 @@ export const seo = {
       'Trahom, Gazze merkezli bir insani yardım kuruluşudur. Filistinli ailelere ve yetim çocuklara doğrudan, topluluk temelli destek sağlar. Çalışmalarımız gıda, temiz su, tıbbi yardım ve yetim sponsorluğu alanlarına odaklanır ve şeffaflık ile onur temelinde yürütülür.',
     areaServed: ['Gaza Strip', 'Palestine'],
     email: 'info@trahom.org',
-    phone: '+1 (555) 123-4567',
     sameAs: [
       'https://www.instagram.com/trahom.charity',
       'https://www.linkedin.com/company/trahomorg/',

@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Send, Clock, Globe } from 'lucide-react';
+import { Mail, Send, Clock } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import type { PageKey } from '../routes';
@@ -87,7 +87,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
     }
   };
 
-  const offices = contactContent.globalOffices.offices;
 
   return (
     <PageLayout
@@ -301,18 +300,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <h3 className="text-xl font-medium mb-6">{contactContent.quickContact.title}</h3>
               <div className="space-y-4">
-                <div className="flex items-start gap-4 hidden">
-                  <div className="w-12 h-12 bg-[#4A90E2]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-[#4A90E2]" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-foreground/60 mb-1">{contactContent.quickContact.phone.label}</p>
-                    <a href={`tel:${contactContent.quickContact.phone.value}`} className="font-medium hover:text-[#e1a226] transition-colors">
-                      {contactContent.quickContact.phone.value}
-                    </a>
-                  </div>
-                </div>
-
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-[#A8D5E2]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Mail className="w-6 h-6 text-[#A8D5E2]" />
@@ -322,16 +309,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
                     <a href={`mailto:${contactContent.quickContact.email.value}`} className="font-medium hover:text-[#e1a226] transition-colors">
                       {contactContent.quickContact.email.value}
                     </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#F5A623]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-[#F5A623]" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-foreground/60 mb-1">{contactContent.quickContact.location.label}</p>
-                    <p className="font-medium leading-relaxed">{contactContent.quickContact.location.value}</p>
                   </div>
                 </div>
               </div>
@@ -362,64 +339,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
               <SocialLinks size="md" shape="rounded" />
             </div>
           </motion.div>
-        </div>
-
-        {/* Global Offices */}
-        <div className="mb-16 sm:mb-24 hidden">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight mb-4">
-              {contactContent.globalOffices.title}
-            </h2>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto leading-relaxed">
-              {contactContent.globalOffices.description}
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {offices.map((office, index) => (
-              <motion.div
-                key={office.city}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 border border-black/5"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <Globe className="w-5 h-5 text-[#e1a226]" />
-                  <h3 className="text-2xl font-medium">{office.city}</h3>
-                </div>
-                <p className="text-foreground/60 mb-6">{office.country}</p>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-foreground/40 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p>{office.address}</p>
-                      <p>{office.postal}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-foreground/40 flex-shrink-0" />
-                    <a href={`tel:${office.phone}`} className="hover:text-[#e1a226] transition-colors">
-                      {office.phone}
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-foreground/40 flex-shrink-0" />
-                    <a href={`mailto:${office.email}`} className="hover:text-[#e1a226] transition-colors">
-                      {office.email}
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
 
         {/* About Us Section */}

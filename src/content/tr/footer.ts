@@ -23,15 +23,10 @@ export const footer = {
     },
     connect: {
       title: 'İletişim',
-      phone: {
-        label: '+1 (555) 123-4567',
-        href: 'tel:+1-555-123-4567'
-      },
       email: {
         label: 'info@trahom.org',
         href: 'mailto:info@trahom.org'
       },
-      location: 'Filistin – Gazze',
       followUsTitle: 'Bizi takip edin'
     }
   },

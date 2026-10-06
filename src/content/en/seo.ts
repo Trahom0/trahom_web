@@ -51,7 +51,6 @@ export const seo = {
       'Trahom is a Gaza-based humanitarian organization providing direct, community-led relief for Palestinian families and orphaned children. Our work centers on food assistance, clean water, medical support, and orphan sponsorship, delivered with transparency and dignity.',
     areaServed: ['Gaza Strip', 'Palestine'],
     email: 'info@trahom.org',
-    phone: '+1 (555) 123-4567',
     sameAs: [
       'https://www.instagram.com/trahom.charity',
       'https://www.linkedin.com/company/trahomorg/',

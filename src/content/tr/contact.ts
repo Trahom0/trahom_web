@@ -50,17 +50,9 @@ export const contact = {
   },
   quickContact: {
     title: 'Hızlı iletişim',
-    phone: {
-      label: 'Telefon',
-      value: '+1 (555) 123-4567'
-    },
     email: {
       label: 'E-posta',
       value: 'info@trahom.org'
-    },
-    location: {
-      label: 'Konum',
-      value: 'Gaza'
     }
   },
   officeHours: {
@@ -74,36 +66,6 @@ export const contact = {
   social: {
     title: 'Bizi takip edin',
     description: 'Güncel çalışmalarımız ve kampanyalarımızdan haberdar olun'
-  },
-  globalOffices: {
-    title: 'Küresel ofislerimiz',
-    description: 'Yerel destek ve iş birliği imkânları için size en yakın ofisi bulun.',
-    offices: [
-      {
-        city: 'New York',
-        country: 'United States',
-        address: '123 Humanitarian Way',
-        postal: 'New York, NY 10001',
-        phone: '+1 (555) 123-4567',
-        email: 'ny@trahom.org'
-      },
-      {
-        city: 'London',
-        country: 'United Kingdom',
-        address: '45 Charity Lane',
-        postal: 'London SW1A 1AA',
-        phone: '+44 20 7123 4567',
-        email: 'london@trahom.org'
-      },
-      {
-        city: 'Dubai',
-        country: 'United Arab Emirates',
-        address: '78 Aid Boulevard',
-        postal: 'Dubai, UAE',
-        phone: '+971 4 123 4567',
-        email: 'dubai@trahom.org'
-      }
-    ]
   },
   about: {
     title: 'Trahom hakkında',

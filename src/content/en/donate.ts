@@ -62,19 +62,19 @@ export const donate = {
       fields: {
         firstName: {
           label: 'First Name *',
-          placeholder: 'Hind'
+          placeholder: ''
         },
         lastName: {
           label: 'Last Name *',
-          placeholder: 'Rajab'
+          placeholder: ''
         },
         email: {
           label: 'Email Address *',
-          placeholder: 'hind.rajab@example.com'
+          placeholder: ''
         },
         phone: {
           label: 'Phone Number',
-          placeholder: '+1 (555) 000-0000'
+          placeholder: ''
         }
       }
     },
@@ -119,7 +119,7 @@ export const donate = {
     items: [
       '90% of funds go directly to programs',
       'Transparent reporting and impact tracking',
-      '20+ years of proven humanitarian work'
+      'On the ground in Gaza since 2024'
     ]
   },
   stats: {

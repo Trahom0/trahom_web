@@ -62,19 +62,19 @@ export const donate = {
       "fields": {
         "firstName": {
           "label": "الاسم الأول *",
-          "placeholder": "هند"
+          "placeholder": ""
         },
         "lastName": {
           "label": "اسم العائلة *",
-          "placeholder": "رجب"
+          "placeholder": ""
         },
         "email": {
           "label": "البريد الإلكتروني *",
-          "placeholder": "hind.rajab@example.com"
+          "placeholder": ""
         },
         "phone": {
           "label": "رقم الهاتف",
-          "placeholder": "+1 (555) 000-0000"
+          "placeholder": ""
         }
       }
     },

@@ -128,8 +128,8 @@ export const impact = {
         description: 'Quarterly performance reviews'
       },
       {
-        title: 'Globally Certified',
-        description: 'International humanitarian standards'
+        title: 'Community-Led',
+        description: 'Delivered directly by local teams and partners inside Gaza'
       }
     ]
   },

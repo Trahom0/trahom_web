@@ -62,19 +62,19 @@ export const donate = {
       fields: {
         firstName: {
           label: 'Ad *',
-          placeholder: 'Hind'
+          placeholder: ''
         },
         lastName: {
           label: 'Soyad *',
-          placeholder: 'Rajab'
+          placeholder: ''
         },
         email: {
           label: 'E-posta adresi *',
-          placeholder: 'hind.rajab@example.com'
+          placeholder: ''
         },
         phone: {
           label: 'Telefon numarası',
-          placeholder: '+90 5xx xxx xx xx'
+          placeholder: ''
         }
       }
     },

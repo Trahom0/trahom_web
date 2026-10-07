@@ -164,25 +164,8 @@ export default function App({ initialPath }: AppProps) {
     ...card,
     ...homeCampaignMedia[card.id]
   }));
-  const partnerItems = homeContent.partners.items;
   const missionCardIcons = [Heart, Users, Globe];
   const missionCardColors = ['bg-[#4A90E2]', 'bg-[#A8D5E2]', 'bg-[#F5A623]'];
-  const partnerMeta = [
-    { icon: Globe, color: 'bg-[#4A90E2]', iconClassName: 'w-8 h-8 text-white' },
-    { icon: Heart, color: 'bg-[#A8D5E2]', iconClassName: 'w-8 h-8 text-white' },
-    { icon: Heart, color: 'bg-[#e1a226]', iconClassName: 'w-8 h-8 text-white fill-white' },
-    { icon: Users, color: 'bg-[#F5A623]', iconClassName: 'w-8 h-8 text-white' },
-    { icon: Globe, color: 'bg-[#4A90E2]', iconClassName: 'w-8 h-8 text-white' },
-    { icon: Heart, color: 'bg-[#A8D5E2]', iconClassName: 'w-8 h-8 text-white' },
-    { icon: Users, color: 'bg-[#e1a226]', iconClassName: 'w-8 h-8 text-white' },
-    { icon: Globe, color: 'bg-[#F5A623]', iconClassName: 'w-8 h-8 text-white' }
-  ];
-  const partnerCards = partnerItems.map((label, index) => ({
-    label,
-    icon: partnerMeta[index]?.icon ?? Globe,
-    color: partnerMeta[index]?.color ?? 'bg-[#4A90E2]',
-    iconClassName: partnerMeta[index]?.iconClassName ?? 'w-8 h-8 text-white'
-  }));
 
   // Handle page navigation
   if (currentPage === 'family-signup') {
@@ -418,8 +401,6 @@ export default function App({ initialPath }: AppProps) {
             </motion.div>
           </div>
         </div>
-
-        {/* Trust Badges Section (hidden for now) */}
 
         {/* Gallery Section */}
         <motion.div 
@@ -699,61 +680,6 @@ export default function App({ initialPath }: AppProps) {
                 </motion.div>
               );
             })}
-          </div>
-        </div>
-
-        {/* Partners Section */}
-        <div className="mb-16 hidden">
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          >
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl tracking-tight">{homeContent.partners.title}</h2>
-            </div>
-          </motion.div>
-          
-          {/* Marquee Container */}
-          <div className="relative">
-            {/* Gradient Overlays */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#f9fbff] to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#f9fbff] to-transparent z-10 pointer-events-none"></div>
-            
-            {/* Marquee Track */}
-            <div className="overflow-hidden">
-              <motion.div
-                animate={{
-                  x: [0, -1400]
-                }}
-                transition={{
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 25,
-                    ease: "linear"
-                  }
-                }}
-                className="flex gap-6"
-              >
-                {[0, 1].map((setIndex) => (
-                  <div key={`partner-set-${setIndex}`} className="flex gap-6 flex-shrink-0">
-                    {partnerCards.map((partner, index) => {
-                      const Icon = partner.icon;
-                      return (
-                        <div key={`${setIndex}-${partner.label}-${index}`} className="w-40 h-40 bg-white rounded-2xl flex flex-col items-center justify-center shadow-sm">
-                          <div className={`w-16 h-16 ${partner.color} rounded-lg flex items-center justify-center mb-3`}>
-                            <Icon className={partner.iconClassName} />
-                          </div>
-                          <p className="text-sm font-medium">{partner.label}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
-              </motion.div>
-            </div>
           </div>
         </div>
 

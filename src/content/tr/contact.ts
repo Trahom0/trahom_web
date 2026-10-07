@@ -9,19 +9,19 @@ export const contact = {
     fields: {
       firstName: {
         label: 'Ad *',
-        placeholder: 'Hind'
+        placeholder: ''
       },
       lastName: {
         label: 'Soyad *',
-        placeholder: 'Rajab'
+        placeholder: ''
       },
       email: {
         label: 'E-posta adresi *',
-        placeholder: 'roh-al-roh@example.com'
+        placeholder: ''
       },
       phone: {
         label: 'Telefon numarası',
-        placeholder: '+90 (5xx) xxx xx xx'
+        placeholder: ''
       },
       subject: {
         label: 'Konu *',

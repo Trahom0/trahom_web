@@ -1,4 +1,4 @@
-import { Mail, Send, Clock } from 'lucide-react';
+import { Mail, Send, Clock, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import type { PageKey } from '../routes';
@@ -78,9 +78,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
         website: ''
       });
 
-      setTimeout(() => {
-        setFormStatus('idle');
-      }, 3000);
     } catch (error) {
       setFormStatus('error');
       setFormError(error instanceof Error ? error.message : contactContent.form.errorMessage);
@@ -132,6 +129,29 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
             className="lg:col-span-2 bg-white rounded-2xl p-8 sm:p-12 border border-black/5"
           >
+            {formStatus === 'success' ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center justify-center text-center py-12 sm:py-16"
+                role="status"
+                aria-live="polite"
+              >
+                <CheckCircle2 className="w-16 h-16 text-[#2E9E6B] mb-6" />
+                <h2 className="text-2xl sm:text-3xl tracking-tight mb-4">{contactContent.form.successTitle}</h2>
+                <p className="text-lg text-foreground/70 max-w-md leading-relaxed mb-8">
+                  {contactContent.form.successMessage}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setFormStatus('idle')}
+                  className="text-sm font-medium text-[#e1a226] hover:underline"
+                >
+                  {contactContent.form.sendAnotherLabel}
+                </button>
+              </motion.div>
+            ) : (
+            <>
             <h2 className="text-3xl sm:text-4xl tracking-tight mb-6">{contactContent.form.title}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -256,8 +276,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
               >
                 {formStatus === 'sending' ? (
                   <span>{contactContent.form.submit.sendingLabel}</span>
-                ) : formStatus === 'success' ? (
-                  <span>{contactContent.form.submit.sentLabel}</span>
                 ) : (
                   <>
                     <span>{contactContent.form.submit.defaultLabel}</span>
@@ -265,16 +283,6 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
                   </>
                 )}
               </PrimaryButton>
-
-              {formStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-[#A8D5E2]/20 text-[#4A90E2] px-4 py-3 rounded-xl text-center"
-                >
-                  {contactContent.form.successMessage}
-                </motion.div>
-              )}
 
               {formStatus === 'error' && (
                 <motion.div
@@ -286,6 +294,8 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
                 </motion.div>
               )}
             </form>
+            </>
+            )}
           </motion.div>
 
           {/* Contact Info Sidebar */}

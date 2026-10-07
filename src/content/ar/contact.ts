@@ -63,7 +63,9 @@ export const contact = {
       "sendingLabel": "جارٍ الإرسال...",
       "sentLabel": "تم الإرسال"
     },
-    "successMessage": "شكرًا لرسالتك. سنرد عليك في أقرب وقت ممكن.",
+    "successTitle": "تم استلام رسالتكم بنجاح",
+    "successMessage": "شكرًا لتواصلكم معنا، وسيتم الرد عليكم في أقرب وقت.",
+    "sendAnotherLabel": "إرسال رسالة أخرى",
     "errorMessage": "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى أو مراسلتنا عبر البريد مباشرة."
   },
   "quickContact": {

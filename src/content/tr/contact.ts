@@ -45,7 +45,9 @@ export const contact = {
       sendingLabel: 'Mesaj gönderiliyor...',
       sentLabel: 'Mesaj gönderildi!'
     },
-    successMessage: 'Bizimle iletişime geçtiğiniz için teşekkür ederiz. En geç 24 saat içinde size geri döneceğiz.',
+    successTitle: 'Mesajınızı aldık',
+    successMessage: 'Bizimle iletişime geçtiğiniz için teşekkür ederiz. En kısa sürede size dönüş yapacağız.',
+    sendAnotherLabel: 'Yeni bir mesaj gönder',
     errorMessage: 'Gönderim sırasında bir hata oluştu. Lütfen tekrar deneyin veya bize doğrudan e-posta gönderin.'
   },
   quickContact: {

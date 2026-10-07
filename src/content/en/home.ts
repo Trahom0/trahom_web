@@ -71,16 +71,6 @@ export const home = {
       description: 'Made possible by thousands of people who chose to show up consistently with trust.'
     }
   },
-  trustBadges: {
-    title: 'Verified & Trusted',
-    description: 'Our commitment to transparency and accountability is recognized by leading charity evaluators',
-    items: [
-      { label: 'Charity Navigator', detail: '4-Star Rating' },
-      { label: 'GuideStar', detail: 'Gold Seal' },
-      { label: 'BBB', detail: 'Accredited' },
-      { label: 'Certified', detail: 'Nonprofit' }
-    ]
-  },
   gallery: {
     title: 'Our Impact in Action',
     viewAllLabel: 'View full gallery →',
@@ -137,23 +127,10 @@ export const home = {
       description: 'Long-term programs that build infrastructure, create jobs, and strengthen local economies.'
     },
     {
-      title: 'Global Partnerships',
-      description: 'Collaborating with governments, NGOs, and local organizations to maximize our collective impact.'
+      title: 'Local Partnerships',
+      description: 'Working hand in hand with local committees and organizations in Gaza to deliver support efficiently.'
     }
   ],
-  partners: {
-    title: 'Global Partnerships',
-    items: [
-      'UN Foundation',
-      'WHO',
-      'Red Cross',
-      'UNICEF',
-      'Oxfam',
-      'Doctors W/O Borders',
-      'Save the Children',
-      'World Vision'
-    ]
-  },
   subscribe: {
     title: 'Stay in the Loop',
     description: 'Join our community and receive the latest updates on campaigns, stories from the field, and opportunities to make a difference.',

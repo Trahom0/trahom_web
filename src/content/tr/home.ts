@@ -71,16 +71,6 @@ export const home = {
       description: 'Bu çalışmalar, “bir defalık” değil “süreklilik” diyen binlerce kişinin emeği ve güveniyle yürüyor.'
     }
   },
-  trustBadges: {
-    title: 'Güven, sözle değil işle kurulur',
-    description: 'Şeffaflık ve hesap verebilirlik bizim için bir iddia değil, günlük bir sorumluluktur.',
-    items: [
-      { label: 'Charity Navigator', detail: '4 yıldızlı değerlendirme' },
-      { label: 'GuideStar', detail: 'Altın mühür' },
-      { label: 'BBB', detail: 'Akredite' },
-      { label: 'Sertifikalı', detail: 'Kâr amacı gütmeyen kuruluş' }
-    ]
-  },
   gallery: {
     title: 'Sahadan görüntüler',
     viewAllLabel: 'Galerinin tamamını gör →',
@@ -137,23 +127,10 @@ export const home = {
       description: 'Altyapıyı güçlendiren, istihdam oluşturan ve yerel ekonomileri destekleyen uzun vadeli programlar.'
     },
     {
-      title: 'Küresel iş birlikleri',
-      description: 'Etkimizi büyütmek için kurumlar, STK’lar ve yerel yapılarla ortak çalışmalar.'
+      title: 'Yerel iş birlikleri',
+      description: 'Desteği etkin biçimde ulaştırmak için Gazze’deki yerel komiteler ve kuruluşlarla birlikte çalışıyoruz.'
     }
   ],
-  partners: {
-    title: 'Küresel ortaklıklar',
-    items: [
-      'UN Foundation',
-      'WHO',
-      'Red Cross',
-      'UNICEF',
-      'Oxfam',
-      'Doctors W/O Borders',
-      'Save the Children',
-      'World Vision'
-    ]
-  },
   subscribe: {
     title: 'Haberdar olun',
     description: 'Sahadan gelişmeler, kampanyalar ve güvenilir destek yolları—gereksiz mesajlar olmadan.',

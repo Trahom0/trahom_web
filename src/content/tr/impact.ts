@@ -128,8 +128,8 @@ export const impact = {
         description: 'Sonuçları iyileştirmek için periyodik değerlendirmeler.'
       },
       {
-        title: 'İnsani standartlar',
-        description: 'Uluslararası kabul gören insani ilkelere bağlılık.'
+        title: 'Toplum temelli',
+        description: 'Gazze’deki yerel ekipler ve ortaklarla doğrudan uygulama.'
       }
     ]
   },

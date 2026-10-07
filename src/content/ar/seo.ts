@@ -52,7 +52,6 @@ export const seo = {
       'تراحم منظمة إنسانية من غزة تقدّم الإغاثة المباشرة للأسر الفلسطينية والأطفال الأيتام، مع تركيز على الغذاء والمياه النظيفة والدعم الطبي وكفالة الأيتام، وبشفافية ومسؤولية.',
     areaServed: ['غزة', 'فلسطين'],
     email: 'info@trahom.org',
-    phone: '+1 (555) 123-4567',
     sameAs: [
       'https://www.instagram.com/trahom.charity',
       'https://www.linkedin.com/company/trahomorg/',

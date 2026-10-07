@@ -68,17 +68,9 @@ export const contact = {
   },
   "quickContact": {
     "title": "تواصل سريع",
-    "phone": {
-      "label": "الهاتف",
-      "value": "+1 (555) 123-4567"
-    },
     "email": {
       "label": "البريد الإلكتروني",
       "value": "info@trahom.org"
-    },
-    "location": {
-      "label": "الموقع",
-      "value": "Gaza"
     }
   },
   "officeHours": {
@@ -101,36 +93,6 @@ export const contact = {
   "social": {
     "title": "تابعنا",
     "description": "لتصلك مستجدات العمل الميداني والحملات دون ضجيج."
-  },
-  "globalOffices": {
-    "title": "مكاتبنا",
-    "description": "إن وُجد مكتب أقرب إليك، يسعدنا مساعدتك محليًا ومناقشة فرص التعاون.",
-    "offices": [
-      {
-        "city": "نيويورك",
-        "country": "الولايات المتحدة",
-        "address": "123 طريق العمل الإنساني",
-        "postal": "نيويورك، NY 10001",
-        "phone": "+1 (555) 123-4567",
-        "email": "ny@trahom.org"
-      },
-      {
-        "city": "لندن",
-        "country": "المملكة المتحدة",
-        "address": "45 شارع العطاء",
-        "postal": "لندن SW1A 1AA",
-        "phone": "+44 20 7123 4567",
-        "email": "london@trahom.org"
-      },
-      {
-        "city": "دبي",
-        "country": "الإمارات العربية المتحدة",
-        "address": "78 شارع الإغاثة",
-        "postal": "دبي، الإمارات",
-        "phone": "+971 4 123 4567",
-        "email": "dubai@trahom.org"
-      }
-    ]
   },
   "about": {
     "title": "عن تراحم",

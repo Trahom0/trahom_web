@@ -45,7 +45,9 @@ export const contact = {
       sendingLabel: 'Sending message...',
       sentLabel: 'Message Sent!'
     },
-    successMessage: "Thank you for contacting us! We'll get back to you within 24 hours.",
+    successTitle: 'We have received your message',
+    successMessage: 'Thank you for reaching out. We will get back to you as soon as possible.',
+    sendAnotherLabel: 'Send another message',
     errorMessage: 'Something went wrong while sending your message. Please try again or email us directly.'
   },
   quickContact: {

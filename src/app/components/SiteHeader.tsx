@@ -1,4 +1,4 @@
-import { ChevronDown, Languages, Menu, MoonStar, X } from 'lucide-react';
+import { ChevronDown, Languages, Menu, Snowflake, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import logoImage from '../../assets/logo and qr code.svg';
@@ -98,9 +98,8 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
   };
 
   const promoParams = new URLSearchParams({
-    cause: 'food-security',
-    amount: '5',
-    campaign: 'ramadan'
+    cause: 'winter-campaign',
+    campaign: 'winter-2026'
   });
   const promoDonateHref = `${getPathForPage('donate', activeLanguage)}?${promoParams.toString()}`;
   const handlePromoDonateClick = (event: { preventDefault: () => void }) => {
@@ -125,7 +124,7 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
             }`}
             dir={activeLanguage === 'AR' ? 'rtl' : 'ltr'}
           >
-            <MoonStar className="w-4 h-4" fill="currentColor" />
+            <Snowflake className="w-4 h-4" />
             <span>{promoBar.message}</span>
           </p>
           <a

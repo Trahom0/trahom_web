@@ -12,7 +12,7 @@ export const shared = {
     description: 'Learn about our mission, impact, and active campaigns in Gaza.'
   },
   promoBar: {
-    message: 'Ramadan: Donate a meal for $5',
-    ctaLabel: 'Donate a meal'
+    message: 'Winter is coming to Gaza: give a family warmth',
+    ctaLabel: 'Donate now'
   }
 } as const;

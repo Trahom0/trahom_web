@@ -12,7 +12,7 @@ export const shared = {
     "description": "تعرّف على رسالتنا وأثرنا والحملات الجارية في غزة."
   },
   "promoBar": {
-    "message": "رمضان: تبرع بوجبة بـ 5$",
-    "ctaLabel": "تبرع بوجبة"
+    "message": "الشتاء قادم على غزة: أهدِ عائلة دفئًا",
+    "ctaLabel": "تبرع الآن"
   }
 } as const;

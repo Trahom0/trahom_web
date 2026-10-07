@@ -12,7 +12,7 @@ export const shared = {
     description: 'Gazze’deki misyonumuz, etkimiz ve devam eden kampanyalarımız hakkında bilgi alın.'
   },
   promoBar: {
-    message: 'Ramazan: 5$ ile bir öğün bağışlayın',
-    ctaLabel: 'Bir öğün bağışla'
+    message: 'Gazze’ye kış geliyor: bir aileye sıcaklık hediye edin',
+    ctaLabel: 'Şimdi bağış yapın'
   }
 } as const;

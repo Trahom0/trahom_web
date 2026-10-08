@@ -1,5 +1,21 @@
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-const MIN_AMOUNT_CENTS = 50;
+const SITE_URL = process.env.SITE_URL;
+const MIN_AMOUNT_CENTS = 100; // $1
+const MAX_AMOUNT_CENTS = 2_500_000; // $25,000
+
+// Only these causes can be donated to; labels are decided here, never by the browser.
+const CAUSE_LABELS: Record<string, string> = {
+  'orphan-sponsorship': 'Orphan Sponsorship',
+  water: 'Clean Water',
+  'winter-campaign': 'Winter Campaign',
+  'food-security': 'Food Security Program',
+  'where-needed': 'Where Most Needed'
+};
+
+const ALLOWED_HOSTS = ['trahom.org', 'www.trahom.org'];
+
+const cleanText = (value: unknown, max = 100) =>
+  typeof value === 'string' ? value.replace(/[\u0000-\u001f]/g, '').trim().slice(0, max) : '';
 
 const readRequestBody = async (req: any) => {
   if (req.body && typeof req.body === 'object') {
@@ -26,16 +42,15 @@ const readRequestBody = async (req: any) => {
   });
 };
 
+// Where Stripe sends the donor back to. Never trust the caller's Origin header blindly:
+// use SITE_URL in production, otherwise only our own domains or our Vercel previews.
 const getOrigin = (req: any) => {
-  if (req.headers?.origin) {
-    return req.headers.origin;
+  if (SITE_URL) {
+    return SITE_URL.replace(/\/+$/, '');
   }
-  const proto = req.headers?.['x-forwarded-proto'] ?? 'https';
-  const host = req.headers?.['x-forwarded-host'] ?? req.headers?.host;
-  if (!host) {
-    return '';
-  }
-  return `${proto}://${host}`;
+  const host = String(req.headers?.['x-forwarded-host'] ?? req.headers?.host ?? '').toLowerCase();
+  const isAllowed = ALLOWED_HOSTS.includes(host) || /^trahom-[a-z0-9-]*\.vercel\.app$/.test(host);
+  return isAllowed ? `https://${host}` : '';
 };
 
 const toCents = (amount: number) => Math.round(amount * 100);
@@ -55,10 +70,17 @@ export default async function handler(req: any, res: any) {
     const body = await readRequestBody(req);
     const amount = Number(body.amount);
     const frequency = body.frequency === 'monthly' ? 'monthly' : 'one-time';
-    const cause = typeof body.cause === 'string' ? body.cause : 'where-needed';
-    const causeLabel = typeof body.causeLabel === 'string' ? body.causeLabel : 'Where Most Needed';
-    const campaign = typeof body.campaign === 'string' ? body.campaign : '';
-    const donor = typeof body.donor === 'object' && body.donor ? body.donor : {};
+    const cause = typeof body.cause === 'string' && CAUSE_LABELS[body.cause] ? body.cause : 'where-needed';
+    const causeLabel = CAUSE_LABELS[cause];
+    const campaign = typeof body.campaign === 'string' && /^[a-z0-9-]{1,40}$/.test(body.campaign) ? body.campaign : '';
+    const rawDonor = typeof body.donor === 'object' && body.donor ? body.donor : {};
+    const donor = {
+      firstName: cleanText(rawDonor.firstName),
+      lastName: cleanText(rawDonor.lastName),
+      email: cleanText(rawDonor.email, 254),
+      phone: cleanText(rawDonor.phone, 40),
+      country: cleanText(rawDonor.country, 60)
+    };
 
     if (!Number.isFinite(amount) || amount <= 0) {
       res.status(400).json({ error: 'Invalid donation amount' });
@@ -68,6 +90,10 @@ export default async function handler(req: any, res: any) {
     const amountCents = toCents(amount);
     if (amountCents < MIN_AMOUNT_CENTS) {
       res.status(400).json({ error: 'Donation amount is too small' });
+      return;
+    }
+    if (amountCents > MAX_AMOUNT_CENTS) {
+      res.status(400).json({ error: 'For donations above $25,000 please contact info@trahom.org' });
       return;
     }
 
@@ -82,7 +108,7 @@ export default async function handler(req: any, res: any) {
     params.append('success_url', `${origin}/donate?status=success&session_id={CHECKOUT_SESSION_ID}`);
     params.append('cancel_url', `${origin}/donate?status=cancel`);
 
-    if (typeof donor.email === 'string' && donor.email) {
+    if (donor.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(donor.email)) {
       params.append('customer_email', donor.email);
     }
 
@@ -112,16 +138,14 @@ export default async function handler(req: any, res: any) {
       }
     }
 
-    if (typeof donor.firstName === 'string' || typeof donor.lastName === 'string') {
-      const fullName = `${donor.firstName ?? ''} ${donor.lastName ?? ''}`.trim();
-      if (fullName) {
-        params.append('metadata[donor_name]', fullName);
-      }
+    const fullName = `${donor.firstName} ${donor.lastName}`.trim();
+    if (fullName) {
+      params.append('metadata[donor_name]', fullName);
     }
-    if (typeof donor.phone === 'string' && donor.phone) {
+    if (donor.phone) {
       params.append('metadata[donor_phone]', donor.phone);
     }
-    if (typeof donor.country === 'string' && donor.country) {
+    if (donor.country) {
       params.append('metadata[donor_country]', donor.country);
     }
     params.append('metadata[cause]', cause);
@@ -142,13 +166,14 @@ export default async function handler(req: any, res: any) {
     const session = await stripeResponse.json();
 
     if (!stripeResponse.ok) {
-      res.status(stripeResponse.status).json({ error: session?.error?.message ?? 'Stripe error' });
+      console.error('Stripe checkout error', session?.error);
+      res.status(502).json({ error: 'Unable to start the payment. Please try again.' });
       return;
     }
 
     res.status(200).json({ url: session.url });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unable to create checkout session';
-    res.status(500).json({ error: message });
+    console.error('Checkout session failed', error);
+    res.status(500).json({ error: 'Unable to start the payment. Please try again.' });
   }
 }

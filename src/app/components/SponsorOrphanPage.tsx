@@ -18,10 +18,7 @@ interface SponsorOrphanPageProps {
 }
 
 const WHATSAPP_NUMBER = '972567075706';
-const SHEET_ID = '1QqMcWc-lX1IGVOGISpNcgL6l5F1t0EWz_uVlFW2b-C0';
-const SHEET_GID = '0';
-const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
-const SHEET_COLUMN_OFFSET = 1;
+const ORPHANS_API_URL = '/api/orphans';
 
 type OrphanProfile = {
   code: string;
@@ -36,118 +33,6 @@ const buildWhatsAppLink = (code: string) =>
     formatTemplate(content.sponsorOrphan.whatsapp.messageTemplate, { code })
   )}`;
 
-const parseCsv = (text: string) => {
-  const rows: string[][] = [];
-  let current = '';
-  let row: string[] = [];
-  let inQuotes = false;
-
-  for (let index = 0; index < text.length; index += 1) {
-    const char = text[index];
-
-    if (char === '"') {
-      const nextChar = text[index + 1];
-      if (inQuotes && nextChar === '"') {
-        current += '"';
-        index += 1;
-      } else {
-        inQuotes = !inQuotes;
-      }
-      continue;
-    }
-
-    if (char === ',' && !inQuotes) {
-      row.push(current);
-      current = '';
-      continue;
-    }
-
-    if ((char === '\n' || char === '\r') && !inQuotes) {
-      if (char === '\r' && text[index + 1] === '\n') {
-        index += 1;
-      }
-      row.push(current);
-      if (row.some((cell) => cell.trim() !== '')) {
-        rows.push(row);
-      }
-      row = [];
-      current = '';
-      continue;
-    }
-
-    current += char;
-  }
-
-  if (current.length || row.length) {
-    row.push(current);
-    if (row.some((cell) => cell.trim() !== '')) {
-      rows.push(row);
-    }
-  }
-
-  return rows;
-};
-
-const buildProfilesFromCsv = (text: string, columnOffset = SHEET_COLUMN_OFFSET): OrphanProfile[] => {
-  const rows = parseCsv(text);
-  if (!rows.length) {
-    return [];
-  }
-
-  const sliceRow = (row: string[]) => row.slice(columnOffset);
-  const normalize = (value: string) => value.trim().toLowerCase().replace(/[_\s]+/g, ' ');
-  const headers = sliceRow(rows[0]).map(normalize);
-  const findHeaderIndexExact = (candidates: string[]) =>
-    headers.findIndex((header) => candidates.some((candidate) => header === candidate));
-
-  const codeIndex = findHeaderIndexExact(['code', 'id', 'orphan code']);
-  const descriptionEnIndex = findHeaderIndexExact(['description en', 'discription en']);
-  const descriptionArIndex = findHeaderIndexExact(['description ar', 'discription ar']);
-  const descriptionTrIndex = findHeaderIndexExact(['description tr', 'discription tr']);
-  const linkIndex = findHeaderIndexExact(['image', 'image url', 'image url', 'link', 'photo']);
-
-  if (codeIndex < 0) {
-    return [];
-  }
-
-  const fallbackDescriptionIndex =
-    descriptionEnIndex < 0 && descriptionArIndex < 0 && descriptionTrIndex < 0
-      ? findHeaderIndexExact(['description', 'discription'])
-      : -1;
-
-  return rows
-    .slice(1)
-    .map((row) => {
-      const cells = sliceRow(row);
-      const code = (cells[codeIndex] ?? '').trim();
-      const fallbackDescription = fallbackDescriptionIndex >= 0 ? (cells[fallbackDescriptionIndex] ?? '').trim() : '';
-      const descriptionEn = (cells[descriptionEnIndex] ?? '').trim() || fallbackDescription;
-      const descriptionAr = (cells[descriptionArIndex] ?? '').trim() || fallbackDescription;
-      const descriptionTr = (cells[descriptionTrIndex] ?? '').trim() || fallbackDescription;
-      const image = (cells[linkIndex] ?? '').trim() || orphanPlaceholderImage;
-
-      return {
-        code,
-        descriptionEn,
-        descriptionAr,
-        descriptionTr,
-        image
-      };
-    })
-    .filter((profile) => profile.code && (profile.descriptionEn || profile.descriptionAr || profile.descriptionTr));
-};
-
-const buildProfilesFromCsvWithFallback = (text: string) => {
-  const primary = buildProfilesFromCsv(text, SHEET_COLUMN_OFFSET);
-  if (primary.length) {
-    return primary;
-  }
-  if (SHEET_COLUMN_OFFSET !== 0) {
-    return buildProfilesFromCsv(text, 0);
-  }
-  return primary;
-};
-
 export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: SponsorOrphanPageProps) {
   const sponsorContent = content.sponsorOrphan;
   const currentLanguage = (language ?? 'EN') as LanguageCode;
@@ -160,15 +45,18 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
   useEffect(() => {
     let isMounted = true;
 
-    fetch(SHEET_CSV_URL)
+    fetch(ORPHANS_API_URL)
       .then((response) => {
         if (!response.ok) {
           throw new Error(sponsorContent.errors.fetch);
         }
-        return response.text();
+        return response.json();
       })
-      .then((text) => {
-        const nextProfiles = buildProfilesFromCsvWithFallback(text);
+      .then((data: { profiles?: OrphanProfile[] }) => {
+        const nextProfiles = (data.profiles ?? []).map((profile) => ({
+          ...profile,
+          image: profile.image || orphanPlaceholderImage
+        }));
         if (isMounted) {
           setProfiles(nextProfiles);
           setProfilesError(null);

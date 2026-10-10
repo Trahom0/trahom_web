@@ -180,7 +180,7 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                      className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-black/5 py-1.5 min-w-[140px] z-[100]"
+                      className="absolute end-0 top-full mt-2 bg-white rounded-xl shadow-lg border border-black/5 py-1.5 min-w-[140px] z-[100]"
                     >
                       {languages.map((language) => (
                         <button
@@ -190,7 +190,7 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                             setLanguageDropdownOpen(false);
                             onLanguageChange?.(language.code);
                           }}
-                          className={`w-full px-4 py-2.5 text-left hover:bg-[#e1a226]/10 transition-colors ${
+                          className={`w-full px-4 py-2.5 text-start hover:bg-[#e1a226]/10 transition-colors ${
                             selectedLanguage === language.code ? 'bg-[#e1a226]/5 text-[#e1a226]' : ''
                           }`}
                         >

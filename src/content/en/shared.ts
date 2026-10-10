@@ -14,5 +14,11 @@ export const shared = {
   promoBar: {
     message: 'Winter is coming to Gaza: give a family warmth',
     ctaLabel: 'Donate now'
+  },
+  "notFound": {
+    "title": "This page could not be found",
+    "description": "The link may be broken, or the page may have moved. You can head back to the homepage or support families in Gaza right now.",
+    "homeLabel": "Back to homepage",
+    "donateLabel": "Donate now"
   }
 } as const;

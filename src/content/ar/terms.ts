@@ -5,7 +5,7 @@ export const terms = {
     "description": "توضّح هذه الشروط كيفية الوصول إلى موقعنا وخدماتنا ومحتوانا الرقمي واستخدامها.",
     "meta": {
       "updated": "آخر تحديث: Jan 6, 2026",
-      "contact": "للاستفسارات: legal@trahom.org"
+      "contact": "للاستفسارات: info@trahom.org"
     }
   },
   "highlights": [

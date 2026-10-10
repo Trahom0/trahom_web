@@ -60,6 +60,12 @@ export const seo = {
     ]
   },
   pages: {
+    'not-found': {
+      title: 'Page not found | Trahom',
+      description: 'The page you are looking for does not exist or has moved.',
+      keywords: '',
+      robots: 'noindex, follow'
+    },
     home: {
       title: 'Trahom | Gaza Humanitarian Aid, Zakat & Sadaqah',
       description:

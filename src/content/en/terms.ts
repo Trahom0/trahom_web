@@ -5,7 +5,7 @@ export const terms = {
     description: 'These terms outline how you can access and use our website, services, and digital content.',
     meta: {
       updated: 'Last updated: Jan 6, 2026',
-      contact: 'Questions: legal@trahom.org'
+      contact: 'Questions: info@trahom.org'
     }
   },
   highlights: [

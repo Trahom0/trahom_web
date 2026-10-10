@@ -19,6 +19,9 @@ import { SiteHeader } from './components/SiteHeader';
 import { SiteFooter } from './components/SiteFooter';
 import { PageLayout } from './components/PageLayout';
 import { PrimaryButton } from './components/PrimaryButton';
+import { LazyVideo } from './components/LazyVideo';
+import { SubscribeForm } from './components/SubscribeForm';
+import { NotFoundPage } from './components/NotFoundPage';
 import orphanCampaignImage from '../assets/homepage-card-orphan-campaign.jpg';
 import waterCampaignImage from '../assets/homepage-card-water.png';
 import { content, setContentLanguage } from '../content';
@@ -208,6 +211,10 @@ export default function App({ initialPath }: AppProps) {
     return <TermsOfServicePage onNavigate={navigateTo} language={language} onLanguageChange={handleLanguageChange} />;
   }
 
+  if (currentPage === 'not-found') {
+    return <NotFoundPage onNavigate={navigateTo} language={language} onLanguageChange={handleLanguageChange} />;
+  }
+
   if (currentPage === 'careers') {
     return <CareersPage onNavigate={navigateTo} language={language} onLanguageChange={handleLanguageChange} />;
   }
@@ -378,18 +385,12 @@ export default function App({ initialPath }: AppProps) {
             >
               <div className="relative aspect-[16/9] -mb-6">
                 <div className="absolute inset-0 rounded-b-2xl overflow-hidden">
-                  <video
+                  <LazyVideo
                     className="w-full h-full object-cover"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
                     poster="https://images.unsplash.com/photo-1710092784814-4a6f158913b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHxoYXBweSUyMGRvbm9ycyUyMHZvbHVudGVlcmluZ3xlbnwxfHx8fDE3Njc1MjYxNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
                     aria-label={homeContent.campaigns.donorsFeature.videoAriaLabel}
-                  >
-                    <source src={cloudinaryVideos.donorsFilm} type="video/mp4" />
-                  </video>
+                    src={cloudinaryVideos.donorsFilm}
+                  />
                 </div>
               </div>
               <div className="bg-white p-6 pt-10 rounded-2xl">
@@ -450,17 +451,11 @@ export default function App({ initialPath }: AppProps) {
                     className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full"
                   >
                     <div className="h-full overflow-hidden">
-                      <video
+                      <LazyVideo
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
                         aria-label={homeContent.gallery.gridLabels[0]}
-                      >
-                        <source src={cloudinaryVideos.homeGalleryTikiya} type="video/mp4" />
-                      </video>
+                        src={cloudinaryVideos.homeGalleryTikiya}
+                      />
                     </div>
                   </motion.div>
                   <motion.div
@@ -468,17 +463,11 @@ export default function App({ initialPath }: AppProps) {
                     className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full"
                   >
                     <div className="h-full overflow-hidden">
-                      <video
+                      <LazyVideo
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
                         aria-label={homeContent.gallery.gridLabels[1]}
-                      >
-                        <source src={cloudinaryVideos.homeGalleryWater2} type="video/mp4" />
-                      </video>
+                        src={cloudinaryVideos.homeGalleryWater2}
+                      />
                     </div>
                   </motion.div>
                   <motion.div
@@ -486,17 +475,11 @@ export default function App({ initialPath }: AppProps) {
                     className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full"
                   >
                     <div className="h-full overflow-hidden">
-                      <video
+                      <LazyVideo
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
                         aria-label={homeContent.gallery.gridLabels[2]}
-                      >
-                        <source src={cloudinaryVideos.homeGalleryWaterDistribute} type="video/mp4" />
-                      </video>
+                        src={cloudinaryVideos.homeGalleryWaterDistribute}
+                      />
                     </div>
                   </motion.div>
                   <motion.div
@@ -504,17 +487,11 @@ export default function App({ initialPath }: AppProps) {
                     className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full"
                   >
                     <div className="h-full overflow-hidden">
-                      <video
+                      <LazyVideo
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
                         aria-label={homeContent.gallery.gridLabels[3]}
-                      >
-                        <source src={cloudinaryVideos.homeGalleryWinterCampaign} type="video/mp4" />
-                      </video>
+                        src={cloudinaryVideos.homeGalleryWinterCampaign}
+                      />
                     </div>
                   </motion.div>
                 </motion.div>
@@ -536,17 +513,11 @@ export default function App({ initialPath }: AppProps) {
                 >
                   <div className="bg-white rounded-2xl overflow-hidden shadow-sm h-full">
                     <div className="h-full overflow-hidden relative">
-                      <video
+                      <LazyVideo
                         className="w-full h-full object-cover"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
                         aria-label={homeContent.gallery.feature.videoAriaLabel}
-                      >
-                        <source src={cloudinaryVideos.homeGalleryFeature} type="video/mp4" />
-                      </video>
+                        src={cloudinaryVideos.homeGalleryFeature}
+                      />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 sm:p-8 lg:p-12">
                         <h3 className="text-2xl sm:text-3xl lg:text-4xl text-white mb-2 sm:mb-3 tracking-tight">{homeContent.gallery.feature.title}</h3>
                         <p className="text-white/90 text-sm sm:text-base lg:text-lg max-w-2xl leading-relaxed">
@@ -698,19 +669,7 @@ export default function App({ initialPath }: AppProps) {
             </p>
           </div>
           <div className="md:col-span-3 bg-white rounded-2xl p-10 shadow-sm flex flex-col justify-center">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input 
-                type="email" 
-                placeholder={homeContent.subscribe.inputPlaceholder}
-                className="flex-1 px-5 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e1a226] focus:border-transparent"
-              />
-              <button className="bg-[#e1a226] text-white px-8 py-3 rounded-lg hover:bg-[#c78f1f] transition-colors whitespace-nowrap">
-                {homeContent.subscribe.buttonLabel}
-              </button>
-            </div>
-            <p className="text-xs text-foreground/50 mt-4">
-              {homeContent.subscribe.helperText}
-            </p>
+            <SubscribeForm language={language} labels={homeContent.subscribe} />
           </div>
         </motion.div>
     </PageLayout>

@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { LazyVideo } from './LazyVideo';
 import { content } from '../../content';
 import { formatTemplate } from '../../content/utils';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -137,18 +138,13 @@ export function CampaignCard({
       <div className="relative aspect-[4/3] -mt-8">
         <div className="absolute inset-0 rounded-t-3xl overflow-hidden">
           {hasVideo ? (
-            <video
+            <LazyVideo
               className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
               poster={image}
               aria-label={imageAltText}
-            >
-              <source src={videoSrc} type={videoType ?? 'video/mp4'} />
-            </video>
+              src={videoSrc as string}
+              type={videoType ?? 'video/mp4'}
+            />
           ) : (
             <ImageWithFallback 
               src={image} 

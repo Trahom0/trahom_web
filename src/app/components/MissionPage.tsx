@@ -277,7 +277,7 @@ export function MissionPage({ onNavigate, language, onLanguageChange }: MissionP
             </p>
           </motion.div>
 
-          <div className="relative">
+          <div className="relative overflow-x-clip">
             {/* Timeline Line - Hidden on mobile */}
             <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-0.5 bg-black/10"></div>
 

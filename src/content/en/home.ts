@@ -136,6 +136,8 @@ export const home = {
     description: 'Join our community and receive the latest updates on campaigns, stories from the field, and opportunities to make a difference.',
     inputPlaceholder: 'Your email address',
     buttonLabel: 'Subscribe',
-    helperText: 'We respect your privacy. Unsubscribe anytime.'
+    helperText: 'We respect your privacy. Unsubscribe anytime.',
+    successMessage: 'Thank you, you are subscribed. Our updates will reach your inbox.',
+    errorMessage: 'We could not subscribe you right now. Please try again shortly.'
   }
 } as const;

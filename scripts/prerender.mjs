@@ -54,6 +54,16 @@ const renderRoute = (route) => {
   return pageHtml;
 };
 
+// The "page not found" page: served by Vercel (with a real 404 status) for any unknown address.
+// Its content is left empty so the browser renders it in the visitor's language from the URL.
+const renderNotFoundShell = () => {
+  const { head } = render('/404', origin);
+  return template
+    .replace('<!--seo-head-->', head)
+    .replace(/<html[^>]*>/, '<html lang="en" dir="ltr">');
+};
+fs.writeFileSync(path.join(distDir, '404.html'), renderNotFoundShell(), 'utf-8');
+
 routes.forEach((route) => {
   const cleanRoute = route === '' ? '/' : route;
   const outputPath = cleanRoute === '/'

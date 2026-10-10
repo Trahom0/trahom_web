@@ -125,9 +125,9 @@ export const donate = {
   stats: {
     title: 'Bağışların sahadaki karşılığı',
     items: [
-      { number: '800k+', label: 'Toplam ulaşılan kişi' },
+      { number: '300k+', label: 'Toplam ulaşılan kişi' },
       { number: '3,375+', label: 'Yetim sponsorluğu' },
-      { number: '135k+', label: 'Dağıtılan öğün' }
+      { number: '160k+', label: 'Dağıtılan öğün' }
     ]
   }
 } as const;

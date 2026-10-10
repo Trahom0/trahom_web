@@ -41,17 +41,17 @@ export const mission = {
       {
         title: 'Yetim bakımı ve sponsorluğu',
         description: 'Yetim çocuklara düzenli takip, eğitim desteği ve sağlık yönlendirmesiyle güvenli bir çerçeve sunarız.',
-        stats: '3.375+ aktif destek · düzenli takip'
+        stats: '3.375+ sponsorlu yetim · düzenli takip'
       },
       {
         title: 'Acil gıda desteği',
         description: 'Yerinden edilmiş ve gıdaya erişimi olmayan ailelere hızlı ve düzenli gıda desteği sağlarız.',
-        stats: '9.450+ gıda paketi · 135 bin öğün'
+        stats: '22.000+ gıda paketi · 160 bin öğün'
       },
       {
         title: 'Su ve sanitasyon',
         description: 'Altyapının zarar gördüğü bölgelerde güvenli içme suyuna erişimi yeniden kurarız.',
-        stats: '202.500+ yararlanıcı'
+        stats: '190.000+ yararlanıcı · 450+ dağıtım · 7 kuyu'
       },
       {
         title: 'Sağlık desteği',
@@ -101,7 +101,7 @@ export const mission = {
     description: 'Bu verileri övünmek için değil, hesap verebilirlik için paylaşıyoruz.',
     items: [
       {
-        number: '800k+',
+        number: '300k+',
         label: 'Toplam erişim'
       },
       {
@@ -109,11 +109,11 @@ export const mission = {
         label: 'Acil barınma'
       },
       {
-        number: '20,250+',
+        number: '20,000+',
         label: 'Nakit destek'
       },
       {
-        number: '130+',
+        number: '150+',
         label: 'Gerçekleştirilen kampanyalar'
       }
     ]

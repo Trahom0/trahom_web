@@ -3,25 +3,25 @@ export const home = {
     title: 'Human support, delivered with dignity.',
     description: 'We work on the ground, every day, connecting people to what they need to survive and rebuild.',
     ctaLabel: 'Join our mission',
-    donorCount: '10,000+ donors',
+    donorCount: 'Thousands choose to keep giving',
     stats: {
       totalReach: {
-        number: '800k+',
+        number: '300k+',
         label: 'Total reach',
         color: 'bg-[#4A90E2]'
       },
       readyMeals: {
-        number: '135k+',
+        number: '160k+',
         label: 'Ready meals served',
         color: 'bg-[#A8D5E2]'
       },
       communityCard: {
         title: 'Community-Led Response',
-        description: '3,375+ active beneficiaries receiving 30 months of continuous support.',
+        description: 'Continuous care for 3,375+ sponsored orphans, built on follow-up and accountability.',
         color: 'bg-[#F5A623]'
       },
       fundsRaised: {
-        number: '130+',
+        number: '150+',
         label: 'Campaigns performed',
         color: 'bg-[#FFF8E1]'
       }
@@ -47,7 +47,7 @@ export const home = {
         description: 'Deliver safe water through 450+ distribution campaigns and 7 wells fixed/constructed in areas without reliable access.',
         goal: '$180,000',
         percentage: 17,
-        primaryBadge: '100k+ people served',
+        primaryBadge: '190k+ people served',
         color: 'bg-[#A8D5E2]'
       },
       {
@@ -56,7 +56,7 @@ export const home = {
         description: 'Deliver warm clothing, blankets, and heating supplies to families in need.',
         goal: '$120,000',
         percentage: 56,
-        primaryBadge: '4,050+ sheltered',
+        primaryBadge: '4,050+ families supported',
         color: 'bg-[#F5A623]'
       }
     ],

@@ -147,7 +147,7 @@ export const donate = {
     "title": "تبرعاتكم على أرض الواقع",
     "items": [
       {
-        "number": "800k+",
+        "number": "300k+",
         "label": "إجمالي المستفيدين"
       },
       {
@@ -155,7 +155,7 @@ export const donate = {
         "label": "كفالات الأيتام"
       },
       {
-        "number": "135k+",
+        "number": "160k+",
         "label": "الوجبات المقدّمة"
       }
     ]

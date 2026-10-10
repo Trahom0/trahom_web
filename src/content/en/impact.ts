@@ -6,12 +6,12 @@ export const impact = {
   },
   stats: {
     items: [
-      { number: '800k+', label: 'Total Reach' },
-      { number: '130+', label: 'Campaigns performed' },
+      { number: '300k+', label: 'Total Reach' },
+      { number: '150+', label: 'Campaigns performed' },
       { number: '3,375+', label: 'Orphan Sponsorship' },
-      { number: '135k+', label: 'Ready Meals Served' },
-      { number: '202,500+', label: 'Clean Water Distribution' },
-      { number: '4,050+', label: 'Emergency Shelter' }
+      { number: '160k+', label: 'Ready Meals Served' },
+      { number: '190k+', label: 'Clean Water Distribution' },
+      { number: '4,050+', label: 'Families supported in winter' }
     ]
   },
   programs: {
@@ -22,16 +22,15 @@ export const impact = {
         category: 'Ongoing Programs',
         impact: 'Ongoing orphan sponsorships that stay present with families over the long term.',
         stats: [
-          { label: 'Active beneficiaries', value: '3,375+' },
-          { label: 'Continuous support', value: '30 months' }
+          { label: 'Orphans sponsored', value: '3,375+' }
         ]
       },
       {
         category: 'Emergency Food Assistance',
         impact: 'Rapid food response for families facing loss, displacement, and food insecurity.',
         stats: [
-          { label: 'Food parcels distributed', value: '9,450+' },
-          { label: 'Ready meals served', value: '135k+' },
+          { label: 'Food parcels distributed', value: '22,000+' },
+          { label: 'Ready meals served', value: '160k+' },
           { label: 'Baby milk provided', value: '1,350+' }
         ]
       },
@@ -41,15 +40,15 @@ export const impact = {
         stats: [
           { label: 'Water distribution campaigns', value: '450+' },
           { label: 'Water wells fixed / constructed', value: '7' },
-          { label: 'People served', value: '100k+' }
+          { label: 'People served', value: '190k+' }
         ]
       },
       {
         category: 'Shelter & Protection',
         impact: 'Safe shelter and immediate protection for families displaced by crisis.',
         stats: [
-          { label: 'Emergency shelter', value: '4,050+' },
-          { label: 'Cash distribution', value: '20,250+' }
+          { label: 'Families supported in winter', value: '4,050+' },
+          { label: 'Cash distribution', value: '20,000+' }
         ]
       },
       {
@@ -93,22 +92,7 @@ export const impact = {
       cleanWater: 'Clean Water Distribution',
       totalFunds: 'Campaigns performed'
     },
-    items: [
-      {
-        year: '2024',
-        lives: '132,300+',
-        projects: '47,250+',
-        countries: '70,875+',
-        funds: '130+'
-      },
-      {
-        year: '2025',
-        lives: '245,700+',
-        projects: '87,750+',
-        countries: '131,625+',
-        funds: '130+'
-      }
-    ]
+    items: []
   },
   financial: {
     title: 'Financial Transparency',

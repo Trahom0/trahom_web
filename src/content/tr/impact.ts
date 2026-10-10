@@ -6,12 +6,12 @@ export const impact = {
   },
   stats: {
     items: [
-      { number: '800k+', label: 'Toplam ulaşılan kişi' },
-      { number: '130+', label: 'Gerçekleştirilen kampanyalar' },
+      { number: '300k+', label: 'Toplam ulaşılan kişi' },
+      { number: '150+', label: 'Gerçekleştirilen kampanyalar' },
       { number: '3,375+', label: 'Yetim sponsorluğu' },
-      { number: '135k+', label: 'Dağıtılan öğün' },
-      { number: '202,500+', label: 'Temiz suya erişim' },
-      { number: '4,050+', label: 'Acil barınma' }
+      { number: '160k+', label: 'Dağıtılan öğün' },
+      { number: '190k+', label: 'Temiz suya erişim' },
+      { number: '4,050+', label: 'Kış desteği alan aile' }
     ]
   },
   programs: {
@@ -22,16 +22,15 @@ export const impact = {
         category: 'Süreklilik esaslı programlar',
         impact: 'Uzun vadeli takip ve destekle yürütülen yetim sponsorluğu; ailelerle bağ kopmadan devam eder.',
         stats: [
-          { label: 'Aktif yararlanıcı', value: '3,375+' },
-          { label: 'Düzenli destek', value: '30 months' }
+          { label: 'Sponsorlu yetim', value: '3,375+' }
         ]
       },
       {
         category: 'Acil gıda desteği',
         impact: 'Kayıp, yerinden edilme ve gıda güvencesizliği yaşayan ailelere hızlı gıda müdahalesi.',
         stats: [
-          { label: 'Dağıtılan gıda paketi', value: '9,450+' },
-          { label: 'Sunulan hazır öğün', value: '135k+' },
+          { label: 'Dağıtılan gıda paketi', value: '22,000+' },
+          { label: 'Sunulan hazır öğün', value: '160k+' },
           { label: 'Bebek maması', value: '1,350+' }
         ]
       },
@@ -41,15 +40,15 @@ export const impact = {
         stats: [
           { label: 'Su dağıtım kampanyaları', value: '450+' },
           { label: 'Su kuyusu onarımı / inşası', value: '7' },
-          { label: 'Yararlanan kişi', value: '100k+' }
+          { label: 'Yararlanan kişi', value: '190k+' }
         ]
       },
       {
         category: 'Barınma ve koruma',
         impact: 'Kriz nedeniyle yerinden edilen aileler için güvenli barınma ve acil koruma.',
         stats: [
-          { label: 'Acil barınma', value: '4,050+' },
-          { label: 'Nakit destek', value: '20,250+' }
+          { label: 'Kış desteği alan aile', value: '4,050+' },
+          { label: 'Nakit destek', value: '20,000+' }
         ]
       },
       {
@@ -93,22 +92,7 @@ export const impact = {
       cleanWater: 'Temiz suya erişim',
       totalFunds: 'Gerçekleştirilen kampanyalar'
     },
-    items: [
-      {
-        year: '2024',
-        lives: '132,300+',
-        projects: '47,250+',
-        countries: '70,875+',
-        funds: '130+'
-      },
-      {
-        year: '2025',
-        lives: '245,700+',
-        projects: '87,750+',
-        countries: '131,625+',
-        funds: '130+'
-      }
-    ]
+    items: []
   },
   financial: {
     title: 'Mali şeffaflık',

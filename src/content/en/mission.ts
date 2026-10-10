@@ -120,7 +120,7 @@ export const mission = {
   },
   cta: {
     title: 'Join Our Mission',
-    description: 'Together, we can create lasting change and bring hope to communities around the world.',
+    description: 'Together, we can create lasting change and bring hope to families in Gaza.',
     primaryButton: 'Donate Now',
     secondaryButton: 'Become a Partner'
   }

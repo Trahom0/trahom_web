@@ -65,10 +65,11 @@ const parseCsv = (text: string) => {
 
 const normalize = (value: string) => value.trim().toLowerCase().replace(/[_\s]+/g, ' ');
 
-const buildProfiles = (text: string): OrphanProfile[] => {
+// Returns null when the text is not the expected sheet (e.g. a Google sign-in page).
+const buildProfiles = (text: string): OrphanProfile[] | null => {
   const rows = parseCsv(text);
   if (!rows.length) {
-    return [];
+    return null;
   }
 
   const headers = rows[0].map(normalize);
@@ -82,7 +83,7 @@ const buildProfiles = (text: string): OrphanProfile[] => {
   const imageIndex = find(['image', 'image url', 'link', 'photo']);
 
   if (codeIndex < 0) {
-    return [];
+    return null;
   }
 
   const cell = (row: string[], index: number) => (index >= 0 ? (row[index] ?? '').trim() : '');
@@ -100,7 +101,9 @@ const buildProfiles = (text: string): OrphanProfile[] => {
         image: safeImage(cell(row, imageIndex))
       };
     })
-    .filter((profile) => profile.code && (profile.descriptionEn || profile.descriptionAr || profile.descriptionTr));
+    .filter((profile) => profile.code && (profile.descriptionEn || profile.descriptionAr || profile.descriptionTr))
+    // Keep only the first row for each code, so a repeated code in the sheet cannot show twice.
+    .filter((profile, index, all) => all.findIndex((other) => other.code === profile.code) === index);
 };
 
 export default async function handler(req: any, res: any) {
@@ -115,7 +118,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const response = await fetch(ORPHANS_CSV_URL);
+    const response = await fetch(ORPHANS_CSV_URL, { signal: AbortSignal.timeout(8_000) });
     if (!response.ok) {
       console.error('Orphan sheet fetch failed', response.status);
       res.status(502).json({ error: 'Unable to load profiles' });
@@ -123,6 +126,11 @@ export default async function handler(req: any, res: any) {
     }
 
     const profiles = buildProfiles(await response.text());
+    if (!profiles) {
+      console.error('Orphan sheet did not contain the expected columns');
+      res.status(502).json({ error: 'Unable to load profiles' });
+      return;
+    }
     // Cache on Vercel's edge for 5 minutes so the sheet is not hit on every visit.
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
     res.status(200).json({ profiles });

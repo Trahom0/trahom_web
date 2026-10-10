@@ -70,6 +70,13 @@ export const getRouteFromPath = (path: string): { page: PageKey; language: Langu
   };
 };
 
+// True for a normal left click; false for Ctrl/Cmd/Shift/Alt or middle clicks,
+// which should keep the browser's default "open in new tab/window" behaviour.
+export const isPlainLeftClick = (event: unknown) => {
+  const e = event as { metaKey?: boolean; ctrlKey?: boolean; shiftKey?: boolean; altKey?: boolean; button?: number };
+  return !(e?.metaKey || e?.ctrlKey || e?.shiftKey || e?.altKey || (typeof e?.button === 'number' && e.button !== 0));
+};
+
 export const getPageFromPath = (path: string): PageKey => getRouteFromPath(path).page;
 
 export const localizePath = (path: string, language: LanguageCode): string => {

@@ -7,7 +7,7 @@ export const impact = {
   "stats": {
     "items": [
       {
-        "number": "300k+",
+        "number": "300 ألف+",
         "label": "إجمالي المستفيدين"
       },
       {
@@ -19,11 +19,11 @@ export const impact = {
         "label": "كفالة الأيتام"
       },
       {
-        "number": "160k+",
+        "number": "160 ألف+",
         "label": "الوجبات المقدّمة"
       },
       {
-        "number": "190k+",
+        "number": "190 ألف+",
         "label": "سقيا الماء"
       },
       {
@@ -56,7 +56,7 @@ export const impact = {
           },
           {
             "label": "الوجبات المقدّمة",
-            "value": "160k+"
+            "value": "160 ألف+"
           },
           {
             "label": "حليب الأطفال الموزّع",
@@ -78,7 +78,7 @@ export const impact = {
           },
           {
             "label": "عدد المستفيدين",
-            "value": "190k+"
+            "value": "190 ألف+"
           }
         ]
       },

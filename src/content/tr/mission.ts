@@ -101,15 +101,15 @@ export const mission = {
     description: 'Bu verileri övünmek için değil, hesap verebilirlik için paylaşıyoruz.',
     items: [
       {
-        number: '300k+',
+        number: '300 bin+',
         label: 'Toplam erişim'
       },
       {
-        number: '4,050+',
-        label: 'Acil barınma'
+        number: '4.050+',
+        label: 'Kış desteği alan aile'
       },
       {
-        number: '20,000+',
+        number: '20.000+',
         label: 'Nakit destek'
       },
       {

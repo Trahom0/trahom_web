@@ -34,7 +34,7 @@ const formatPublicIdLabel = (publicId: string) => {
   return base.replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
-const fallbackGalleryItems = galleryFallbackPublicIds.map((publicId) => ({
+const fallbackGalleryItems = galleryFallbackPublicIds.slice(1).map((publicId) => ({
   src: makeCloudinaryVideoUrl(publicId),
   label: formatPublicIdLabel(publicId),
   publicId
@@ -168,7 +168,7 @@ export function GalleryPage({ onNavigate, language, onLanguageChange }: GalleryP
             >
               <VideoWithRatio
                 src={item.src}
-                label={item.label}
+                label={`${galleryContent.hero.title} (${index + 1})`}
                 className="w-full h-full object-cover"
                 wrapperClassName="w-full"
                 autoPlay

@@ -175,11 +175,11 @@ export function MissionPage({ onNavigate, language, onLanguageChange }: MissionP
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-            className="bg-[#A8D5E2] rounded-2xl p-8 sm:p-12 text-white"
+            className="bg-[#A8D5E2] rounded-2xl p-8 sm:p-12 text-[#103b51]"
           >
             <Compass className="w-12 h-12 mb-6" />
             <h2 className="text-3xl sm:text-4xl tracking-tight mb-4">{missionContent.approach.title}</h2>
-            <p className="text-white/90 text-lg leading-relaxed">
+            <p className="text-[#103b51]/90 text-lg leading-relaxed">
               {missionContent.approach.description}
             </p>
           </motion.div>
@@ -369,7 +369,7 @@ export function MissionPage({ onNavigate, language, onLanguageChange }: MissionP
             <button className="bg-white text-[#e1a226] px-8 py-4 rounded-full hover:bg-white/90 transition-colors text-lg font-medium" onClick={() => onNavigate?.('donate')}>
               {missionContent.cta.primaryButton}
             </button>
-            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-lg font-medium">
+            <button className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-lg font-medium" onClick={() => onNavigate?.('contact')}>
               {missionContent.cta.secondaryButton}
             </button>
           </div>

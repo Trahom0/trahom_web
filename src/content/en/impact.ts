@@ -2,7 +2,7 @@ export const impact = {
   hero: {
     badge: 'Measuring Our Impact',
     title: 'Creating Lasting Change Together',
-    description: 'Every donation translates into real impact. Explore how your generosity is transforming lives and communities around the world.'
+    description: 'Every donation translates into real impact. Explore how your generosity is transforming lives and communities in Gaza.'
   },
   stats: {
     items: [
@@ -76,10 +76,10 @@ export const impact = {
         category: 'Orphan Sponsorship'
       },
       {
-        name: 'What It Means to Be Sponsored',
+        name: 'The Impact of Continuity',
         age: 38,
         country: 'Gaza',
-        story: 'Being sponsored means steady meals, safe learning, and someone checking in on me. It helped my family feel stable again.',
+        story: 'Regular support stood by my family through the hardest times and helped us regain some stability.',
         category: 'Orphan Sponsorship'
       }
     ]

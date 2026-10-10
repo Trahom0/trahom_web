@@ -63,7 +63,7 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
           ...formData,
           subjectLabel,
           language: language ?? 'EN',
-          startedAt: formStartedAt
+          elapsedMs: Date.now() - formStartedAt
         })
       });
 

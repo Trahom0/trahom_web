@@ -31,7 +31,7 @@ export const sponsorOrphan = {
     "countLabels": {
       "loading": "جارٍ تحميل الملفات...",
       "error": "تعذّر عرض الملفات",
-      "availableTemplate": "{{count}} ملفًا متاحًا"
+      "availableTemplate": "الملفات المتاحة: {{count}}"
     },
     "states": {
       "loading": "جارٍ تحميل ملفات الكفالة...",

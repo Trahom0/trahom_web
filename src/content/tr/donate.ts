@@ -84,6 +84,7 @@ export const donate = {
     },
     errors: {
       invalidAmount: 'Lütfen geçerli bir bağış tutarı girin.',
+      tooLarge: '25.000 doların üzerindeki bağışlar için lütfen info@trahom.org adresinden bize ulaşın.',
       startCheckout: 'Ödeme işlemi başlatılamadı. Lütfen tekrar deneyin.',
       missingCheckoutUrl: 'Ödeme bağlantısı şu anda kullanılamıyor.',
       default: 'İşlem tamamlanamadı. Lütfen tekrar deneyin.'
@@ -95,7 +96,7 @@ export const donate = {
       { amount: 50, impact: 'Acil gıda paketlerinin dağıtımını destekler.' },
       { amount: 100, impact: 'Bir yetim çocuğun düzenli takibini mümkün kılar.' },
       { amount: 250, impact: 'Temiz suya erişimi genişletmeye yardımcı olur.' },
-      { amount: 500, impact: 'Yerinden edilmiş bir aile için barınma yükünü hafifletir.' },
+      { amount: 500, impact: 'Yerinden edilmiş bir ailenin kışı sıcak geçirmesine yardımcı olur.' },
       { amount: 1000, impact: 'Acil sağlık müdahalesi ya da nakit desteğe katkı sağlar.' }
     ],
     fallback: 'Her katkının bir karşılığı vardır'
@@ -125,9 +126,9 @@ export const donate = {
   stats: {
     title: 'Bağışların sahadaki karşılığı',
     items: [
-      { number: '300k+', label: 'Toplam ulaşılan kişi' },
-      { number: '3,375+', label: 'Yetim sponsorluğu' },
-      { number: '160k+', label: 'Dağıtılan öğün' }
+      { number: '300 bin+', label: 'Toplam ulaşılan kişi' },
+      { number: '3.375+', label: 'Yetim sponsorluğu' },
+      { number: '160 bin+', label: 'Dağıtılan öğün' }
     ]
   }
 } as const;

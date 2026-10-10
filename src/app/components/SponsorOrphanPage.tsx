@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import orphanPlaceholderImage from '../../assets/homepage-card-orphan-campaign.jpg';
 import { content } from '../../content';
 import { formatTemplate } from '../../content/utils';
-import { getPathForPage, type LanguageCode, type PageKey } from '../routes';
+import { getPathForPage, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { PageLayout } from './PageLayout';
 import { PrimaryButton } from './PrimaryButton';
@@ -77,6 +77,9 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
   }, []);
 
   const handleNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     event.preventDefault();
     onNavigate?.(page);
   };
@@ -154,7 +157,6 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
                 src={orphanPlaceholderImage}
                 alt={sponsorContent.hero.imageAlt}
                 loading="eager"
-                fetchPriority="high"
                 className="w-full h-full object-cover aspect-[4/3]"
               />
             </div>
@@ -194,7 +196,7 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
           </div>
         </section>
 
-        <section id="orphans" className="scroll-mt-32">
+        <section id="orphans" className="scroll-mt-52">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -260,10 +262,8 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
                       <div className="flex flex-col gap-3 flex-1">
                         {description ? (
                           <p
-                            className={`text-sm sm:text-base text-foreground/70 leading-relaxed ${
-                              currentLanguage === 'AR' ? 'text-right' : 'text-left'
-                            }`}
-                            dir={currentLanguage === 'AR' ? 'rtl' : 'ltr'}
+                            className="text-sm sm:text-base text-foreground/70 leading-relaxed text-start"
+                            dir="auto"
                           >
                             {description}
                           </p>

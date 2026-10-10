@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { content } from '../../content';
-import { getPathForPage, type LanguageCode, type PageKey } from '../routes';
+import { getPathForPage, isPlainLeftClick, type LanguageCode, type PageKey } from '../routes';
 import { PageLayout } from './PageLayout';
 import { SiteHeader } from './SiteHeader';
 import { SiteFooter } from './SiteFooter';
@@ -14,6 +14,9 @@ interface NotFoundPageProps {
 export function NotFoundPage({ onNavigate, language, onLanguageChange }: NotFoundPageProps) {
   const text = content.shared.notFound;
   const go = (page: PageKey) => (event: MouseEvent) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     event.preventDefault();
     onNavigate(page);
   };

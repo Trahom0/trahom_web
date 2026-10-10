@@ -1,5 +1,5 @@
 export const header = {
-  "logoAlt": "Trahom",
+  "logoAlt": "تراحم",
   "homeLinkAria": "الانتقال إلى الصفحة الرئيسية",
   "menuAria": {
     "open": "فتح القائمة",

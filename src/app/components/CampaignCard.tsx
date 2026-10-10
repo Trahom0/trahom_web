@@ -107,6 +107,10 @@ export function CampaignCard({
       onKeyDown={
         isCardClickable
           ? (event) => {
+              // Ignore keys pressed on the buttons inside the card; they handle themselves.
+              if (event.target !== event.currentTarget) {
+                return;
+              }
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 onCardClick?.(event);
@@ -116,7 +120,7 @@ export function CampaignCard({
       }
       role={isCardClickable ? 'link' : undefined}
       tabIndex={isCardClickable ? 0 : undefined}
-      aria-label={isCardClickable ? `Open ${title}` : undefined}
+      aria-label={isCardClickable ? title : undefined}
     >
       {/* Top Section - Text Content */}
       <div className={`${color} p-4 sm:p-6 lg:p-8 pb-8 sm:pb-10 lg:pb-12 flex-1 flex flex-col justify-between min-h-[240px] sm:min-h-[260px] lg:min-h-[280px]`}>

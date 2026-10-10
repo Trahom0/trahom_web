@@ -42,7 +42,7 @@ export const seo = {
   defaultKeywords: joinKeywords(baseKeywords),
   themeColor: '#F5A623',
   ogImage: '/og-image.jpg',
-  ogImageAlt: 'Trahom humanitarian aid in Gaza',
+  ogImageAlt: 'Trahom’un Gazze’deki insani yardımı',
   twitterHandle: '@TrahomGaza',
   organization: {
     name: 'Trahom',
@@ -79,9 +79,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     mission: {
-      title: 'Our Mission in Gaza | Trahom Humanitarian Aid',
+      title: 'Gazze’deki Misyonumuz | Trahom İnsani Yardım',
       description:
-        'Discover Trahom’s community-led mission in Gaza with direct, verified assistance and long-term care for Palestinian families, children, and orphans.',
+        'Trahom’un Gazze’deki toplum temelli misyonunu keşfedin: Filistinli aileler, çocuklar ve yetimler için doğrudan, doğrulanmış yardım ve uzun vadeli destek.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze yardım misyonu',
@@ -93,9 +93,9 @@ export const seo = {
       schemaType: 'AboutPage'
     },
     impact: {
-      title: 'Impact & Transparency | Gaza Relief Results',
+      title: 'Etki ve Şeffaflık | Gazze Yardım Sonuçları',
       description:
-        'See measurable impact from Trahom’s Gaza relief programs: food aid, clean water, medical care, and orphan support with accountable reporting.',
+        'Trahom’un Gazze yardım programlarının ölçülebilir etkisini görün: gıda yardımı, temiz su, sağlık desteği ve yetim sponsorluğu, hesap verebilir raporlama ile.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze etki raporu',
@@ -107,9 +107,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     campaigns: {
-      title: 'Gaza Relief Campaigns | Orphan, Water & Food Aid',
+      title: 'Gazze Yardım Kampanyaları | Yetim, Su ve Gıda Yardımı',
       description:
-        'Support active Gaza relief campaigns, including orphan sponsorship, clean water projects, emergency food assistance, and winter aid. Donate zakat or sadaqah.',
+        'Yetim sponsorluğu, temiz su projeleri, acil gıda yardımı ve kış desteği gibi devam eden Gazze kampanyalarına destek olun. Zekât veya sadaka bağışlayın.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze yardım kampanyaları',
@@ -122,9 +122,9 @@ export const seo = {
       schemaType: 'CollectionPage'
     },
     contact: {
-      title: 'Contact Trahom | Gaza Humanitarian Aid & Partnerships',
+      title: 'Trahom ile İletişim | Gazze İnsani Yardım ve İş Birlikleri',
       description:
-        'Contact Trahom for Gaza humanitarian aid inquiries, zakat or sadaqah giving, partnerships, or media requests. Our team responds promptly and responsibly.',
+        'Gazze insani yardım soruları, zekât ve sadaka bağışları, iş birlikleri veya basın talepleri için Trahom ile iletişime geçin. Ekibimiz en kısa sürede yanıt verir.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze yardım iletişim',
@@ -136,9 +136,9 @@ export const seo = {
       schemaType: 'ContactPage'
     },
     donate: {
-      title: 'Donate to Gaza | Zakat, Sadaqah & Emergency Relief',
+      title: 'Gazze’ye Bağış | Zekât, Sadaka ve Acil Yardım',
       description:
-        'Donate to Gaza and Palestine with secure options for zakat, sadaqah, and recurring support. Fund food, clean water, medical care, and orphan sponsorship.',
+        'Gazze ve Filistin’e zekât, sadaka veya düzenli bağış ile güvenle destek olun. Gıda, temiz su, sağlık desteği ve yetim sponsorluğuna katkı sağlayın.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze zekat bağışı',
@@ -167,9 +167,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     gallery: {
-      title: 'Gaza Relief Gallery | Photos & Videos from the Field',
+      title: 'Gazze Yardım Galerisi | Sahadan Fotoğraf ve Videolar',
       description:
-        'Explore photos and videos from Trahom’s humanitarian work in Gaza, including aid distribution, water projects, medical relief, and orphan care.',
+        'Trahom’un Gazze’deki insani çalışmalarından fotoğraf ve videolar: yardım dağıtımları, su projeleri, sağlık desteği ve yetim bakımı.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze yardım fotoğrafları',
@@ -180,9 +180,9 @@ export const seo = {
       schemaType: 'CollectionPage'
     },
     careers: {
-      title: 'Careers | Humanitarian Jobs Supporting Gaza',
+      title: 'Kariyer | Gazze’yi Destekleyen İnsani Görevler',
       description:
-        'Join Trahom’s humanitarian mission supporting Gaza relief and Palestinian recovery. Explore roles in programs, operations, communications, and partnerships.',
+        'Gazze’ye yardım eden Trahom’un insani misyonuna katılın. Açık pozisyonlar bu sayfada duyurulur.',
       keywords: joinKeywords([
         ...baseKeywords,
         'insani yardım işleri',
@@ -193,9 +193,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     'family-signup': {
-      title: 'Family Assistance Registration | Trahom Gaza Aid',
+      title: 'Aile Yardım Kaydı | Trahom Gazze Yardımı',
       description:
-        'Families in Gaza can register to request humanitarian assistance and follow-up support through Trahom’s verified, community-led process.',
+        'Gazze’deki aileler, Trahom’un doğrulanmış ve toplum temelli süreci aracılığıyla insani yardım ve takip desteği için kayıt olabilir.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze aile kaydı',
@@ -206,9 +206,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     'sponsor-orphan': {
-      title: 'Sponsor a Gaza Orphan | Secure, Verified Support',
+      title: 'Gazze’de Bir Yetime Sponsor Olun | Güvenli ve Doğrulanmış Destek',
       description:
-        'Sponsor a child in Gaza through a private, verified process. Your support provides education, healthcare, and daily care for orphaned children.',
+        'Gazze’de bir çocuğa gizli ve doğrulanmış bir süreçle sponsor olun. Desteğiniz yetim çocuklara eğitim, sağlık ve günlük bakım sağlar.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze’de yetim sponsorluğu',
@@ -220,9 +220,9 @@ export const seo = {
       schemaType: 'CollectionPage'
     },
     privacy: {
-      title: 'Privacy Policy | Trahom',
+      title: 'Gizlilik Politikası | Trahom',
       description:
-        'Learn how Trahom protects donor and applicant data while delivering humanitarian aid in Gaza and Palestine.',
+        'Trahom’un Gazze ve Filistin’de insani yardım ulaştırırken bağışçı ve başvuru sahiplerinin verilerini nasıl koruduğunu öğrenin.',
       keywords: joinKeywords([
         ...baseKeywords,
         'bağışçı gizliliği',
@@ -232,9 +232,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     terms: {
-      title: 'Terms of Service | Trahom',
+      title: 'Kullanım Şartları | Trahom',
       description:
-        'Review Trahom’s terms for donations, services, and use of our humanitarian aid website.',
+        'Bağışlar, hizmetler ve insani yardım web sitemizin kullanımına ilişkin Trahom şartlarını inceleyin.',
       keywords: joinKeywords([
         ...baseKeywords,
         'bağış şartları',

@@ -1,5 +1,5 @@
 import type { PageKey, LanguageCode } from '../routes';
-import { getPathForPage } from '../routes';
+import { getPathForPage, isPlainLeftClick } from '../routes';
 import { content } from '../../content';
 
 interface RelatedLinksProps {
@@ -13,6 +13,9 @@ export function RelatedLinks({ links, onNavigate, language }: RelatedLinksProps)
   const activeLanguage = (language ?? 'EN') as LanguageCode;
 
   const handleNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     if (!onNavigate) {
       return;
     }

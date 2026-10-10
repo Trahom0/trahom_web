@@ -3,8 +3,8 @@ export const shared = {
   "campaignCard": {
     "donateLabel": "تبرع الآن",
     "sponsorLabel": "كفالة",
-    "raisedTemplate": "{{amount}} تم جمعها",
-    "fundedTemplate": "{{percent}}٪ ممول",
+    "raisedTemplate": "تم جمع {{amount}}",
+    "fundedTemplate": "مموّلة بنسبة {{percent}}٪",
     "imageAltTemplate": "حملة إغاثة في غزة: {{title}}"
   },
   "relatedLinks": {

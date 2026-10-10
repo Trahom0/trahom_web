@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
 type SubscribeFormProps = {
   language: string;
@@ -15,6 +15,10 @@ export function SubscribeForm({ language, labels }: SubscribeFormProps) {
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [startedAt, setStartedAt] = useState(0);
+  useEffect(() => {
+    setStartedAt(Date.now());
+  }, []);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -26,7 +30,7 @@ export function SubscribeForm({ language, labels }: SubscribeFormProps) {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, website, language })
+        body: JSON.stringify({ email, website, language, elapsedMs: startedAt ? Date.now() - startedAt : undefined })
       });
       if (!response.ok) {
         throw new Error('subscribe failed');

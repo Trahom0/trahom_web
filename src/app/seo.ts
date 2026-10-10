@@ -127,6 +127,8 @@ const toAbsoluteUrl = (url: string, origin: string) => {
   return `${origin}${url.startsWith('/') ? url : `/${url}`}`;
 };
 
+const SHOW_FAQ_MARKUP = false;
+
 const escapeHtml = (value: string) =>
   value
     .replace(/&/g, '&amp;')
@@ -216,7 +218,7 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
       organizer: {
         '@id': organizationId
       },
-      inLanguage: seo.locale
+      inLanguage: seo.htmlLang || 'en'
     });
   }
 
@@ -229,7 +231,7 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
       target: {
         '@type': 'EntryPoint',
         urlTemplate: canonical,
-        inLanguage: seo.locale,
+        inLanguage: seo.htmlLang || 'en',
         actionPlatform: [
           'http://schema.org/DesktopWebPlatform',
           'http://schema.org/MobileWebPlatform'
@@ -240,7 +242,8 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
       }
     });
 
-    if (pageMeta.faq?.length) {
+    // FAQ markup is only allowed when the questions are visible on the page, which they are not yet.
+    if (pageMeta.faq?.length && SHOW_FAQ_MARKUP) {
       extraGraph.push({
         '@type': 'FAQPage',
         '@id': `${canonical}#faq`,
@@ -275,7 +278,7 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
         url: resolvedOrigin,
         name: seo.siteName,
         description: seo.defaultDescription,
-        inLanguage: seo.locale,
+        inLanguage: seo.htmlLang || 'en',
         publisher: {
           '@id': organizationId
         }
@@ -286,7 +289,7 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
         url: canonical,
         name: title,
         description,
-        inLanguage: seo.locale,
+        inLanguage: seo.htmlLang || 'en',
         isPartOf: {
           '@id': websiteId
         },
@@ -310,7 +313,8 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
     description,
     keywords,
     robots,
-    canonical,
+    // The "page not found" page has no real address of its own to point search engines to.
+    canonical: page === 'not-found' ? '' : canonical,
     ogImage,
     ogImageAlt: seo.ogImageAlt,
     locale: seo.locale,
@@ -319,8 +323,8 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
     themeColor: seo.themeColor,
     twitterHandle: seo.twitterHandle,
     htmlLang: seo.htmlLang || 'en',
-    hreflangs,
-    xDefault,
+    hreflangs: page === 'not-found' ? [] : hreflangs,
+    xDefault: page === 'not-found' ? '' : xDefault,
     jsonLd
   };
 };
@@ -365,7 +369,7 @@ export const buildSeoTags = ({ page, seo, path, origin }: ApplySeoArgs & { origi
     metaTag('name', 'twitter:image', payload.ogImage),
     metaTag('name', 'twitter:image:alt', payload.ogImageAlt),
     payload.twitterHandle ? metaTag('name', 'twitter:site', payload.twitterHandle) : '',
-    `<script type="application/ld+json">${JSON.stringify(payload.jsonLd)}</script>`
+    `<script type="application/ld+json" id="seo-jsonld">${JSON.stringify(payload.jsonLd)}</script>`
   ]
     .filter(Boolean)
     .join('\n');
@@ -404,7 +408,13 @@ export const applySeo = ({ page, seo, path }: ApplySeoArgs) => {
     return;
   }
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  // On the live site always point search engines at https://trahom.org (never www or other hosts).
+  const origin =
+    typeof window === 'undefined'
+      ? ''
+      : /(^|\.)trahom\.org$/.test(window.location.hostname)
+        ? 'https://trahom.org'
+        : window.location.origin;
   const payload = buildSeoPayload({ page, seo, path, origin });
 
   document.title = payload.title;
@@ -419,6 +429,11 @@ export const applySeo = ({ page, seo, path }: ApplySeoArgs) => {
   setMetaTag('name', 'theme-color', payload.themeColor);
   setMetaTag('name', 'application-name', payload.siteName);
 
+  if (!payload.canonical) {
+    document
+      .querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang], meta[property="og:url"]')
+      .forEach((element) => element.remove());
+  }
   setLinkTag('canonical', payload.canonical);
   payload.hreflangs.forEach(({ hreflang, href }) => {
     setAlternateLink(hreflang, href);

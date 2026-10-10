@@ -2,7 +2,7 @@ export const contact = {
   hero: {
     badge: 'Bizimle İletişime Geçin',
     title: 'Dinlemek için buradayız',
-    description: 'İş Birliği Fırsatı'
+    description: 'Çalışmalarımız hakkında sorularınız mı var, iş birliği mi yapmak istiyorsunuz ya da desteğe mi ihtiyacınız var? Ekibimiz yardımcı olmaya hazır. Bugün bize yazın, birlikte fark yaratalım.'
   },
   form: {
     title: 'Bize mesaj gönderin',
@@ -73,7 +73,7 @@ export const contact = {
     title: 'Trahom hakkında',
     paragraphs: [
       'Trahom, Gazze\'den çıkan gerçek ihtiyaçları karşılamayı amaçlayan insani bir girişimdir.',
-      'SDoğrudan etkilenen ailelerle çalışıyoruz; yetimlere, gıda güvenliğine, temiz suya ve yaşam için gerekli diğer ihtiyaçlara odaklanıyoruz. Durumları mümkün olduğunca kontrol ediyor ve takip ediyoruz, çünkü yardım bir emanettir.',
+      'Doğrudan etkilenen ailelerle çalışıyoruz; yetimlere, gıda güvenliğine, temiz suya ve yaşam için gerekli diğer ihtiyaçlara odaklanıyoruz. Durumları mümkün olduğunca kontrol ediyor ve takip ediyoruz, çünkü yardım bir emanettir.',
       'Mesajımız basit: Yardım onurla ulaşıp, etkisi takip ile sürsün, sözlerle değil.'
     ],
     whyTitle: 'Neden Trahom?',

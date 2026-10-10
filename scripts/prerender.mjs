@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, '..', 'dist');
 const sitemapPath = path.join(distDir, 'sitemap.xml');
-const serverDir = path.join(distDir, 'server');
+const serverDir = path.resolve(__dirname, '..', 'dist-ssr');
 
 const templateCandidates = [
   path.join(distDir, 'index.html'),
@@ -39,7 +39,7 @@ const serverEntryName = ['entry-server.js', 'entry-server.mjs', 'entry-server.cj
 );
 
 if (!serverEntryName) {
-  throw new Error('SSR entry not found in dist/server.');
+  throw new Error('SSR entry not found in dist-ssr.');
 }
 
 const { render } = await import(pathToFileURL(path.join(serverDir, serverEntryName)).href);
@@ -48,8 +48,8 @@ const origin = (process.env.SITE_URL ?? 'https://trahom.org').replace(/\/$/, '')
 const renderRoute = (route) => {
   const { html, head, htmlLang, htmlDir } = render(route, origin);
   let pageHtml = template;
-  pageHtml = pageHtml.replace('<!--seo-head-->', head);
-  pageHtml = pageHtml.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+  pageHtml = pageHtml.replace('<!--seo-head-->', () => head);
+  pageHtml = pageHtml.replace('<div id="root"></div>', () => `<div id="root">${html}</div>`);
   pageHtml = pageHtml.replace(/<html[^>]*>/, `<html lang="${htmlLang}" dir="${htmlDir ?? 'ltr'}">`);
   return pageHtml;
 };
@@ -59,7 +59,7 @@ const renderRoute = (route) => {
 const renderNotFoundShell = () => {
   const { head } = render('/404', origin);
   return template
-    .replace('<!--seo-head-->', head)
+    .replace('<!--seo-head-->', () => head)
     .replace(/<html[^>]*>/, '<html lang="en" dir="ltr">');
 };
 fs.writeFileSync(path.join(distDir, '404.html'), renderNotFoundShell(), 'utf-8');

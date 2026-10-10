@@ -197,7 +197,7 @@ export function ImpactPage({ onNavigate, language, onLanguageChange }: ImpactPag
           <div className={`grid gap-6 ${successStories.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
             {successStories.map((story, index) => (
               <motion.div
-                key={story.name}
+                key={`${story.name}-${index}`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

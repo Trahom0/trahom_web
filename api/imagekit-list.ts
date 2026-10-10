@@ -19,7 +19,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (!CDN_API_URL || !CDN_API_KEY) {
-    res.status(500).json({ error: 'CDN configuration is missing in environment variables' });
+    res.status(503).json({ error: 'Gallery is not available' });
     return;
   }
 
@@ -31,7 +31,7 @@ export default async function handler(req: any, res: any) {
       folder: CDN_TARGET_FOLDER
     });
 
-    const response = await fetch(`${CDN_API_URL}?${params.toString()}`);
+    const response = await fetch(`${CDN_API_URL}?${params.toString()}`, { signal: AbortSignal.timeout(8_000) });
     
     if (!response.ok) {
       throw new Error(`HTTP error from CDN! status: ${response.status}`);
@@ -40,14 +40,17 @@ export default async function handler(req: any, res: any) {
     const data = await response.json();
 
     if (data.status !== 'success') {
-      res.status(500).json({ error: data.message ?? 'Failed to list files from CDN' });
+      console.error('CDN list failed', data.message);
+      res.status(502).json({ error: 'Gallery is not available' });
       return;
     }
 
     const cdnFiles = Array.isArray(data.data) ? (data.data as HostingerFile[]) : [];
 
-    const formattedFiles = cdnFiles.map((file) => {
-      const isoDate = new Date(file.time * 1000).toISOString();
+    const formattedFiles = cdnFiles
+      .filter((file) => file && typeof file.rel_path === 'string' && typeof file.url === 'string' && Number.isFinite(Number(file.time)))
+      .map((file) => {
+      const isoDate = new Date(Number(file.time) * 1000).toISOString();
       
       return {
         fileId: Buffer.from(file.rel_path).toString('base64'),
@@ -61,10 +64,11 @@ export default async function handler(req: any, res: any) {
       };
     });
 
+    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
     res.status(200).json({ files: formattedFiles });
     
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Failed to connect to Custom CDN';
-    res.status(500).json({ error: message });
+    console.error('Gallery list failed', error);
+    res.status(502).json({ error: 'Gallery is not available' });
   }
 }

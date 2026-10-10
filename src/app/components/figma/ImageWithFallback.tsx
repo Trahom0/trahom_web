@@ -11,7 +11,7 @@ export function ImageWithFallback(props: React.ImgHTMLAttributes<HTMLImageElemen
     setDidError(true)
   }
 
-  const { src, alt, style, className, loading = 'lazy', decoding = 'async', ...rest } = props
+  const { src, alt, style, className, loading = 'lazy', decoding = 'async', srcSet: _srcSet, sizes: _sizes, ...rest } = props
 
   return didError ? (
     <div

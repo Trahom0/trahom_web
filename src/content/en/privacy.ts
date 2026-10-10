@@ -4,7 +4,7 @@ export const privacy = {
     title: 'Your privacy matters.',
     description: 'We are committed to transparency about how we collect, use, and protect your information while supporting our humanitarian work.',
     meta: {
-      updated: 'Last updated: Jan 6, 2026',
+      updated: 'Last updated: Oct 11, 2026',
       contact: 'Contact: info@trahom.org'
     }
   },
@@ -62,6 +62,16 @@ export const privacy = {
         'We use cookies to remember preferences and keep the site secure.',
         'Analytics help us understand what content is most useful to supporters.',
         'You can manage cookies through your browser settings.'
+      ]
+    },
+    {
+      title: 'Third-party services we use',
+      items: [
+        'Google Analytics (through Google Tag Manager) measures visits and page views so we can improve the site. Google may set its own cookies; see Google’s privacy policy.',
+        'Stripe processes donations. Card details go directly to Stripe and are never stored on our servers.',
+        'Tally hosts our orphan registration form. Information submitted there is stored by Tally and reviewed only by our team to verify cases.',
+        'If you message us on WhatsApp, your number and messages are also handled under WhatsApp’s (Meta) privacy policy.',
+        'Resend delivers the messages sent through our contact form and newsletter sign-up to our inbox.'
       ]
     },
     {

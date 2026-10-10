@@ -8,7 +8,7 @@ export const footer = {
         mission: 'Misyonumuz',
         impact: 'Etki Raporu',
         careers: 'Kariyer',
-        familySignup: 'Aile Kaydı'
+        familySignup: 'Yetim Kaydı'
       }
     },
     getInvolved: {

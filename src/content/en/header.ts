@@ -17,7 +17,7 @@ export const header = {
     { key: 'contact', label: 'Contact' }
   ],
   topLinks: [
-    { key: 'family-signup', label: 'Family Sign Up' },
+    { key: 'family-signup', label: 'Orphan Registration' },
     { key: 'sponsor-orphan', label: 'Sponsor an Orphan' }
   ],
   donateButton: 'Donate Now',

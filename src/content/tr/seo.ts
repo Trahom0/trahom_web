@@ -193,14 +193,14 @@ export const seo = {
       schemaType: 'WebPage'
     },
     'family-signup': {
-      title: 'Aile Yardım Kaydı | Trahom Gazze Yardımı',
+      title: 'Yetim Sponsorluğu Kaydı | Trahom Gazze Yardımı',
       description:
-        'Gazze’deki aileler, Trahom’un doğrulanmış ve toplum temelli süreci aracılığıyla insani yardım ve takip desteği için kayıt olabilir.',
+        'Gazze’deki veliler, yetim çocukları Trahom’un yetim sponsorluğu programına kaydedebilir. Her başvuru, sponsorluk başlamadan önce incelenir ve doğrulanır.',
       keywords: joinKeywords([
         ...baseKeywords,
-        'Gazze aile kaydı',
-        'Gazze yardım talebi',
-        'insani yardım başvurusu',
+        'Gazze yetim kaydı',
+        'yetim sponsorluğu başvurusu',
+        'Gazze’de yetim kaydı',
         'vaka doğrulama Gazze'
       ]),
       schemaType: 'WebPage'

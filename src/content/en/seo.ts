@@ -194,14 +194,14 @@ export const seo = {
       schemaType: 'WebPage'
     },
     'family-signup': {
-      title: 'Family Assistance Registration | Trahom Gaza Aid',
+      title: 'Orphan Sponsorship Registration | Trahom Gaza Aid',
       description:
-        'Families in Gaza can register to request humanitarian assistance and follow-up support through Trahom’s verified, community-led process.',
+        'Guardians in Gaza can register orphaned children for Trahom’s orphan sponsorship program. Every case is reviewed and verified before sponsorship begins.',
       keywords: joinKeywords([
         ...baseKeywords,
-        'Gaza family registration',
-        'aid request Gaza',
-        'humanitarian assistance application',
+        'Gaza orphan registration',
+        'orphan sponsorship application',
+        'register orphan Gaza',
         'case verification Gaza'
       ]),
       schemaType: 'WebPage'

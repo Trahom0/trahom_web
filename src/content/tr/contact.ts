@@ -58,11 +58,10 @@ export const contact = {
     }
   },
   officeHours: {
-    title: 'Çalışma saatleri',
+    title: 'Çalışma saatleri (Gazze saati)',
     schedule: [
-      { day: 'Pazartesi – Cuma', hours: '09:00 – 18:00' },
-      { day: 'Cumartesi', hours: '10:00 – 16:00' },
-      { day: 'Pazar', hours: 'Kapalı' }
+      { day: 'Pazar – Perşembe', hours: '09:00 – 16:00' },
+      { day: 'Cuma – Cumartesi', hours: 'Kapalı' }
     ]
   },
   social: {

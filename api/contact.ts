@@ -3,6 +3,43 @@ const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL;
 const RESEND_TO_EMAIL = process.env.RESEND_TO_EMAIL;
 
 const MAX_MESSAGE_LENGTH = 5000;
+// A person needs at least a few seconds to fill the form; bots submit instantly.
+const MIN_FILL_TIME_MS = 3000;
+// Best-effort limit per visitor IP (kept in memory, so it resets when Vercel restarts the function).
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const recentSubmissions = new Map<string, number[]>();
+
+const ALLOWED_HOSTS = ['trahom.org', 'www.trahom.org'];
+
+const isRateLimited = (ip: string) => {
+  const now = Date.now();
+  const recent = (recentSubmissions.get(ip) ?? []).filter((time) => now - time < RATE_WINDOW_MS);
+  if (recent.length >= RATE_LIMIT) {
+    recentSubmissions.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  recentSubmissions.set(ip, recent);
+  if (recentSubmissions.size > 5000) {
+    recentSubmissions.clear();
+  }
+  return false;
+};
+
+const getClientIp = (req: any) =>
+  String(req.headers?.['x-forwarded-for'] ?? '').split(',')[0].trim() || 'unknown';
+
+// Only accept submissions sent from our own site (or its Vercel previews).
+const isFromOurSite = (req: any) => {
+  const source = String(req.headers?.origin ?? req.headers?.referer ?? '');
+  try {
+    const host = new URL(source).hostname.toLowerCase();
+    return ALLOWED_HOSTS.includes(host) || /^trahom-[a-z0-9-]*\.vercel\.app$/.test(host) || host === 'localhost';
+  } catch {
+    return false;
+  }
+};
 
 const readRequestBody = async (req: any) => {
   if (req.body && typeof req.body === 'object') {
@@ -29,9 +66,12 @@ const readRequestBody = async (req: any) => {
   });
 };
 
-const sanitize = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
+// Trims, removes control characters (which could break email headers) and caps the length.
+const sanitize = (value: unknown, max = 200) =>
+  typeof value === 'string' ? value.replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g, '').trim().slice(0, max) : '';
+const oneLine = (value: string) => value.replace(/[\r\n]+/g, ' ');
 
-const isValidEmail = (value: string) => /.+@.+\..+/.test(value);
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 const escapeHtml = (value: string) =>
   value
@@ -70,20 +110,32 @@ export default async function handler(req: any, res: any) {
     return;
   }
 
+  if (!isFromOurSite(req)) {
+    res.status(403).json({ error: 'Forbidden' });
+    return;
+  }
+
   try {
     const body = await readRequestBody(req);
-    const firstName = sanitize(body.firstName);
-    const lastName = sanitize(body.lastName);
-    const email = sanitize(body.email);
-    const phone = sanitize(body.phone);
-    const subject = sanitize(body.subject);
-    const subjectLabel = sanitize(body.subjectLabel);
-    const message = sanitize(body.message);
-    const language = sanitize(body.language);
+    const firstName = oneLine(sanitize(body.firstName, 100));
+    const lastName = oneLine(sanitize(body.lastName, 100));
+    const email = oneLine(sanitize(body.email, 200));
+    const phone = oneLine(sanitize(body.phone, 40));
+    const subject = oneLine(sanitize(body.subject, 100));
+    const subjectLabel = oneLine(sanitize(body.subjectLabel, 150));
+    const message = typeof body.message === 'string' ? body.message.trim() : '';
+    const language = oneLine(sanitize(body.language, 5));
     const website = sanitize(body.website);
+    const startedAt = Number(body.startedAt);
 
-    if (website) {
+    // Honeypot field or a form filled faster than a person can: pretend it worked and drop it.
+    if (website || (Number.isFinite(startedAt) && startedAt > 0 && Date.now() - startedAt < MIN_FILL_TIME_MS)) {
       res.status(200).json({ ok: true });
+      return;
+    }
+
+    if (isRateLimited(getClientIp(req))) {
+      res.status(429).json({ error: 'Too many messages. Please try again later.' });
       return;
     }
 
@@ -104,7 +156,7 @@ export default async function handler(req: any, res: any) {
 
     const fullName = `${firstName} ${lastName}`.trim();
     const displaySubject = subjectLabel || subject;
-    const origin = getOrigin(req);
+    const origin = oneLine(sanitize(getOrigin(req), 200));
 
     const textContent = [
       'New contact form submission',
@@ -159,13 +211,14 @@ export default async function handler(req: any, res: any) {
 
     const responsePayload = await resendResponse.json().catch(() => ({}));
     if (!resendResponse.ok) {
-      res.status(500).json({ error: responsePayload?.message ?? 'Unable to send message' });
+      console.error('Resend error', resendResponse.status, responsePayload?.message);
+      res.status(502).json({ error: 'Unable to send message' });
       return;
     }
 
     res.status(200).json({ ok: true });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unable to send message';
-    res.status(500).json({ error: message });
+    console.error('Contact form failed', error);
+    res.status(500).json({ error: 'Unable to send message' });
   }
 }

@@ -41,17 +41,17 @@ export const mission = {
       {
         title: 'Orphan Care & Sponsorship',
         description: 'Supporting orphaned children with safe shelter, daily care, and ongoing sponsorship.',
-        stats: '3,375+ active beneficiaries · 30 months'
+        stats: '3,375+ orphans sponsored · ongoing follow-up'
       },
       {
         title: 'Emergency Food Assistance',
         description: 'Delivering emergency food parcels and hot meals to families in crisis, plus baby milk for 1,350+ infants.',
-        stats: '9,450+ parcels · 135k+ meals'
+        stats: '22,000+ parcels · 160k+ meals'
       },
       {
         title: 'Water & Sanitation',
         description: 'Restoring clean water access and sanitation services where systems have failed.',
-        stats: '202,500+ beneficiaries · 2,700+ served'
+        stats: '190k+ beneficiaries · 450+ distributions · 7 wells'
       },
       {
         title: 'Health & Medical Support',
@@ -101,19 +101,19 @@ export const mission = {
     description: 'Our commitment to transparency means sharing our progress with you.',
     items: [
       {
-        number: '800k+',
+        number: '300k+',
         label: 'Total reach'
       },
       {
         number: '4,050+',
-        label: 'Emergency shelter'
+        label: 'Families supported in winter'
       },
       {
-        number: '20,250+',
+        number: '20,000+',
         label: 'Cash distribution'
       },
       {
-        number: '130+',
+        number: '150+',
         label: 'Campaigns performed'
       }
     ]

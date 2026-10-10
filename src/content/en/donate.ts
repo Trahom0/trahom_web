@@ -91,12 +91,12 @@ export const donate = {
   },
   impact: {
     examples: [
-      { amount: 25, impact: 'Help deliver 135k+ ready meals served to families.' },
-      { amount: 50, impact: 'Support 9,450+ emergency food parcels distributed.' },
+      { amount: 25, impact: 'Help deliver 160k+ ready meals served to families.' },
+      { amount: 50, impact: 'Support 22,000+ emergency food parcels distributed.' },
       { amount: 100, impact: 'Keep 3,375+ orphan sponsorships active.' },
-      { amount: 250, impact: 'Expand clean water access for 202,500+ people.' },
-      { amount: 500, impact: 'Strengthen emergency shelter for 4,050+ families.' },
-      { amount: 1000, impact: 'Back 68 urgent surgeries and 20,250+ cash distributions.' }
+      { amount: 250, impact: 'Expand clean water access for 190k+ people.' },
+      { amount: 500, impact: 'Help keep 4,050+ families warm through winter.' },
+      { amount: 1000, impact: 'Back 68 urgent surgeries and 20,000+ cash distributions.' }
     ],
     fallback: 'Every contribution makes a difference'
   },
@@ -125,9 +125,9 @@ export const donate = {
   stats: {
     title: 'Your Donations at Work',
     items: [
-      { number: '800k+', label: 'Total Reach' },
+      { number: '300k+', label: 'Total Reach' },
       { number: '3,375+', label: 'Orphan Sponsorships' },
-      { number: '135k+', label: 'Ready Meals Served' }
+      { number: '160k+', label: 'Ready Meals Served' }
     ]
   }
 } as const;

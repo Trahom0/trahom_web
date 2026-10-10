@@ -6,22 +6,22 @@ export const home = {
     "donorCount": "آلاف اختاروا الاستمرار في العطاء",
     "stats": {
       "totalReach": {
-        "number": "800k+",
+        "number": "300k+",
         "label": "إجمالي المستفيدين",
         "color": "bg-[#4A90E2]"
       },
       "readyMeals": {
-        "number": "135k+",
+        "number": "160k+",
         "label": "الوجبات المقدّمة",
         "color": "bg-[#A8D5E2]"
       },
       "communityCard": {
         "title": "استجابة يقودها المجتمع",
-        "description": "دعم متواصل لأكثر من 3,375 مستفيدًا، قائم على المتابعة والمسؤولية لا على التدخّل المؤقت.",
+        "description": "رعاية متواصلة لأكثر من 3,375 يتيمًا مكفولًا، قائم على المتابعة والمسؤولية لا على التدخّل المؤقت.",
         "color": "bg-[#F5A623]"
       },
       "fundsRaised": {
-        "number": "130+",
+        "number": "150+",
         "label": "الحملات المنفذة",
         "color": "bg-[#FFF8E1]"
       }
@@ -47,7 +47,7 @@ export const home = {
         "description": "توفير مياه آمنة عبر 450+ حملة توزيع و7 آبار مُصلحة/مُنشأة في المناطق التي تفتقر إلى الوصول.",
         "goal": "$180,000",
         "percentage": 17,
-        "primaryBadge": "100k+ مستفيد",
+        "primaryBadge": "190k+ مستفيد",
         "color": "bg-[#A8D5E2]"
       },
       {

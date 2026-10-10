@@ -6,15 +6,15 @@ export const campaigns = {
   stats: {
     activeLabel: 'Active campaigns',
     totalRaised: {
-      number: '130+',
+      number: '150+',
       label: 'Campaigns performed'
     },
     activeDonors: {
-      number: '10,000+',
-      label: 'Active donors'
+      number: '3,375+',
+      label: 'Orphans sponsored'
     },
     peopleHelped: {
-      number: '800k+',
+      number: '300k+',
       label: 'People helped'
     }
   },
@@ -40,7 +40,7 @@ export const campaigns = {
       description: 'Deliver safe water through 450+ distribution campaigns and 7 wells fixed/constructed in areas without reliable access.',
       goal: '$180,000',
       percentage: 17,
-      primaryBadge: '100k+ people served',
+      primaryBadge: '190k+ people served',
       color: 'bg-[#A8D5E2]',
       category: 'Water & Sanitation'
     },
@@ -50,7 +50,7 @@ export const campaigns = {
       description: 'Deliver warm clothing, blankets, and heating supplies to families in need.',
       goal: '$120,000',
       percentage: 56,
-      primaryBadge: '4,050+ sheltered',
+      primaryBadge: '4,050+ families supported',
       color: 'bg-[#F5A623]',
       category: 'Emergency'
     },
@@ -60,7 +60,7 @@ export const campaigns = {
       description: 'Providing meals and food support to families facing loss and displacement.',
       goal: '$175,000',
       percentage: 75,
-      primaryBadge: '135k+ meals served',
+      primaryBadge: '160k+ meals served',
       color: 'bg-[#A8D5E2]',
       category: 'Food Security'
     }

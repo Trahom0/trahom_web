@@ -6,22 +6,22 @@ export const home = {
     donorCount: 'Binlerce kişi düzenli destek veriyor',
     stats: {
       totalReach: {
-        number: '800k+',
+        number: '300k+',
         label: 'Toplam ulaşılan kişi',
         color: 'bg-[#4A90E2]'
       },
       readyMeals: {
-        number: '135k+',
+        number: '160k+',
         label: 'Dağıtılan hazır öğün',
         color: 'bg-[#A8D5E2]'
       },
       communityCard: {
         title: 'Sahadan, toplumla birlikte',
-        description: '3.375+ kişi düzenli takip ve destek alıyor; geçici müdahale değil, süreklilik esas.',
+        description: '3.375+ sponsorlu yetim düzenli takip ve destek alıyor; geçici müdahale değil, süreklilik esas.',
         color: 'bg-[#F5A623]'
       },
       fundsRaised: {
-        number: '130+',
+        number: '150+',
         label: 'Gerçekleştirilen kampanyalar',
         color: 'bg-[#FFF8E1]'
       }
@@ -47,7 +47,7 @@ export const home = {
         description: '450+ su dağıtım kampanyası ve 7 su kuyusu onarımı / inşasıyla güvenli suya erişimi destekliyoruz.',
         goal: '$180,000',
         percentage: 17,
-        primaryBadge: '100k+ yararlanıcı',
+        primaryBadge: '190k+ yararlanıcı',
         color: 'bg-[#A8D5E2]'
       },
       {

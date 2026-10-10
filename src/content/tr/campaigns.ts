@@ -6,15 +6,15 @@ export const campaigns = {
   stats: {
     activeLabel: 'Devam Eden Kampanyalar',
     totalRaised: {
-      number: '130+',
+      number: '150+',
       label: 'Gerçekleştirilen kampanyalar'
     },
     activeDonors: {
-      number: '10,000+',
-      label: 'Aktif Bağışçılar'
+      number: '3.375+',
+      label: 'Sponsorlu yetim'
     },
     peopleHelped: {
-      number: '800k+',
+      number: '300k+',
       label: 'Yararlanan Sayısı'
     }
   },
@@ -40,7 +40,7 @@ export const campaigns = {
       description: '450+ su dağıtım kampanyası ve 7 su kuyusu onarımı / inşasıyla güvenli suya erişimi destekliyoruz.',
       goal: '$180,000',
       percentage: 17,
-      primaryBadge: '100k+ yararlanıcı',
+      primaryBadge: '190k+ yararlanıcı',
       color: 'bg-[#A8D5E2]',
       category: 'Su ve sanitasyon'
     },
@@ -60,7 +60,7 @@ export const campaigns = {
       description: 'Kayıp ve yerinden edilme koşullarında yaşayan ailelere, çocuklar ve yaşlılara öncelik verilerek düzenli öğünler ve gıda kolileri ulaştırılması.',
       goal: '$175,000',
       percentage: 75,
-      primaryBadge: '135.000’den fazla yemek servisi yapıldı',
+      primaryBadge: '160.000’den fazla yemek servisi yapıldı',
       color: 'bg-[#A8D5E2]',
       category: 'Gıda güvenliği'
     }

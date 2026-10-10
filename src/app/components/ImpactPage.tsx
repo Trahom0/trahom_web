@@ -251,7 +251,8 @@ export function ImpactPage({ onNavigate, language, onLanguageChange }: ImpactPag
           </div>
         </div>
 
-        {/* Yearly Progress */}
+        {/* Yearly Progress (shown only when yearly figures are provided) */}
+        {yearlyProgress.length > 0 && (
         <div className="mb-16 sm:mb-24">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -306,6 +307,7 @@ export function ImpactPage({ onNavigate, language, onLanguageChange }: ImpactPag
             </div>
           </motion.div>
         </div>
+        )}
 
         {/* Financial Transparency */}
         <div className="mb-16 sm:mb-24">

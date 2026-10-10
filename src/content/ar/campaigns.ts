@@ -6,15 +6,15 @@ export const campaigns = {
   "stats": {
     "activeLabel": "حملات جارية",
     "totalRaised": {
-      "number": "130+",
+      "number": "150+",
       "label": "الحملات المنفذة"
     },
     "activeDonors": {
-      "number": "10,000+",
-      "label": "المتبرعون النشطون"
+      "number": "3,375+",
+      "label": "يتيم مكفول"
     },
     "peopleHelped": {
-      "number": "800k+",
+      "number": "300k+",
       "label": "عدد المستفيدين"
     }
   },
@@ -40,7 +40,7 @@ export const campaigns = {
       "description": "توفير مياه آمنة عبر 450+ حملة توزيع و7 آبار مُصلحة/مُنشأة في المناطق التي تفتقر إلى الوصول.",
       "goal": "$180,000",
       "percentage": 17,
-      "primaryBadge": "100k+ مستفيد",
+      "primaryBadge": "190k+ مستفيد",
       "color": "bg-[#A8D5E2]",
       "category": "المياه والصرف الصحي"
     },
@@ -60,7 +60,7 @@ export const campaigns = {
       "description": "إيصال وجبات منتظمة وطرود غذائية للأسر التي تعيش الفقدان والنزوح، مع إعطاء الأولوية للأطفال وكبار السن.",
       "goal": "$175,000",
       "percentage": 75,
-      "primaryBadge": "أكثر من 135 ألف وجبة قُدّمت",
+      "primaryBadge": "أكثر من 160 ألف وجبة قُدّمت",
       "color": "bg-[#A8D5E2]",
       "category": "الأمن الغذائي"
     }

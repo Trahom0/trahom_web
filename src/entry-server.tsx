@@ -1,13 +1,14 @@
 import { renderToString } from 'react-dom/server';
 import App from './app/App';
 import { content, setContentLanguage } from './content';
-import { buildSeoTags } from './app/seo';
+import { buildSeoTags, getTextDirection } from './app/seo';
 import { getPathForPage, getRouteFromPath } from './app/routes';
 
 export type RenderResult = {
   html: string;
   head: string;
   htmlLang: string;
+  htmlDir: 'rtl' | 'ltr';
 };
 
 export const render = (url: string, origin = ''): RenderResult => {
@@ -19,6 +20,7 @@ export const render = (url: string, origin = ''): RenderResult => {
   return {
     html,
     head: seo.tags,
-    htmlLang: seo.htmlLang
+    htmlLang: seo.htmlLang,
+    htmlDir: getTextDirection(seo.htmlLang)
   };
 };

@@ -313,13 +313,13 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
                       setCustomAmount(e.target.value);
                       setSelectedAmount('custom');
                     }}
-                    className={`w-full pl-10 pr-4 py-3 bg-[#f9fbff] border-2 rounded-xl focus:outline-none transition-all ${
+                    className={`w-full ps-10 pe-4 py-3 bg-[#f9fbff] border-2 rounded-xl focus:outline-none transition-all ${
                       selectedAmount === 'custom'
                         ? 'border-[#e1a226] ring-2 ring-[#e1a226]/20'
                         : 'border-black/10 focus:border-[#e1a226]'
                     }`}
                   />
-                  <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40 pointer-events-none" />
+                  <DollarSign className="absolute start-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40 pointer-events-none" />
                 </div>
               </div>
 
@@ -334,7 +334,7 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
                         key={cause.id}
                         type="button"
                         onClick={() => setSelectedCause(cause.id)}
-                        className={`w-full p-4 rounded-xl border-2 transition-all text-left ${
+                        className={`w-full p-4 rounded-xl border-2 transition-all text-start ${
                           selectedCause === cause.id
                             ? 'border-[#e1a226] bg-[#e1a226]/5'
                             : 'border-black/10 hover:border-black/20'

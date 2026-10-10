@@ -293,8 +293,8 @@ export function MissionPage({ onNavigate, language, onLanguageChange }: MissionP
                     index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                   } flex-col md:flex-row`}
                 >
-                  <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-left`}>
-                    <div className={`bg-white rounded-2xl p-8 border border-black/5 inline-block ${index % 2 === 0 ? 'md:ml-auto' : 'md:mr-auto'} w-full md:max-w-md`}>
+                  <div className={`flex-1 ${index % 2 === 0 ? 'md:text-end' : 'md:text-start'} text-start`}>
+                    <div className={`bg-white rounded-2xl p-8 border border-black/5 inline-block ${index % 2 === 0 ? 'md:ms-auto' : 'md:me-auto'} w-full md:max-w-md`}>
                       <div className={`inline-flex items-center gap-2 ${item.color} text-white px-4 py-2 rounded-full mb-4`}>
                         <span className="text-sm font-medium">{item.year}</span>
                       </div>

@@ -29,7 +29,7 @@ export const home = {
   },
   "campaigns": {
     "title": "الحملات الجارية",
-    "viewAllLabel": "عرض جميع الحملات →",
+    "viewAllLabel": "عرض جميع الحملات ←",
     "cards": [
       {
         "id": "orphan-sponsorship",
@@ -73,7 +73,7 @@ export const home = {
   },
   "gallery": {
     "title": "أثرنا على أرض الواقع",
-    "viewAllLabel": "عرض المعرض كاملًا →",
+    "viewAllLabel": "عرض المعرض كاملًا ←",
     "gridLabels": [
       "الإغاثة الإنسانية",
       "تنمية المجتمع",
@@ -88,7 +88,7 @@ export const home = {
   },
   "about": {
     "title": "عن تراحم",
-    "viewMissionLabel": "اقرأ رسالتنا →",
+    "viewMissionLabel": "اقرأ رسالتنا ←",
     "sinceBadge": "Since 2024",
     "cardTitle": "عن تراحم",
     "paragraphs": [

@@ -30,7 +30,7 @@ export function StoryCard({ image, title, description, name, role }: StoryCardPr
               <p className="opacity-60 text-sm">{name}</p>
               <p className="opacity-40 text-xs">{role}</p>
             </div>
-            <ArrowRight className="w-5 h-5 opacity-40" />
+            <ArrowRight className="w-5 h-5 opacity-40 rtl:-scale-x-100" />
           </div>
         )}
       </div>

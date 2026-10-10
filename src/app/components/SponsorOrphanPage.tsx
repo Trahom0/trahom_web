@@ -276,7 +276,7 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
                         className="inline-flex items-center justify-between gap-2 rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-foreground hover:border-[#e1a226] hover:bg-[#e1a226] hover:text-white transition-colors"
                       >
                         {sponsorContent.profile.requestLabel}
-                        <ArrowRight className="w-4 h-4" />
+                        <ArrowRight className="w-4 h-4 rtl:-scale-x-100" />
                       </a>
                     </div>
                   </motion.article>

@@ -325,6 +325,9 @@ const buildSeoPayload = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: 
   };
 };
 
+
+export const getTextDirection = (htmlLang?: string) => (htmlLang?.toLowerCase().startsWith('ar') ? 'rtl' : 'ltr');
+
 export const buildSeoTags = ({ page, seo, path, origin }: ApplySeoArgs & { origin?: string }) => {
   const payload = buildSeoPayload({ page, seo, path, origin });
   const metaTag = (attribute: 'name' | 'property', key: string, content: string) =>
@@ -406,6 +409,8 @@ export const applySeo = ({ page, seo, path }: ApplySeoArgs) => {
 
   document.title = payload.title;
   document.documentElement.lang = payload.htmlLang || 'en';
+  // Arabic pages read right-to-left; this flips the whole layout (menus, icons, alignment).
+  document.documentElement.dir = getTextDirection(payload.htmlLang);
 
   setMetaTag('name', 'description', payload.description);
   setMetaTag('name', 'keywords', payload.keywords);

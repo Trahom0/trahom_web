@@ -78,7 +78,7 @@ export function CampaignCard({
     const content = (
       <>
         <span className="font-medium">{label}</span>
-        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1 transition-transform" />
       </>
     );
 

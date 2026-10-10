@@ -46,11 +46,11 @@ const { render } = await import(pathToFileURL(path.join(serverDir, serverEntryNa
 const origin = (process.env.SITE_URL ?? 'https://trahom.org').replace(/\/$/, '');
 
 const renderRoute = (route) => {
-  const { html, head, htmlLang } = render(route, origin);
+  const { html, head, htmlLang, htmlDir } = render(route, origin);
   let pageHtml = template;
   pageHtml = pageHtml.replace('<!--seo-head-->', head);
   pageHtml = pageHtml.replace('<div id="root"></div>', `<div id="root">${html}</div>`);
-  pageHtml = pageHtml.replace(/<html[^>]*>/, `<html lang="${htmlLang}">`);
+  pageHtml = pageHtml.replace(/<html[^>]*>/, `<html lang="${htmlLang}" dir="${htmlDir ?? 'ltr'}">`);
   return pageHtml;
 };
 

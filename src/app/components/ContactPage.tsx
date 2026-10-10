@@ -1,5 +1,5 @@
 import { Mail, Send, Clock, CheckCircle2 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import type { PageKey } from '../routes';
 import { content } from '../../content';
@@ -27,6 +27,11 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
     website: ''
   });
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  // When the visitor opened the form; the server ignores forms submitted too fast to be human.
+  const [formStartedAt, setFormStartedAt] = useState(0);
+  useEffect(() => {
+    setFormStartedAt(Date.now());
+  }, []);
   const [formError, setFormError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -57,14 +62,15 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
         body: JSON.stringify({
           ...formData,
           subjectLabel,
-          language: language ?? 'EN'
+          language: language ?? 'EN',
+          startedAt: formStartedAt
         })
       });
 
-      const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(payload?.error ?? contactContent.form.errorMessage);
+        // Show the visitor a message in their own language rather than the server's English one.
+        throw new Error(contactContent.form.errorMessage);
       }
 
       setFormStatus('success');
@@ -144,7 +150,10 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
                 </p>
                 <button
                   type="button"
-                  onClick={() => setFormStatus('idle')}
+                  onClick={() => {
+                    setFormStatus('idle');
+                    setFormStartedAt(Date.now());
+                  }}
                   className="text-sm font-medium text-[#e1a226] hover:underline"
                 >
                   {contactContent.form.sendAnotherLabel}

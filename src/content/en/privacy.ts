@@ -5,7 +5,7 @@ export const privacy = {
     description: 'We are committed to transparency about how we collect, use, and protect your information while supporting our humanitarian work.',
     meta: {
       updated: 'Last updated: Jan 6, 2026',
-      contact: 'Contact: privacy@trahom.org'
+      contact: 'Contact: info@trahom.org'
     }
   },
   highlights: [

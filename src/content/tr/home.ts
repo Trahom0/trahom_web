@@ -136,6 +136,8 @@ export const home = {
     description: 'Sahadan gelişmeler, kampanyalar ve güvenilir destek yolları—gereksiz mesajlar olmadan.',
     inputPlaceholder: 'E-posta adresiniz',
     buttonLabel: 'Abone ol',
-    helperText: 'Gizliliğinize saygı duyarız. İstediğiniz zaman abonelikten çıkabilirsiniz.'
+    helperText: 'Gizliliğinize saygı duyarız. İstediğiniz zaman abonelikten çıkabilirsiniz.',
+    successMessage: 'Teşekkürler, abone oldunuz. Güncellemelerimiz e-postanıza ulaşacak.',
+    errorMessage: 'Şu anda abone olamadınız. Lütfen biraz sonra tekrar deneyin.'
   }
 } as const;

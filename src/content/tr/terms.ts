@@ -5,7 +5,7 @@ export const terms = {
     description: 'Bu şartlar, web sitemizi ve hizmetlerimizi nasıl kullanabileceğinizi açıklar.',
     meta: {
       updated: 'Son güncelleme: 6 Ocak 2026',
-      contact: 'Sorular: legal@trahom.org'
+      contact: 'Sorular: info@trahom.org'
     }
   },
   highlights: [

@@ -10,7 +10,8 @@ export const pagePaths = {
   'family-signup': '/family-signup',
   'sponsor-orphan': '/sponsor-orphan',
   privacy: '/privacy-policy',
-  terms: '/terms-of-service'
+  terms: '/terms-of-service',
+  'not-found': '/404'
 } as const;
 
 export type PageKey = keyof typeof pagePaths;
@@ -44,7 +45,8 @@ const pathPageMap: Record<string, PageKey> = {
   '/privacy': 'privacy',
   '/privacy-policy': 'privacy',
   '/terms': 'terms',
-  '/terms-of-service': 'terms'
+  '/terms-of-service': 'terms',
+  '/404': 'not-found'
 };
 
 const normalizePath = (path: string) => {
@@ -62,7 +64,8 @@ export const getRouteFromPath = (path: string): { page: PageKey; language: Langu
     : normalized;
   const routePath = remainingPath === '/' || remainingPath === '' ? '/' : remainingPath;
   return {
-    page: pathPageMap[routePath] ?? 'home',
+    // Unknown addresses show the "page not found" page instead of silently showing the homepage.
+    page: pathPageMap[routePath] ?? 'not-found',
     language
   };
 };

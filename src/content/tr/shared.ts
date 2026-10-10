@@ -14,5 +14,11 @@ export const shared = {
   promoBar: {
     message: 'Gazze’ye kış geliyor: bir aileye sıcaklık hediye edin',
     ctaLabel: 'Şimdi bağış yapın'
+  },
+  "notFound": {
+    "title": "Bu sayfa bulunamadı",
+    "description": "Bağlantı hatalı olabilir veya sayfa taşınmış olabilir. Ana sayfaya dönebilir ya da Gazze’deki ailelere şimdi destek olabilirsiniz.",
+    "homeLabel": "Ana sayfaya dön",
+    "donateLabel": "Şimdi bağış yap"
   }
 } as const;

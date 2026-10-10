@@ -6,7 +6,7 @@ export const privacy = {
       'İnsani çalışmalarımızı yürütürken bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu şeffaf biçimde açıklıyoruz.',
     meta: {
       updated: 'Son güncelleme: 6 Ocak 2026',
-      contact: 'İletişim: privacy@trahom.org'
+      contact: 'İletişim: info@trahom.org'
     }
   },
   highlights: [

@@ -61,6 +61,12 @@ export const seo = {
     ]
   },
   pages: {
+    'not-found': {
+      title: 'الصفحة غير موجودة | تراحم',
+      description: 'الصفحة التي تبحث عنها غير موجودة أو تم نقلها.',
+      keywords: '',
+      robots: 'noindex, follow'
+    },
     home: {
       title: 'تراحم | إغاثة إنسانية لغزة وفلسطين',
       description:

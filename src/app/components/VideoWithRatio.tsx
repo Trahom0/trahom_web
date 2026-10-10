@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LazyVideo } from './LazyVideo';
 
 interface VideoWithRatioProps extends Omit<React.VideoHTMLAttributes<HTMLVideoElement>, 'src'> {
   src: string;
@@ -14,6 +15,7 @@ export function VideoWithRatio({
   fallbackRatio = 16 / 9,
   className,
   onLoadedMetadata,
+  autoPlay,
   ...props
 }: VideoWithRatioProps) {
   const [ratio, setRatio] = useState(fallbackRatio);
@@ -27,6 +29,22 @@ export function VideoWithRatio({
 
     onLoadedMetadata?.(event);
   };
+
+  // Background (auto-playing) videos load only when they come into view.
+  if (autoPlay) {
+    const { preload: _preload, loop: _loop, muted: _muted, playsInline: _playsInline, ...rest } = props;
+    return (
+      <div className={wrapperClassName} style={{ aspectRatio: ratio }}>
+        <LazyVideo
+          className={className}
+          aria-label={label}
+          onLoadedMetadata={handleLoadedMetadata}
+          src={src}
+          {...rest}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={wrapperClassName} style={{ aspectRatio: ratio }}>

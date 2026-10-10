@@ -5,7 +5,7 @@ export const privacy = {
     "description": "نلتزم بالوضوح والشفافية في كيفية جمع معلوماتك واستخدامها وحمايتها، بما يضمن صون الأمانة أثناء أداء عملنا الإنساني.",
     "meta": {
       "updated": "آخر تحديث: Jan 6, 2026",
-      "contact": "للتواصل: privacy@trahom.org"
+      "contact": "للتواصل: info@trahom.org"
     }
   },
   "highlights": [

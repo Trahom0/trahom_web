@@ -59,6 +59,12 @@ export const seo = {
     ]
   },
   pages: {
+    'not-found': {
+      title: 'Sayfa bulunamadı | Trahom',
+      description: 'Aradığınız sayfa mevcut değil veya taşınmış.',
+      keywords: '',
+      robots: 'noindex, follow'
+    },
     home: {
       title: 'Trahom | Gazze İnsani Yardım, Zekât ve Sadaka',
       description:

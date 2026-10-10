@@ -1,9 +1,9 @@
 export const familySignup = {
   hero: {
-    badge: 'Aile kayıt portalı',
-    title: 'Aile kaydı',
+    badge: 'Yetim kayıt portalı',
+    title: 'Yetim kaydı',
     description:
-      'Gazze’deki aileler, Trahom’un doğrulanmış destek ve takip sürecine başvurmak için buradan kayıt olabilir.'
+      'Gazze’deki veliler, yetim çocukları Trahom’un yetim sponsorluğu programına dahil edilmek üzere buradan kaydedebilir. Her başvuru, sponsorluk başlamadan önce incelenir ve doğrulanır.'
   },
-  iframeTitle: 'Aile destek başvuru portalı'
+  iframeTitle: 'Yetim kayıt formu'
 } as const;

@@ -17,7 +17,7 @@ export const header = {
     { key: 'contact', label: 'İletişim' }
   ],
   topLinks: [
-    { key: 'family-signup', label: 'Aile Kaydı' },
+    { key: 'family-signup', label: 'Yetim Kaydı' },
     { key: 'sponsor-orphan', label: 'Yetim Sponsorluğu' }
   ],
   donateButton: 'Şimdi bağış yap',

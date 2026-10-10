@@ -1,8 +1,9 @@
 export const familySignup = {
   hero: {
-    badge: 'Family Registration Portal',
-    title: 'Family Sign Up',
-    description: 'Register your family to receive support and assistance from Trahom'
+    badge: 'Orphan Registration Portal',
+    title: 'Orphan Registration',
+    description:
+      'Guardians in Gaza can register orphaned children here to be considered for Trahom’s orphan sponsorship program. Every case is reviewed and verified before sponsorship begins.'
   },
-  iframeTitle: 'Registration form'
+  iframeTitle: 'Orphan registration form'
 } as const;

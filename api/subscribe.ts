@@ -13,7 +13,14 @@ const isFromOurSite = (req: any) => {
   const source = String(req.headers?.origin ?? req.headers?.referer ?? '');
   try {
     const host = new URL(source).hostname.toLowerCase();
-    return ALLOWED_HOSTS.includes(host) || /^trahom-[a-z0-9-]*\.vercel\.app$/.test(host) || host === 'localhost';
+    if (ALLOWED_HOSTS.includes(host)) {
+      return true;
+    }
+    // Preview links and local testing are accepted only outside the live site.
+    if (process.env.VERCEL_ENV === 'production') {
+      return false;
+    }
+    return /^trahom-web(-[a-z0-9-]+)?\.vercel\.app$/.test(host) || host === 'localhost';
   } catch {
     return false;
   }
@@ -34,25 +41,41 @@ const isRateLimited = (ip: string) => {
 };
 
 const readRequestBody = async (req: any) => {
-  if (req.body && typeof req.body === 'object') {
-    return req.body;
+  let parsed: unknown;
+  try {
+    parsed = req.body;
+  } catch {
+    return null;
+  }
+  if (parsed && typeof parsed === 'object') {
+    return parsed;
+  }
+  if (!req.readable) {
+    return {};
   }
   return new Promise<any>((resolve) => {
     let body = '';
+    let done = false;
+    const finish = (value: any) => {
+      if (!done) {
+        done = true;
+        resolve(value);
+      }
+    };
     req.on('data', (chunk: string) => {
       body += chunk;
       if (body.length > 10_000) {
-        req.destroy();
+        finish(null);
       }
     });
     req.on('end', () => {
       try {
-        resolve(body ? JSON.parse(body) : {});
+        finish(body ? JSON.parse(body) : {});
       } catch {
-        resolve({});
+        finish(null);
       }
     });
-    req.on('error', () => resolve({}));
+    req.on('error', () => finish(null));
   });
 };
 
@@ -74,11 +97,16 @@ export default async function handler(req: any, res: any) {
   }
 
   const body = await readRequestBody(req);
+  if (!body || typeof body !== 'object') {
+    res.status(400).json({ error: 'Invalid request' });
+    return;
+  }
   const email = clean(body.email, 200);
   const language = clean(body.language, 5);
 
-  // Honeypot: a hidden field only bots fill in.
-  if (clean(body.website, 200)) {
+  // Honeypot field, or a form sent faster than a person can type: pretend it worked and drop it.
+  const elapsedMs = Number(body.elapsedMs);
+  if (clean(body.website, 200) || (Number.isFinite(elapsedMs) && elapsedMs >= 0 && elapsedMs < 2000)) {
     res.status(200).json({ ok: true });
     return;
   }
@@ -94,6 +122,7 @@ export default async function handler(req: any, res: any) {
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
+      signal: AbortSignal.timeout(10_000),
       method: 'POST',
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({

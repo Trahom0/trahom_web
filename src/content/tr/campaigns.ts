@@ -14,7 +14,7 @@ export const campaigns = {
       label: 'Sponsorlu yetim'
     },
     peopleHelped: {
-      number: '300k+',
+      number: '300 bin+',
       label: 'Yararlanan Sayısı'
     }
   },
@@ -40,7 +40,7 @@ export const campaigns = {
       description: '450+ su dağıtım kampanyası ve 7 su kuyusu onarımı / inşasıyla güvenli suya erişimi destekliyoruz.',
       goal: '$180,000',
       percentage: 17,
-      primaryBadge: '190k+ yararlanıcı',
+      primaryBadge: '190 bin+ yararlanıcı',
       color: 'bg-[#A8D5E2]',
       category: 'Su ve sanitasyon'
     },

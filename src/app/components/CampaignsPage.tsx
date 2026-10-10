@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import orphanCampaignImage from '../../assets/homepage-card-orphan-campaign.jpg';
 import waterCampaignImage from '../../assets/homepage-card-water.png';
-import { actionPaths, localizePath, pagePaths, type LanguageCode, type PageKey } from '../routes';
+import { actionPaths, localizePath, pagePaths, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { cloudinaryVideos } from '../cloudinary';
 import { content } from '../../content';
 import { PageLayout } from './PageLayout';
@@ -38,6 +38,9 @@ export function CampaignsPage({ onNavigate, language, onLanguageChange }: Campai
       .join(', ');
 
   const handleNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     event.preventDefault();
     onNavigate?.(page);
   };
@@ -89,6 +92,9 @@ export function CampaignsPage({ onNavigate, language, onLanguageChange }: Campai
   }, [categories, campaignsContent.filter.allLabel, selectedCategory]);
 
   const handleDonateWithCause = (cause: string) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     event.preventDefault();
     const nextPath = `${localizePath(pagePaths.donate, (language ?? 'EN') as LanguageCode)}?cause=${encodeURIComponent(cause)}`;
     onNavigate?.('donate');

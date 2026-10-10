@@ -84,6 +84,7 @@ export const donate = {
     },
     errors: {
       invalidAmount: 'Please enter a valid donation amount.',
+      tooLarge: 'For donations above $25,000, please contact us at info@trahom.org.',
       startCheckout: 'Unable to start checkout.',
       missingCheckoutUrl: 'Stripe checkout URL is missing.',
       default: 'Unable to start checkout.'
@@ -91,12 +92,12 @@ export const donate = {
   },
   impact: {
     examples: [
-      { amount: 25, impact: 'Help deliver 160k+ ready meals served to families.' },
-      { amount: 50, impact: 'Support 22,000+ emergency food parcels distributed.' },
-      { amount: 100, impact: 'Keep 3,375+ orphan sponsorships active.' },
-      { amount: 250, impact: 'Expand clean water access for 190k+ people.' },
-      { amount: 500, impact: 'Help keep 4,050+ families warm through winter.' },
-      { amount: 1000, impact: 'Back 68 urgent surgeries and 20,000+ cash distributions.' }
+      { amount: 25, impact: 'Can help provide ready meals for families with nothing to cook.' },
+      { amount: 50, impact: 'Can support emergency food parcels distributed by need.' },
+      { amount: 100, impact: 'Helps keep an orphaned child’s regular follow-up going.' },
+      { amount: 250, impact: 'Helps expand access to clean drinking water.' },
+      { amount: 500, impact: 'Helps keep a displaced family warm through winter.' },
+      { amount: 1000, impact: 'Contributes to urgent medical care or cash assistance.' }
     ],
     fallback: 'Every contribution makes a difference'
   },

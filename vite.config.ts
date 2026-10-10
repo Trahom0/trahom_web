@@ -3,8 +3,8 @@ import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig(({ ssrBuild }) => {
-  const isSsrBuild = Boolean(ssrBuild || process.argv.includes('--ssr'));
+export default defineConfig(({ isSsrBuild: ssrFlag }) => {
+  const isSsrBuild = Boolean(ssrFlag || process.argv.includes('--ssr'));
   return {
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
@@ -19,8 +19,9 @@ export default defineConfig(({ ssrBuild }) => {
     },
   },
     build: {
-      outDir: isSsrBuild ? 'dist/server' : 'dist',
-      emptyOutDir: !isSsrBuild,
+      // The server-side bundle is only used at build time, so keep it out of the published folder.
+      outDir: isSsrBuild ? 'dist-ssr' : 'dist',
+      emptyOutDir: true,
     },
   };
 })

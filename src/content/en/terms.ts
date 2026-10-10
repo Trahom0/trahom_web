@@ -52,8 +52,8 @@ export const terms = {
       title: 'Donations and payments',
       items: [
         'Donations are processed by trusted third-party payment providers.',
-        'Receipts are issued for completed transactions and may be used for tax purposes.',
-        'Recurring gifts can be managed or canceled through your donor portal.'
+        'Receipts are issued for completed transactions.',
+        'You can cancel a recurring gift at any time by emailing info@trahom.org.'
       ]
     },
     {

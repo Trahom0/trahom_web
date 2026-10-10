@@ -35,49 +35,49 @@ export const terms = {
     {
       title: 'Şartların kabulü',
       items: [
-        'By accessing Trahom services, you agree to comply with these terms.',
-        'If you do not agree, please refrain from using the site.',
-        'Additional program-specific terms may apply for certain services.'
+        'Trahom hizmetlerini kullanarak bu şartlara uymayı kabul etmiş olursunuz.',
+        'Kabul etmiyorsanız lütfen siteyi kullanmayın.',
+        'Bazı hizmetler için programa özel ek şartlar geçerli olabilir.'
       ]
     },
     {
       title: 'Sitenin kullanımı',
       items: [
-        'Use the site only for lawful purposes and in a respectful manner.',
-        'Do not attempt to interfere with the security or operation of the site.',
-        'We may suspend access if misuse or harmful activity is detected.'
+        'Siteyi yalnızca yasal amaçlarla ve saygılı bir şekilde kullanın.',
+        'Sitenin güvenliğine veya işleyişine müdahale etmeye çalışmayın.',
+        'Kötüye kullanım veya zararlı bir faaliyet tespit edilirse erişimi askıya alabiliriz.'
       ]
     },
     {
       title: 'Bağışlar ve ödemeler',
       items: [
-        'Donations are processed by trusted third-party payment providers.',
-        'Receipts are issued for completed transactions and may be used for tax purposes.',
-        'Recurring gifts can be managed or canceled through your donor portal.'
+        'Bağışlar güvenilir üçüncü taraf ödeme sağlayıcıları tarafından işlenir.',
+        'Tamamlanan işlemler için makbuz düzenlenir.',
+        'Düzenli bağışınızı istediğiniz zaman iptal etmek için info@trahom.org adresinden bize yazabilirsiniz.'
       ]
     },
     {
       title: 'Kullanıcı içerikleri ve iletişim',
       items: [
-        'If you submit content, you grant us permission to use it for program delivery.',
-        'Do not post unlawful, harmful, or misleading information.',
-        'We may remove content that violates these terms or community standards.'
+        'İçerik gönderdiğinizde, bu içeriği programlarımızı yürütmek için kullanmamıza izin vermiş olursunuz.',
+        'Yasa dışı, zararlı veya yanıltıcı bilgi paylaşmayın.',
+        'Bu şartları veya topluluk kurallarını ihlal eden içerikleri kaldırabiliriz.'
       ]
     },
     {
       title: 'Fikri mülkiyet',
       items: [
-        'Trahom branding, content, and materials are protected by applicable laws.',
-        'You may not reproduce or distribute materials without written permission.',
-        'Third-party trademarks remain the property of their respective owners.'
+        'Trahom markası, içerikleri ve materyalleri ilgili yasalarla korunmaktadır.',
+        'Materyaller yazılı izin olmadan çoğaltılamaz veya dağıtılamaz.',
+        'Üçüncü taraf markalar ilgili sahiplerine aittir.'
       ]
     },
     {
       title: 'Sorumluluk reddi ve sınırlar',
       items: [
-        'Services are provided as-is without warranties of any kind.',
-        'We are not liable for indirect damages to the fullest extent permitted by law.',
-        'Your sole remedy for dissatisfaction is to stop using the site.'
+        'Hizmetler herhangi bir garanti olmaksızın “olduğu gibi” sunulur.',
+        'Yasaların izin verdiği en geniş ölçüde dolaylı zararlardan sorumlu değiliz.',
+        'Memnun kalmamanız durumunda tek çözüm siteyi kullanmayı bırakmaktır.'
       ]
     }
   ],

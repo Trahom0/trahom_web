@@ -37,49 +37,49 @@ export const privacy = {
     {
       title: 'Topladığımız bilgiler',
       items: [
-        'Contact details you provide when donating, subscribing, or contacting us.',
-        'Donation and payment details processed securely by our payment partners.',
-        'Usage data such as pages viewed, device type, and referral sources.'
+        'Bağış yaparken, abone olurken veya bizimle iletişime geçerken paylaştığınız iletişim bilgileri.',
+        'Ödeme iş ortaklarımız tarafından güvenle işlenen bağış ve ödeme bilgileri.',
+        'Görüntülenen sayfalar, cihaz türü ve yönlendiren kaynaklar gibi kullanım verileri.'
       ]
     },
     {
       title: 'Bilgileri nasıl kullanıyoruz',
       items: [
-        'Process donations, respond to inquiries, and deliver requested services.',
-        'Send program updates, receipts, and organizational news.',
-        'Analyze site performance and improve accessibility and security.'
+        'Bağışları işlemek, sorulara yanıt vermek ve talep edilen hizmetleri sunmak.',
+        'Program güncellemeleri, makbuzlar ve kurum haberleri göndermek.',
+        'Site performansını analiz etmek, erişilebilirliği ve güvenliği iyileştirmek.'
       ]
     },
     {
       title: 'Paylaşım ve açıklama',
       items: [
-        'Service providers who help us operate the site and process payments.',
-        'Partners when you opt in to shared initiatives or joint campaigns.',
-        'Legal or regulatory requests when required by law.'
+        'Siteyi işletmemize ve ödemeleri işlememize yardımcı olan hizmet sağlayıcılar.',
+        'Ortak girişimlere veya kampanyalara katılmayı seçtiğinizde ilgili iş ortakları.',
+        'Kanunen gerekli olduğunda yasal veya düzenleyici talepler.'
       ]
     },
     {
       title: 'Çerezler ve analiz',
       items: [
-        'We use cookies to remember preferences and keep the site secure.',
-        'Analytics help us understand what content is most useful to supporters.',
-        'You can manage cookies through your browser settings.'
+        'Tercihlerinizi hatırlamak ve siteyi güvende tutmak için çerezler kullanırız.',
+        'Analizler, destekçilerimiz için en faydalı içeriği anlamamıza yardımcı olur.',
+        'Çerezleri tarayıcı ayarlarınızdan yönetebilirsiniz.'
       ]
     },
     {
       title: 'Veri saklama ve güvenlik',
       items: [
-        'We retain information only as long as needed for operational or legal purposes.',
-        'Access to sensitive data is limited to trained team members.',
-        'No method of transmission is 100 percent secure, but we work to protect data.'
+        'Bilgileri yalnızca operasyonel veya yasal amaçlar için gerektiği sürece saklarız.',
+        'Hassas verilere erişim, eğitimli ekip üyeleriyle sınırlıdır.',
+        'Hiçbir aktarım yöntemi yüzde 100 güvenli değildir; ancak verileri korumak için çalışırız.'
       ]
     },
     {
       title: 'Haklarınız ve tercihleriniz',
       items: [
-        'Request access to, correction of, or deletion of your personal data.',
-        'Opt out of marketing communications while still receiving receipts.',
-        'Contact us with questions about this policy or your data.'
+        'Kişisel verilerinize erişim, düzeltme veya silme talep edebilirsiniz.',
+        'Makbuzları almaya devam ederken bilgilendirme e-postalarından çıkabilirsiniz.',
+        'Bu politika veya verilerinizle ilgili sorularınız için bize ulaşın.'
       ]
     }
   ],

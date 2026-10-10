@@ -76,7 +76,7 @@ export function FamilySignUpPage({ onNavigate, language, onLanguageChange }: Fam
           className="bg-white rounded-2xl border border-black/5 overflow-visible"
         >
           <iframe 
-            data-tally-src="https://tally.so/r/mJ48jJ?transparentBackground=1" 
+            data-tally-src="https://tally.so/r/mJ48jJ?transparentBackground=1&dynamicHeight=1" 
             width="100%" 
             height="2000"
             frameBorder="0" 

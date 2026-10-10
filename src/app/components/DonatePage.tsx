@@ -41,7 +41,24 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
     const status = params.get('status');
     if (status === 'success' || status === 'cancel') {
       setCheckoutStatus(status);
+      // Remove the status from the address so a refresh doesn't show the message again.
+      params.delete('status');
+      params.delete('session_id');
+      const query = params.toString();
+      window.history.replaceState(window.history.state, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
     }
+  }, []);
+
+  // Coming back from Stripe with the browser's Back button can restore this page from cache
+  // with the button still showing "redirecting"; reset it.
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setIsSubmitting(false);
+      }
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    return () => window.removeEventListener('pageshow', handlePageShow);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -67,8 +84,12 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
     }
 
     const amount = getCurrentAmount();
-    if (amount <= 0) {
+    if (!Number.isFinite(amount) || amount < 1) {
       setSubmitError(donateContent.form.errors.invalidAmount);
+      return;
+    }
+    if (amount > 25000) {
+      setSubmitError(donateContent.form.errors.tooLarge);
       return;
     }
 
@@ -88,6 +109,7 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
           cause: selectedCause,
           causeLabel: selectedCauseData?.name,
           campaign,
+          language: language ?? 'EN',
           donor: {
             firstName: formData.firstName,
             lastName: formData.lastName,
@@ -97,20 +119,16 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
         })
       });
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data?.error || donateContent.form.errors.startCheckout);
-      }
-
-      if (data?.url) {
+      // The server may answer with a non-JSON error page; never show its raw text to donors.
+      const data = await response.json().catch(() => null);
+      if (response.ok && typeof data?.url === 'string' && data.url.startsWith('https://')) {
         window.location.href = data.url;
         return;
       }
-
-      throw new Error(donateContent.form.errors.missingCheckoutUrl);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : donateContent.form.errors.default;
-      setSubmitError(message);
+      setSubmitError(response.ok ? donateContent.form.errors.missingCheckoutUrl : donateContent.form.errors.startCheckout);
+      setIsSubmitting(false);
+    } catch {
+      setSubmitError(donateContent.form.errors.default);
       setIsSubmitting(false);
     }
   };
@@ -470,20 +488,16 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
             className="space-y-6"
           >
             {/* Summary Card */}
-            <div className="bg-gradient-to-br from-[#e1a226] to-[#c78f1f] rounded-2xl p-8 text-white sticky top-24">
+            <div className="bg-gradient-to-br from-[#e1a226] to-[#c78f1f] rounded-2xl p-8 text-white sticky top-40">
               <h3 className="text-xl font-medium mb-6">{donateContent.summary.title}</h3>
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between items-center pb-4 border-b border-white/20">
                   <span className="text-white/80">{donateContent.summary.labels.type}</span>
                   <span className="font-medium">{summaryTypeLabel}</span>
                 </div>
-                <div className="flex justify-between items-center pb-4 border-b border-white/20">
+                <div className="flex justify-between items-center">
                   <span className="text-white/80">{donateContent.summary.labels.amount}</span>
                   <span className="text-3xl font-medium">${getCurrentAmount()}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-white/80">{donateContent.summary.labels.frequency}</span>
-                  <span className="font-medium">{summaryTypeLabel}</span>
                 </div>
               </div>
 

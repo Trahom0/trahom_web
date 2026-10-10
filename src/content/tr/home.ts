@@ -6,12 +6,12 @@ export const home = {
     donorCount: 'Binlerce kişi düzenli destek veriyor',
     stats: {
       totalReach: {
-        number: '300k+',
+        number: '300 bin+',
         label: 'Toplam ulaşılan kişi',
         color: 'bg-[#4A90E2]'
       },
       readyMeals: {
-        number: '160k+',
+        number: '160 bin+',
         label: 'Dağıtılan hazır öğün',
         color: 'bg-[#A8D5E2]'
       },
@@ -47,7 +47,7 @@ export const home = {
         description: '450+ su dağıtım kampanyası ve 7 su kuyusu onarımı / inşasıyla güvenli suya erişimi destekliyoruz.',
         goal: '$180,000',
         percentage: 17,
-        primaryBadge: '190k+ yararlanıcı',
+        primaryBadge: '190 bin+ yararlanıcı',
         color: 'bg-[#A8D5E2]'
       },
       {
@@ -74,7 +74,7 @@ export const home = {
   gallery: {
     title: 'Sahadan görüntüler',
     viewAllLabel: 'Galerinin tamamını gör →',
-    gridLabels: ['İnsani yardım', 'Topluluk geliştirme', 'Tıbbi destek', 'Eğitim'],
+    gridLabels: ['Aşevi yemek dağıtımı', 'Su dağıtımı', 'Ailelere su ulaştırma', 'Kış kampanyası'],
     feature: {
       videoAriaLabel: 'Birlikte etki oluşturuyoruz',
       title: 'Birlikte, sahada',
@@ -84,7 +84,7 @@ export const home = {
   about: {
     title: 'Trahom hakkında',
     viewMissionLabel: 'Misyonumuzu oku →',
-    sinceBadge: 'Since 2024',
+    sinceBadge: '2024’ten beri',
     cardTitle: 'Trahom hakkında',
     paragraphs: [
       'Trahom, Gazze’deki gerçek ve sürekli ihtiyaçlara bir cevap olarak doğdu. Her şeyini kaybeden aileler ve yüzünü çevirmeyi reddeden insanlar ile başladı.',
@@ -93,17 +93,17 @@ export const home = {
     stats: {
       yearsOfService: {
         number: '2+',
-        label: 'Years of service',
+        label: 'Hizmet yılı',
         color: 'bg-[#4A90E2]'
       },
       localPartners: {
         number: '10',
-        label: 'Local partners',
+        label: 'Yerel ortak',
         color: 'bg-[#A8D5E2]'
       },
       volunteers: {
         number: '20+',
-        label: 'Volunteers',
+        label: 'Gönüllü',
         color: 'bg-[#F5A623]'
       },
       valuesCard: {

@@ -1,7 +1,7 @@
 export const campaigns = {
   hero: {
     title: 'Active Campaigns',
-    description: 'Support our ongoing initiatives to bring hope and assistance to communities worldwide.'
+    description: 'Support our ongoing initiatives to bring hope and assistance to families across Gaza.'
   },
   stats: {
     activeLabel: 'Active campaigns',

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import logoImage from '../../assets/logo and qr code.svg';
 import { content } from '../../content';
-import { getPathForPage, type LanguageCode, type PageKey } from '../routes';
+import { getPathForPage, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { PrimaryButton } from './PrimaryButton';
 
 type SiteHeaderProps = {
@@ -47,8 +47,9 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
   }, []);
 
   useEffect(() => {
-    const currentRef = languageDropdownRef.current;
     const handleClickOutside = (event: MouseEvent) => {
+      // Read the ref at click time: the dropdown is re-created when the top bar re-appears.
+      const currentRef = languageDropdownRef.current;
       if (currentRef && !currentRef.contains(event.target as Node)) {
         setLanguageDropdownOpen(false);
       }
@@ -64,7 +65,29 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
     }
   }, [language]);
 
+  // While the mobile menu is open: stop the page behind it from scrolling, and let Escape close it.
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      return;
+    }
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [mobileMenuOpen]);
+
   const handleNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     if (!onNavigate) {
       return;
     }
@@ -73,6 +96,9 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
   };
 
   const handleMenuNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     if (onNavigate) {
       event.preventDefault();
       setMobileMenuOpen(false);
@@ -167,6 +193,13 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
               <div className="relative" ref={languageDropdownRef}>
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      setLanguageDropdownOpen(false);
+                    }
+                  }}
+                  aria-haspopup="true"
+                  aria-expanded={languageDropdownOpen}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-[#e1a226]/10 transition-all"
                 >
                   <Languages className="w-4 h-4" />
@@ -244,13 +277,13 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ x: '100%' }}
+            initial={{ x: activeLanguage === 'AR' ? '-100%' : '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            exit={{ x: activeLanguage === 'AR' ? '-100%' : '100%' }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 bg-white z-50 md:hidden"
+            className="fixed inset-0 bg-white z-50 md:hidden overflow-y-auto"
           >
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col min-h-full">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -266,7 +299,7 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                 >
                   <img src={logoImage} alt={content.header.logoAlt} className="h-10 w-auto" />
                 </a>
-                <button onClick={() => setMobileMenuOpen(false)}>
+                <button onClick={() => setMobileMenuOpen(false)} aria-label={content.header.menuAria.close}>
                   <X className="w-7 h-7" />
                 </button>
               </motion.div>

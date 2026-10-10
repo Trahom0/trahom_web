@@ -14,7 +14,7 @@ export const campaigns = {
       "label": "يتيم مكفول"
     },
     "peopleHelped": {
-      "number": "300k+",
+      "number": "300 ألف+",
       "label": "عدد المستفيدين"
     }
   },
@@ -40,7 +40,7 @@ export const campaigns = {
       "description": "توفير مياه آمنة عبر 450+ حملة توزيع و7 آبار مُصلحة/مُنشأة في المناطق التي تفتقر إلى الوصول.",
       "goal": "$180,000",
       "percentage": 17,
-      "primaryBadge": "190k+ مستفيد",
+      "primaryBadge": "أكثر من 190 ألف مستفيد",
       "color": "bg-[#A8D5E2]",
       "category": "المياه والصرف الصحي"
     },

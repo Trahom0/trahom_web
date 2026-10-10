@@ -25,7 +25,7 @@ import { NotFoundPage } from './components/NotFoundPage';
 import orphanCampaignImage from '../assets/homepage-card-orphan-campaign.jpg';
 import waterCampaignImage from '../assets/homepage-card-water.png';
 import { content, setContentLanguage } from '../content';
-import { actionPaths, getPathForPage, getRouteFromPath, localizePath, pagePaths, type LanguageCode, type PageKey } from './routes';
+import { actionPaths, getPathForPage, getRouteFromPath, localizePath, pagePaths, type LanguageCode, type PageKey, isPlainLeftClick } from './routes';
 import { cloudinaryVideos } from './cloudinary';
 import { applySeo } from './seo';
 
@@ -71,12 +71,16 @@ export default function App({ initialPath }: AppProps) {
   }, [currentPage, language]);
 
   useEffect(() => {
+    // The gallery on the homepage switches layout every 10 seconds; other pages don't need it.
+    if (currentPage !== 'home') {
+      return;
+    }
     const interval = setInterval(() => {
       setShowWideCard((prev) => !prev);
-    }, 10000); // Toggle every 10 seconds
+    }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -102,11 +106,17 @@ export default function App({ initialPath }: AppProps) {
   };
 
   const handleNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     event.preventDefault();
     navigateTo(page);
   };
 
   const handleDonateWithCause = (cause: string) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     event.preventDefault();
     const nextPath = `${localizePath(pagePaths.donate, language)}?cause=${encodeURIComponent(cause)}`;
     if (typeof window !== 'undefined') {
@@ -444,7 +454,7 @@ export default function App({ initialPath }: AppProps) {
                       }
                     }
                   }}
-                  className="grid md:grid-cols-4 gap-6 h-full absolute w-full"
+                  className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 h-full absolute w-full"
                 >
                   <motion.div
                     variants={galleryCardVariants}

@@ -3,11 +3,21 @@ import crypto from 'crypto';
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const DEFAULT_TOLERANCE_SECONDS = 5 * 60;
 
+const MAX_BODY_BYTES = 1_000_000;
+
 const readRawBody = (req: any) =>
   new Promise<Buffer>((resolve, reject) => {
     const chunks: Buffer[] = [];
+    let size = 0;
     req.on('data', (chunk: Buffer | string) => {
-      chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+      const buffer = typeof chunk === 'string' ? Buffer.from(chunk) : chunk;
+      size += buffer.length;
+      if (size > MAX_BODY_BYTES) {
+        reject(new Error('Payload too large'));
+        req.destroy?.();
+        return;
+      }
+      chunks.push(buffer);
     });
     req.on('end', () => resolve(Buffer.concat(chunks)));
     req.on('error', reject);
@@ -35,7 +45,12 @@ const isValidSignature = (payload: string, secret: string, signatureHeader: stri
 
   const signedPayload = `${timestamp}.${payload}`;
   const expected = crypto.createHmac('sha256', secret).update(signedPayload).digest('hex');
-  return signatures.includes(expected);
+  const expectedBuffer = Buffer.from(expected, 'hex');
+  // Constant-time comparison so the secret cannot be guessed from response timing.
+  return signatures.some((signature) => {
+    const candidate = Buffer.from(signature, 'hex');
+    return candidate.length === expectedBuffer.length && crypto.timingSafeEqual(candidate, expectedBuffer);
+  });
 };
 
 export default async function handler(req: any, res: any) {
@@ -45,7 +60,8 @@ export default async function handler(req: any, res: any) {
   }
 
   if (!STRIPE_WEBHOOK_SECRET) {
-    res.status(500).send('Stripe webhook secret is missing');
+    console.error('STRIPE_WEBHOOK_SECRET is not set');
+    res.status(500).send('Webhook not configured');
     return;
   }
 
@@ -78,7 +94,7 @@ export default async function handler(req: any, res: any) {
 
     res.status(200).json({ received: true });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Webhook error';
-    res.status(400).send(message);
+    console.error('Stripe webhook failed', error);
+    res.status(400).send('Webhook error');
   }
 }

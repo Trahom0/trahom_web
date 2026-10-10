@@ -35,34 +35,69 @@ const isFromOurSite = (req: any) => {
   const source = String(req.headers?.origin ?? req.headers?.referer ?? '');
   try {
     const host = new URL(source).hostname.toLowerCase();
-    return ALLOWED_HOSTS.includes(host) || /^trahom-[a-z0-9-]*\.vercel\.app$/.test(host) || host === 'localhost';
+    if (ALLOWED_HOSTS.includes(host)) {
+      return true;
+    }
+    // Preview links and local testing are accepted only outside the live site.
+    if (process.env.VERCEL_ENV === 'production') {
+      return false;
+    }
+    return /^trahom-web(-[a-z0-9-]+)?\.vercel\.app$/.test(host) || host === 'localhost';
   } catch {
     return false;
   }
 };
 
-const readRequestBody = async (req: any) => {
-  if (req.body && typeof req.body === 'object') {
-    return req.body;
-  }
+const MAX_BODY_BYTES = 20_000;
 
-  return new Promise<any>((resolve, reject) => {
+// Returns the parsed JSON body, or null when it is missing, malformed or too large.
+const readJsonBody = async (req: any): Promise<any | null> => {
+  let parsed: unknown;
+  try {
+    parsed = req.body;
+  } catch {
+    return null;
+  }
+  if (parsed && typeof parsed === 'object') {
+    return parsed;
+  }
+  if (typeof parsed === 'string') {
+    try {
+      return parsed.length > MAX_BODY_BYTES ? null : JSON.parse(parsed);
+    } catch {
+      return null;
+    }
+  }
+  if (!req.readable) {
+    return {};
+  }
+  return new Promise((resolve) => {
     let body = '';
-    req.on('data', (chunk: string) => {
+    let done = false;
+    const finish = (value: any) => {
+      if (!done) {
+        done = true;
+        resolve(value);
+      }
+    };
+    req.on('data', (chunk: Buffer | string) => {
       body += chunk;
+      if (body.length > MAX_BODY_BYTES) {
+        finish(null);
+      }
     });
     req.on('end', () => {
       if (!body) {
-        resolve({});
+        finish({});
         return;
       }
       try {
-        resolve(JSON.parse(body));
-      } catch (error) {
-        reject(error);
+        finish(JSON.parse(body));
+      } catch {
+        finish(null);
       }
     });
-    req.on('error', reject);
+    req.on('error', () => finish(null));
   });
 };
 
@@ -116,7 +151,11 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const body = await readRequestBody(req);
+    const body = await readJsonBody(req);
+    if (!body) {
+      res.status(400).json({ error: 'Invalid request' });
+      return;
+    }
     const firstName = oneLine(sanitize(body.firstName, 100));
     const lastName = oneLine(sanitize(body.lastName, 100));
     const email = oneLine(sanitize(body.email, 200));
@@ -126,16 +165,13 @@ export default async function handler(req: any, res: any) {
     const message = typeof body.message === 'string' ? body.message.trim() : '';
     const language = oneLine(sanitize(body.language, 5));
     const website = sanitize(body.website);
-    const startedAt = Number(body.startedAt);
+    // How long the visitor spent on the form, measured by their own browser
+    // (so a wrong clock on their device cannot make a real message look like a bot).
+    const elapsedMs = Number(body.elapsedMs);
 
     // Honeypot field or a form filled faster than a person can: pretend it worked and drop it.
-    if (website || (Number.isFinite(startedAt) && startedAt > 0 && Date.now() - startedAt < MIN_FILL_TIME_MS)) {
+    if (website || (Number.isFinite(elapsedMs) && elapsedMs >= 0 && elapsedMs < MIN_FILL_TIME_MS)) {
       res.status(200).json({ ok: true });
-      return;
-    }
-
-    if (isRateLimited(getClientIp(req))) {
-      res.status(429).json({ error: 'Too many messages. Please try again later.' });
       return;
     }
 
@@ -151,6 +187,12 @@ export default async function handler(req: any, res: any) {
 
     if (message.length > MAX_MESSAGE_LENGTH) {
       res.status(400).json({ error: 'Message is too long' });
+      return;
+    }
+
+    // Counted only for valid messages, so mistakes do not use up a visitor's allowance.
+    if (isRateLimited(getClientIp(req))) {
+      res.status(429).json({ error: 'Too many messages. Please try again later.' });
       return;
     }
 
@@ -194,6 +236,7 @@ export default async function handler(req: any, res: any) {
     }
 
     const resendResponse = await fetch('https://api.resend.com/emails', {
+      signal: AbortSignal.timeout(10_000),
       method: 'POST',
       headers: {
         Authorization: `Bearer ${RESEND_API_KEY}`,

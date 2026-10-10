@@ -74,11 +74,11 @@ export const home = {
   gallery: {
     title: 'Our Impact in Action',
     viewAllLabel: 'View full gallery →',
-    gridLabels: ['Humanitarian Aid', 'Community Development', 'Medical Relief', 'Education'],
+    gridLabels: ['Community kitchen meals', 'Water distribution', 'Water delivered to families', 'Winter campaign'],
     feature: {
       videoAriaLabel: 'Together Making Impact',
       title: 'Together, Making an Impact',
-      description: 'Our dedicated team works tirelessly across the globe to bring hope, resources, and sustainable solutions to communities in need.'
+      description: 'Our dedicated team works every day across Gaza to bring hope, resources, and sustainable solutions to communities in need.'
     }
   },
   about: {

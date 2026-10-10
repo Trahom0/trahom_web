@@ -49,6 +49,7 @@ export function VideoWithRatio({
   return (
     <div className={wrapperClassName} style={{ aspectRatio: ratio }}>
       <video
+        key={src}
         className={className}
         aria-label={label}
         onLoadedMetadata={handleLoadedMetadata}

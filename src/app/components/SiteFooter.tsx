@@ -1,7 +1,7 @@
 import { Mail } from 'lucide-react';
 import logoImage from '../../assets/logo and qr code.svg';
 import { content } from '../../content';
-import { actionPaths, getPathForPage, localizePath, type LanguageCode, type PageKey } from '../routes';
+import { actionPaths, getPathForPage, localizePath, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { SocialLinks } from './SocialLinks';
 
 type SiteFooterProps = {
@@ -14,6 +14,9 @@ export function SiteFooter({ onNavigate, language }: SiteFooterProps) {
   const activeLanguage = (language ?? 'EN') as LanguageCode;
 
   const handleNavClick = (page: PageKey) => (event: { preventDefault: () => void }) => {
+    if (!isPlainLeftClick(event)) {
+      return;
+    }
     if (!onNavigate) {
       return;
     }

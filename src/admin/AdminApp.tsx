@@ -268,7 +268,7 @@ function PostForm({
       await call('save', { id: draft.id, intent, post: draft });
       onSaved(
         intent === 'publish'
-          ? 'تم النشر. سيظهر على الموقع خلال دقيقتين تقريبًا.'
+          ? 'تم النشر. سيظهر على الموقع خلال 10 دقائق تقريبًا.'
           : intent === 'submit'
             ? 'تم الإرسال للموافقة، ووصل إشعار للمدير.'
             : 'تم حفظ المسودة.'

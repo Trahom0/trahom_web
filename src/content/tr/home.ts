@@ -131,6 +131,19 @@ export const home = {
       description: 'Desteği etkin biçimde ulaştırmak için Gazze’deki yerel komiteler ve kuruluşlarla birlikte çalışıyoruz.'
     }
   ],
+  fieldUpdates: {
+    title: 'Sahadan',
+    description: 'Ekiplerimizin Gazze genelindeki son çalışmaları.',
+    viewOnTemplate: '{{platform}} üzerinde gör',
+    followLabel: 'Bizi takip edin',
+    governorates: {
+      'north-gaza': 'Kuzey Gazze',
+      gaza: 'Gazze Şehri',
+      'deir-al-balah': 'Deyr el-Belah',
+      'khan-younis': 'Han Yunus',
+      rafah: 'Refah'
+    }
+  },
   subscribe: {
     title: 'Haberdar olun',
     description: 'Sahadan gelişmeler, kampanyalar ve güvenilir destek yolları—gereksiz mesajlar olmadan.',

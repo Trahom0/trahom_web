@@ -22,6 +22,18 @@ export default defineConfig(({ isSsrBuild: ssrFlag }) => {
       // The server-side bundle is only used at build time, so keep it out of the published folder.
       outDir: isSsrBuild ? 'dist-ssr' : 'dist',
       emptyOutDir: true,
+      // The website admin (/admin) is a separate page with its own small bundle, so none of it
+      // is loaded by visitors of the public site.
+      ...(isSsrBuild
+        ? {}
+        : {
+            rollupOptions: {
+              input: {
+                main: path.resolve(__dirname, 'index.html'),
+                admin: path.resolve(__dirname, 'admin.html'),
+              },
+            },
+          }),
     },
   };
 })

@@ -136,6 +136,19 @@ export const home = {
       "description": "نعمل جنبًا إلى جنب مع لجان ومؤسسات محلية داخل غزة لإيصال الدعم بكفاءة."
     }
   ],
+  "fieldUpdates": {
+    "title": "من الميدان",
+    "description": "آخر ما أنجزته فرقنا في مختلف مناطق غزة.",
+    "viewOnTemplate": "عرض على {{platform}}",
+    "followLabel": "تابعنا",
+    "governorates": {
+      "north-gaza": "شمال غزة",
+      "gaza": "مدينة غزة",
+      "deir-al-balah": "دير البلح",
+      "khan-younis": "خان يونس",
+      "rafah": "رفح"
+    }
+  },
   "subscribe": {
     "title": "ابقَ على صلة",
     "description": "تصلك أخبار الميدان والحملات وفرص العطاء دون إزعاج أو استغلال.",

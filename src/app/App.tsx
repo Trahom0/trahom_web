@@ -21,6 +21,7 @@ import { PageLayout } from './components/PageLayout';
 import { PrimaryButton } from './components/PrimaryButton';
 import { LazyVideo } from './components/LazyVideo';
 import { SubscribeForm } from './components/SubscribeForm';
+import { FieldUpdates } from './components/FieldUpdates';
 import { NotFoundPage } from './components/NotFoundPage';
 import orphanCampaignImage from '../assets/homepage-card-orphan-campaign.jpg';
 import waterCampaignImage from '../assets/homepage-card-water.png';
@@ -663,6 +664,9 @@ export default function App({ initialPath }: AppProps) {
             })}
           </div>
         </div>
+
+        {/* "From the field": posts approved in the website admin (hidden while there are none) */}
+        <FieldUpdates language={language} labels={homeContent.fieldUpdates} />
 
         {/* Subscribe Section */}
         <motion.div 

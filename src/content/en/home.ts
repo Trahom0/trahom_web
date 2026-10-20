@@ -131,6 +131,19 @@ export const home = {
       description: 'Working hand in hand with local committees and organizations in Gaza to deliver support efficiently.'
     }
   ],
+  fieldUpdates: {
+    title: 'From the Field',
+    description: 'Recent work by our teams across Gaza.',
+    viewOnTemplate: 'View on {{platform}}',
+    followLabel: 'Follow us',
+    governorates: {
+      'north-gaza': 'North Gaza',
+      gaza: 'Gaza City',
+      'deir-al-balah': 'Deir al-Balah',
+      'khan-younis': 'Khan Younis',
+      rafah: 'Rafah'
+    }
+  },
   subscribe: {
     title: 'Stay in the Loop',
     description: 'Join our community and receive the latest updates on campaigns, stories from the field, and opportunities to make a difference.',

@@ -14,7 +14,7 @@
 // Storage: Vercel Blob (BLOB_READ_WRITE_TOKEN is added automatically when a Blob store is connected).
 //   posts/<id>-<random>.json   one file per post version (older versions are deleted after each save)
 //   images/<random>.jpg        uploaded photos
-//   feed/feed-<random>.json    the published posts the homepage reads, rebuilt after every change
+//   feed/feed.json             the published posts the homepage reads, rebuilt after every change
 //   audit/<time>-<random>.json who did what and when
 //   used/<nonce>-<random>      marks sign-in links that were already used
 //
@@ -342,16 +342,17 @@ const publicFields = (post: Post) => ({
 const rebuildFeed = async () => {
   const { posts, stale } = await loadPosts();
   const published = posts.filter((post) => post.status === 'published').slice(0, 30).map(publicFields);
-  const oldFeeds = await listAll('feed/');
+  // Fixed address, so the homepage can read it directly without listing the store (listing is the
+  // scarcest operation on the free plan).
   await put('feed/feed.json', JSON.stringify({ updatedAt: new Date().toISOString(), posts: published }), {
     access: 'public',
-    addRandomSuffix: true,
+    addRandomSuffix: false,
+    allowOverwrite: true,
     contentType: 'application/json',
     cacheControlMaxAge: 60
   });
-  const leftovers = [...oldFeeds.map((file) => file.url), ...stale];
-  if (leftovers.length) {
-    await del(leftovers).catch(() => undefined);
+  if (stale.length) {
+    await del(stale).catch(() => undefined);
   }
 };
 

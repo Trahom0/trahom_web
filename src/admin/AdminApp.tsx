@@ -64,6 +64,7 @@ const ERRORS: Record<string, string> = {
   'too-large': 'الصورة كبيرة جدًا.',
   'not-an-image': 'الملف ليس صورة (JPG أو PNG أو WebP).',
   'not-configured': 'اللوحة غير مُعدّة بعد على الخادم.',
+  'orphan-not-found': 'لم نجد يتيمًا بهذا الرمز أو رقم الهوية في جدول الأيتام.',
   'signed-out': 'انتهت الجلسة. سجّل الدخول من جديد.',
   changed: 'تم تعديل هذا المنشور بعد أن فتحته. راجعه من جديد ثم وافق عليه.'
 };
@@ -161,19 +162,44 @@ const secondaryButton =
 
 // ---------- sign-in ----------
 
-function SignIn() {
+function SignIn({ onSignedIn }: { onSignedIn: (user: { email: string; role: Role }) => void }) {
   const [email, setEmail] = useState('');
-  const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [password, setPassword] = useState('');
+  const [mode, setMode] = useState<'password' | 'link'>('password');
+  const [state, setState] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [error, setError] = useState('');
   const expired = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('login') === 'expired';
 
-  const submit = async (event: FormEvent) => {
+  const signIn = async (event: FormEvent) => {
     event.preventDefault();
     setState('sending');
+    setError('');
+    try {
+      const data = await call('login', { email, password });
+      setPassword('');
+      onSignedIn({ email: data.email, role: data.role });
+    } catch (loginError) {
+      setState('idle');
+      setError(
+        loginError instanceof ApiError && loginError.code === 'too-many-attempts'
+          ? 'محاولات خاطئة كثيرة. انتظر 15 دقيقة ثم حاول مجددًا.'
+          : loginError instanceof ApiError && loginError.code === 'wrong-login'
+            ? 'البريد الإلكتروني أو كلمة السر غير صحيحة.'
+            : messageFor(loginError)
+      );
+    }
+  };
+
+  const sendLink = async (event: FormEvent) => {
+    event.preventDefault();
+    setState('sending');
+    setError('');
     try {
       await call('request-link', { email });
       setState('sent');
     } catch {
-      setState('error');
+      setState('idle');
+      setError('تعذّر الإرسال. حاول مرة أخرى.');
     }
   };
 
@@ -181,18 +207,58 @@ function SignIn() {
     <div className="min-h-screen bg-[#f6f3ee] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-sm p-8">
         <img src="/favicon.png" alt="" className="w-10 h-10 mb-4" />
-        <h1 className="text-2xl mb-2">لوحة موقع تراحم</h1>
-        {state === 'sent' ? (
+        <h1 className="text-2xl mb-4">لوحة موقع تراحم</h1>
+        {expired && (
+          <p className="rounded-xl bg-amber-50 text-amber-800 p-3 text-sm mb-4">رابط الدخول منتهي الصلاحية أو مستخدم من قبل.</p>
+        )}
+        {mode === 'password' ? (
+          <form onSubmit={signIn} className="space-y-4">
+            <label className="block">
+              <span className="block mb-1 text-sm text-foreground/70">البريد الإلكتروني</span>
+              <input
+                type="email"
+                required
+                dir="ltr"
+                autoComplete="username"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="name@trahom.org"
+                className={inputClass}
+              />
+            </label>
+            <label className="block">
+              <span className="block mb-1 text-sm text-foreground/70">كلمة السر</span>
+              <input
+                type="password"
+                required
+                dir="ltr"
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className={inputClass}
+              />
+            </label>
+            <button type="submit" className={`${primaryButton} w-full`} disabled={state === 'sending'}>
+              {state === 'sending' ? 'جارٍ الدخول…' : 'دخول'}
+            </button>
+            {error && <p className="text-rose-600 text-sm">{error}</p>}
+            <button
+              type="button"
+              onClick={() => {
+                setMode('link');
+                setError('');
+              }}
+              className="text-sm text-foreground/60 hover:text-foreground underline"
+            >
+              نسيت كلمة السر؟ أرسل لي رابط دخول على الإيميل
+            </button>
+          </form>
+        ) : state === 'sent' ? (
           <p className="leading-relaxed text-foreground/80">
             إذا كان هذا البريد مسجّلًا في اللوحة، فقد وصلك الآن رابط الدخول. افتح بريدك واضغط على الرابط خلال 15 دقيقة.
           </p>
         ) : (
-          <form onSubmit={submit} className="space-y-4">
-            {expired && (
-              <p className="rounded-xl bg-amber-50 text-amber-800 p-3 text-sm">
-                رابط الدخول منتهي الصلاحية أو غير صالح. اطلب رابطًا جديدًا.
-              </p>
-            )}
+          <form onSubmit={sendLink} className="space-y-4">
             <p className="text-foreground/70">اكتب بريدك الإلكتروني، وسنرسل لك رابط دخول لمرة واحدة.</p>
             <input
               type="email"
@@ -207,7 +273,10 @@ function SignIn() {
             <button type="submit" className={`${primaryButton} w-full`} disabled={state === 'sending'}>
               {state === 'sending' ? 'جارٍ الإرسال…' : 'أرسل رابط الدخول'}
             </button>
-            {state === 'error' && <p className="text-rose-600 text-sm">تعذّر الإرسال. حاول مرة أخرى.</p>}
+            {error && <p className="text-rose-600 text-sm">{error}</p>}
+            <button type="button" onClick={() => setMode('password')} className="text-sm text-foreground/60 hover:text-foreground underline">
+              الرجوع إلى الدخول بكلمة السر
+            </button>
           </form>
         )}
       </div>
@@ -413,6 +482,154 @@ function PostForm({
   );
 }
 
+// ---------- sponsored orphans ----------
+
+type SponsoredEntry = { code: string; at: string; by: string };
+
+function OrphansPanel() {
+  const [query, setQuery] = useState('');
+  const [found, setFound] = useState<{ code: string; description: string; alreadySponsored: boolean } | null>(null);
+  const [entries, setEntries] = useState<SponsoredEntry[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+
+  const load = useCallback(async () => {
+    try {
+      const data = await call('sponsored');
+      setEntries(data.entries ?? []);
+    } catch (loadError) {
+      setError(messageFor(loadError));
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const lookup = async (event: FormEvent) => {
+    event.preventDefault();
+    setBusy(true);
+    setError('');
+    setMessage('');
+    setFound(null);
+    try {
+      setFound(await call('orphan-lookup', { query }));
+    } catch (lookupError) {
+      setError(messageFor(lookupError));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const setSponsored = async (code: string, sponsored: boolean) => {
+    setBusy(true);
+    setError('');
+    try {
+      await call(sponsored ? 'orphan-sponsored' : 'orphan-available', { code });
+      setMessage(
+        sponsored
+          ? `تم إخفاء الملف ${code} من صفحة الكفالة. يختفي من الموقع خلال دقيقة تقريبًا.`
+          : `تمت إعادة الملف ${code} إلى صفحة الكفالة. يظهر خلال دقيقة تقريبًا.`
+      );
+      setFound(null);
+      setQuery('');
+      await load();
+    } catch (failure) {
+      setError(messageFor(failure));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+        <h2 className="text-xl">تمت كفالة يتيم</h2>
+        <p className="text-foreground/70 text-sm leading-relaxed">
+          اكتب رمز الملف أو رقم هوية اليتيم. ستظهر لك بياناته المختصرة للتأكد، ثم يُخفى من صفحة «كفالة يتيم» على الموقع. لا يتغيّر شيء في جدول الأيتام نفسه.
+        </p>
+        <form onSubmit={lookup} className="flex flex-wrap gap-3">
+          <input
+            dir="ltr"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="JZQOBYK أو رقم الهوية"
+            className={`${inputClass} flex-1 min-w-[220px]`}
+            autoComplete="off"
+          />
+          <button type="submit" className={primaryButton} disabled={busy || query.trim().length < 3}>
+            {busy ? 'جارٍ البحث…' : 'بحث'}
+          </button>
+        </form>
+
+        {found && (
+          <div className="rounded-xl border border-black/10 p-4 space-y-3">
+            <div className="font-medium" dir="ltr">
+              {found.code}
+            </div>
+            {found.description && (
+              <p dir="auto" className="text-sm text-foreground/70 text-start">
+                {found.description}
+              </p>
+            )}
+            {found.alreadySponsored ? (
+              <p className="text-sm text-amber-800">هذا الملف مخفي من الموقع مسبقًا.</p>
+            ) : (
+              <div className="flex flex-wrap gap-3">
+                <button type="button" className={primaryButton} disabled={busy} onClick={() => setSponsored(found.code, true)}>
+                  تأكيد: تمت كفالته، أخفِه من الموقع
+                </button>
+                <button type="button" className={secondaryButton} disabled={busy} onClick={() => setFound(null)}>
+                  إلغاء
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {message && <p className="rounded-xl bg-emerald-50 text-emerald-800 p-3 text-sm">{message}</p>}
+        {error && <p className="rounded-xl bg-rose-50 text-rose-700 p-3 text-sm">{error}</p>}
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-sm">
+        <h3 className="p-5 pb-3 font-medium">الملفات المخفية لأنها كُفلت ({entries.length})</h3>
+        {entries.length === 0 ? (
+          <p className="px-5 pb-5 text-foreground/60 text-sm">لا يوجد ملفات مخفية بعد.</p>
+        ) : (
+          <div className="divide-y divide-black/5">
+            {entries.map((entry) => (
+              <div key={entry.code} className="px-5 py-3 flex flex-wrap items-center justify-between gap-3 text-sm">
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  <span className="font-medium" dir="ltr">
+                    {entry.code}
+                  </span>
+                  <span className="text-foreground/60">{formatDate(entry.at)}</span>
+                  <span className="text-foreground/50" dir="ltr">
+                    {entry.by}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  disabled={busy}
+                  className="rounded-lg bg-black/5 px-3 py-1.5"
+                  onClick={() => {
+                    if (window.confirm(`إعادة الملف ${entry.code} إلى صفحة الكفالة؟`)) {
+                      void setSponsored(entry.code, false);
+                    }
+                  }}
+                >
+                  إعادته للموقع
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ---------- main ----------
 
 export function AdminApp() {
@@ -424,7 +641,7 @@ export function AdminApp() {
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [busyId, setBusyId] = useState('');
-  const [view, setView] = useState<'posts' | 'audit'>('posts');
+  const [view, setView] = useState<'posts' | 'orphans' | 'audit'>('posts');
   const [auditEntries, setAuditEntries] = useState<AuditEntry[]>([]);
 
   const loadPosts = useCallback(async () => {
@@ -481,7 +698,7 @@ export function AdminApp() {
     );
   }
   if (!user) {
-    return <SignIn />;
+    return <SignIn onSignedIn={setUser} />;
   }
 
   const changeStatus = async (post: Post, status: Status) => {
@@ -563,7 +780,7 @@ export function AdminApp() {
 
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setView('posts')}
@@ -571,6 +788,15 @@ export function AdminApp() {
             >
               من الميدان
             </button>
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => setView('orphans')}
+                className={`rounded-lg px-4 py-2 ${view === 'orphans' ? 'bg-white shadow-sm' : 'text-foreground/60'}`}
+              >
+                الأيتام المكفولون
+              </button>
+            )}
             {isAdmin && (
               <button
                 type="button"
@@ -598,7 +824,9 @@ export function AdminApp() {
         {notice && <p className="rounded-xl bg-emerald-50 text-emerald-800 p-3">{notice}</p>}
         {error && <p className="rounded-xl bg-rose-50 text-rose-700 p-3">{error}</p>}
 
-        {view === 'audit' ? (
+        {view === 'orphans' ? (
+          <OrphansPanel />
+        ) : view === 'audit' ? (
           <div className="bg-white rounded-2xl shadow-sm divide-y divide-black/5">
             {auditEntries.length === 0 && <p className="p-6 text-foreground/60">لا يوجد نشاط بعد.</p>}
             {auditEntries.map((entry) => (

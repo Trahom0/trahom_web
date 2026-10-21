@@ -1,9 +1,11 @@
 // Website admin ("لوحة الموقع") — one function for every admin action, so the site stays within the
 // function limits. Used by the page at /admin.
 //
-// Sign-in: the person types their email; if it is on the allow-list, a one-time sign-in link is emailed to
-// them (valid 15 minutes, works once). Opening it sets a signed session cookie (valid 7 days). There are
-// no passwords. To sign everyone out at once, change ADMIN_SECRET. Use a different ADMIN_SECRET and Blob
+// Sign-in: email + password. Passwords are never stored: ADMIN_PASSWORDS holds only scrypt hashes, made on the
+// owner's own computer with `node scripts/admin-password.mjs`. A correct password sets a signed session
+// cookie (valid 30 days). Wrong attempts are slowed down and limited. As a backup (e.g. a forgotten
+// password), a one-time sign-in link can still be emailed (valid 15 minutes, works once).
+// To sign everyone out at once, change ADMIN_SECRET. Use a different ADMIN_SECRET and Blob
 // store for Preview deployments than for Production.
 //
 // Roles:
@@ -17,13 +19,17 @@
 //   feed/feed.json             the published posts the homepage reads, rebuilt after every change
 //   audit/<time>-<random>.json who did what and when
 //   used/<nonce>-<random>      marks sign-in links that were already used
+//   orphans/sponsored.json     codes of orphans that now have a sponsor; the sponsorship page hides them.
+//                              Only codes are stored here, never names or ID numbers.
 //
 // Required environment variables (Vercel → Settings → Environment Variables, Production):
 //   ADMIN_SECRET   a long random string (at least 32 characters). Changing it signs everyone out.
 //   ADMIN_EMAILS   comma-separated, e.g. info@trahom.org
 //   EDITOR_EMAILS  optional, comma-separated
+//   ADMIN_PASSWORDS  one entry per person, separated by ";": email=scrypt$… (the line printed by
+//                    scripts/admin-password.mjs). People without an entry can only use the emailed link.
 //   RESEND_API_KEY / RESEND_FROM_EMAIL — already set for the contact form; used for sign-in links and notices.
-import { createHmac, randomBytes, timingSafeEqual } from 'crypto';
+import { createHmac, randomBytes, scrypt, timingSafeEqual } from 'crypto';
 import { del, list, put } from '@vercel/blob';
 
 const ADMIN_SECRET = process.env.ADMIN_SECRET ?? '';
@@ -31,7 +37,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL;
 const SITE_HOSTS = ['trahom.org', 'www.trahom.org'];
 const SESSION_COOKIE = 'th_admin';
-const SESSION_DAYS = 7;
+const SESSION_DAYS = 30;
 const LINK_MINUTES = 15;
 const MAX_JSON_BYTES = 50_000;
 const MAX_UPLOAD_BYTES = 4_000_000; // Vercel's request limit is 4.5 MB; the page shrinks photos before sending.
@@ -122,6 +128,54 @@ const readCookie = (req: any, name: string) => {
     }
   }
   return '';
+};
+
+// ---------- passwords ----------
+
+const scryptAsync = (password: string, salt: Buffer, N: number, r: number, p: number) =>
+  new Promise<Buffer>((resolve, reject) =>
+    scrypt(password.normalize('NFKC'), salt, 64, { N, r, p, maxmem: 256 * 1024 * 1024 }, (error, key) =>
+      error ? reject(error) : resolve(key)
+    )
+  );
+
+const passwordHashFor = (email: string) => {
+  for (const entry of (process.env.ADMIN_PASSWORDS ?? '').split(';')) {
+    const index = entry.indexOf('=');
+    if (index > 0 && entry.slice(0, index).trim().toLowerCase() === email) {
+      return entry.slice(index + 1).trim();
+    }
+  }
+  return '';
+};
+
+// A fixed dummy hash, so an unknown email takes as long to check as a known one.
+const DUMMY_HASH = `scrypt$16384$8$1$${Buffer.alloc(16, 7).toString('base64')}$${Buffer.alloc(64, 7).toString('base64')}`;
+
+const checkPassword = async (password: string, stored: string) => {
+  const [kind, n, r, p, saltB64, hashB64] = (stored || DUMMY_HASH).split('$');
+  const N = Number(n);
+  if (kind !== 'scrypt' || !saltB64 || !hashB64 || !Number.isInteger(N) || N < 16384 || N > 1048576) {
+    return false;
+  }
+  const expected = Buffer.from(hashB64, 'base64');
+  const actual = await scryptAsync(password, Buffer.from(saltB64, 'base64'), N, Number(r) || 8, Number(p) || 1);
+  return Boolean(stored) && expected.length === actual.length && timingSafeEqual(expected, actual);
+};
+
+// Failed attempts per email and per network address (per server instance, on top of the firewall).
+const failedLogins = new Map<string, number[]>();
+const recentFailures = (key: string) => {
+  const now = Date.now();
+  const list = (failedLogins.get(key) ?? []).filter((time) => now - time < 15 * 60 * 1000);
+  failedLogins.set(key, list);
+  return list.length;
+};
+const recordFailure = (key: string) => {
+  if (failedLogins.size > 5000) {
+    failedLogins.clear();
+  }
+  failedLogins.set(key, [...(failedLogins.get(key) ?? []), Date.now()]);
 };
 
 const isProduction = () => process.env.VERCEL_ENV === 'production';
@@ -410,6 +464,43 @@ const requestLink = async (req: any, res: any) => {
   await answer();
 };
 
+const sessionCookie = (email: string) => {
+  const session = makeToken('session', { e: email, exp: Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000 });
+  return `${SESSION_COOKIE}=${session}; Path=/api/admin; HttpOnly; ${isProduction() ? 'Secure; ' : ''}SameSite=Strict; Max-Age=${SESSION_DAYS * 24 * 60 * 60}`;
+};
+
+const passwordLogin = async (req: any, res: any) => {
+  const startedAt = Date.now();
+  const body = await readJsonBody(req, MAX_JSON_BYTES);
+  const email = oneLine(text(body?.email, 200)).toLowerCase();
+  const password = typeof body?.password === 'string' ? body.password.slice(0, 200) : '';
+  const ip = String(req.headers?.['x-forwarded-for'] ?? '').split(',')[0].trim() || 'unknown';
+  // Every answer takes about the same time, so timing reveals nothing.
+  const finish = async (status: number, payload: Record<string, unknown>) => {
+    const wait = 900 + Math.floor(Math.random() * 300) - (Date.now() - startedAt);
+    if (wait > 0) {
+      await new Promise((resolve) => setTimeout(resolve, wait));
+    }
+    res.status(status).json(payload);
+  };
+
+  if (recentFailures(`email:${email}`) >= 5 || recentFailures(`ip:${ip}`) >= 10) {
+    await finish(429, { error: 'too-many-attempts' });
+    return;
+  }
+  const role = roleOf(email);
+  const valid = (await checkPassword(password, role ? passwordHashFor(email) : '')) && Boolean(role) && password.length > 0;
+  if (!valid) {
+    recordFailure(`email:${email}`);
+    recordFailure(`ip:${ip}`);
+    await finish(401, { error: 'wrong-login' });
+    return;
+  }
+  res.setHeader('Set-Cookie', sessionCookie(email));
+  await audit(email, 'sign-in:password', '');
+  await finish(200, { email, role });
+};
+
 const verifyLink = async (req: any, res: any) => {
   const url = new URL(String(req.url ?? ''), 'https://trahom.org');
   const data = readToken('login', url.searchParams.get('t') ?? '');
@@ -424,11 +515,7 @@ const verifyLink = async (req: any, res: any) => {
     return;
   }
   await put(`used/${nonce}`, '1', { access: 'public', addRandomSuffix: true, contentType: 'text/plain' });
-  const session = makeToken('session', { e: email, exp: Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000 });
-  res.setHeader(
-    'Set-Cookie',
-    `${SESSION_COOKIE}=${session}; Path=/api/admin; HttpOnly; ${isProduction() ? 'Secure; ' : ''}SameSite=Strict; Max-Age=${SESSION_DAYS * 24 * 60 * 60}`
-  );
+  res.setHeader('Set-Cookie', sessionCookie(email));
   res.setHeader('Cache-Control', 'no-store');
   res.statusCode = 302;
   res.setHeader('Location', '/admin');
@@ -635,6 +722,177 @@ const uploadAction = async (req: any, res: any, user: { email: string; role: Rol
   res.status(200).json({ url: blob.url });
 };
 
+// ---------- sponsored orphans ----------
+// The orphan list comes from the team's Google Sheet (ORPHANS_CSV_URL). Marking an orphan as sponsored here
+// hides it from the sponsorship page within about a minute, without editing the sheet.
+
+const SPONSORED_FILE = 'orphans/sponsored.json';
+
+type SponsoredEntry = { code: string; at: string; by: string };
+
+const parseCsv = (input: string) => {
+  const rows: string[][] = [];
+  let current = '';
+  let row: string[] = [];
+  let inQuotes = false;
+  for (let index = 0; index < input.length; index += 1) {
+    const char = input[index];
+    if (char === '"') {
+      if (inQuotes && input[index + 1] === '"') {
+        current += '"';
+        index += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+    if (char === ',' && !inQuotes) {
+      row.push(current);
+      current = '';
+      continue;
+    }
+    if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && input[index + 1] === '\n') {
+        index += 1;
+      }
+      row.push(current);
+      if (row.some((cell) => cell.trim() !== '')) {
+        rows.push(row);
+      }
+      row = [];
+      current = '';
+      continue;
+    }
+    current += char;
+  }
+  if (current.length || row.length) {
+    row.push(current);
+    if (row.some((cell) => cell.trim() !== '')) {
+      rows.push(row);
+    }
+  }
+  return rows;
+};
+
+// Arabic/Persian digits → Latin, no spaces or dashes, case-insensitive.
+const normalizeKey = (value: string) =>
+  value
+    .replace(/[\u0660-\u0669]/g, (digit) => String(digit.charCodeAt(0) - 0x0660))
+    .replace(/[\u06f0-\u06f9]/g, (digit) => String(digit.charCodeAt(0) - 0x06f0))
+    .replace(/[\s\-_.]/g, '')
+    .toLowerCase();
+
+type OrphanRow = { code: string; ids: string[]; description: string };
+
+// Reads the sheet on the server. Only the code and a short description ever leave this function's callers;
+// ID numbers are used for matching only.
+const loadOrphanRows = async (): Promise<OrphanRow[]> => {
+  const url = process.env.ORPHANS_CSV_URL;
+  if (!url) {
+    throw new Error('ORPHANS_CSV_URL missing');
+  }
+  const response = await fetch(url, { signal: AbortSignal.timeout(8_000) });
+  if (!response.ok) {
+    throw new Error(`Orphan sheet fetch failed with ${response.status}`);
+  }
+  const rows = parseCsv(await response.text());
+  const headers = (rows[0] ?? []).map((header) => header.trim().toLowerCase().replace(/[_\s]+/g, ' '));
+  const codeIndex = headers.findIndex((header) => ['code', 'id', 'orphan code'].includes(header));
+  const idIndexes = headers
+    .map((header, index) => (/national|identity|id number|id no|هوية|رقم الهوية/.test(header) && index !== codeIndex ? index : -1))
+    .filter((index) => index >= 0);
+  const descriptionIndex = headers.findIndex((header) => ['description ar', 'discription ar', 'description', 'discription'].includes(header));
+  if (codeIndex < 0) {
+    throw new Error('Orphan sheet has no code column');
+  }
+  return rows.slice(1).map((row) => ({
+    code: (row[codeIndex] ?? '').trim().slice(0, 40),
+    ids: idIndexes.map((index) => normalizeKey(row[index] ?? '')).filter((id) => id.length >= 5),
+    description: descriptionIndex >= 0 ? (row[descriptionIndex] ?? '').trim().slice(0, 160) : ''
+  })).filter((row) => row.code);
+};
+
+const readSponsored = async (): Promise<SponsoredEntry[]> => {
+  const files = await listAll(SPONSORED_FILE);
+  const file = files.find((item) => item.pathname === SPONSORED_FILE);
+  if (!file) {
+    return [];
+  }
+  // The file is overwritten in place, so skip the CDN copy to always read the latest list.
+  const data = await readJsonUrl(`${file.url}?v=${Date.now()}`);
+  return Array.isArray(data?.entries) ? data.entries : [];
+};
+
+const writeSponsored = async (entries: SponsoredEntry[]) => {
+  await put(SPONSORED_FILE, JSON.stringify({ updatedAt: new Date().toISOString(), codes: entries.map((entry) => entry.code), entries }), {
+    access: 'public',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: 'application/json',
+    cacheControlMaxAge: 60
+  });
+};
+
+const sponsoredListAction = async (res: any, user: { email: string; role: Role }) => {
+  if (user.role !== 'admin') {
+    res.status(403).json({ error: 'forbidden' });
+    return;
+  }
+  res.status(200).json({ entries: await readSponsored() });
+};
+
+// Step 1: find the orphan by code or ID number, so the admin can check it is the right child before hiding.
+const orphanLookupAction = async (req: any, res: any, user: { email: string; role: Role }) => {
+  if (user.role !== 'admin') {
+    res.status(403).json({ error: 'forbidden' });
+    return;
+  }
+  const body = await readJsonBody(req, MAX_JSON_BYTES);
+  const query = normalizeKey(text(body?.query, 60));
+  if (query.length < 3) {
+    res.status(400).json({ error: 'invalid' });
+    return;
+  }
+  const rows = await loadOrphanRows();
+  const match = rows.find((row) => normalizeKey(row.code) === query) ?? rows.find((row) => row.ids.includes(query));
+  if (!match) {
+    res.status(404).json({ error: 'orphan-not-found' });
+    return;
+  }
+  const already = (await readSponsored()).some((entry) => entry.code === match.code);
+  res.status(200).json({ code: match.code, description: match.description, alreadySponsored: already });
+};
+
+// Step 2: hide (or show again) a confirmed code.
+const setSponsoredAction = async (req: any, res: any, user: { email: string; role: Role }, sponsored: boolean) => {
+  if (user.role !== 'admin') {
+    res.status(403).json({ error: 'forbidden' });
+    return;
+  }
+  const body = await readJsonBody(req, MAX_JSON_BYTES);
+  const code = text(body?.code, 40);
+  if (!code) {
+    res.status(400).json({ error: 'invalid' });
+    return;
+  }
+  const entries = await readSponsored();
+  const exists = entries.some((entry) => entry.code === code);
+  if (sponsored) {
+    if (!exists) {
+      if (!(await loadOrphanRows()).some((row) => row.code === code)) {
+        res.status(404).json({ error: 'orphan-not-found' });
+        return;
+      }
+      entries.unshift({ code, at: new Date().toISOString(), by: user.email });
+      await writeSponsored(entries);
+    }
+  } else if (exists) {
+    await writeSponsored(entries.filter((entry) => entry.code !== code));
+  }
+  await audit(user.email, sponsored ? 'orphan:sponsored' : 'orphan:available-again', '', code);
+  res.status(200).json({ ok: true });
+};
+
 const auditAction = async (res: any, user: { email: string; role: Role }) => {
   if (user.role !== 'admin') {
     res.status(403).json({ error: 'forbidden' });
@@ -667,6 +925,11 @@ export default async function handler(req: any, res: any) {
       return;
     }
 
+    if (req.method === 'POST' && action === 'login') {
+      await passwordLogin(req, res);
+      return;
+    }
+
     if (req.method === 'POST' && action === 'request-link') {
       await requestLink(req, res);
       return;
@@ -691,6 +954,22 @@ export default async function handler(req: any, res: any) {
     if (req.method === 'GET' && action === 'posts') {
       const { posts } = await loadPosts();
       res.status(200).json({ posts });
+      return;
+    }
+    if (req.method === 'GET' && action === 'sponsored') {
+      await sponsoredListAction(res, user);
+      return;
+    }
+    if (req.method === 'POST' && action === 'orphan-lookup') {
+      await orphanLookupAction(req, res, user);
+      return;
+    }
+    if (req.method === 'POST' && action === 'orphan-sponsored') {
+      await setSponsoredAction(req, res, user, true);
+      return;
+    }
+    if (req.method === 'POST' && action === 'orphan-available') {
+      await setSponsoredAction(req, res, user, false);
       return;
     }
     if (req.method === 'GET' && action === 'audit') {

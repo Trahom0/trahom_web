@@ -63,6 +63,30 @@ const parseCsv = (text: string) => {
   return rows;
 };
 
+// Codes the team marked as sponsored in the website admin (/admin). They are hidden from this page.
+// The file holds codes only. If it cannot be read, the page still works and simply shows everyone.
+const sponsoredCodes = async (): Promise<Set<string>> => {
+  const fromEnv = process.env.BLOB_STORE_ID ?? '';
+  const fromToken = (process.env.BLOB_READ_WRITE_TOKEN ?? '').split('_')[3] ?? '';
+  const storeId = (fromEnv || fromToken).replace(/^store_/, '');
+  if (!/^[A-Za-z0-9]+$/.test(storeId)) {
+    return new Set();
+  }
+  try {
+    const response = await fetch(`https://${storeId}.public.blob.vercel-storage.com/orphans/sponsored.json`, {
+      signal: AbortSignal.timeout(4_000)
+    });
+    if (!response.ok) {
+      return new Set();
+    }
+    const data = await response.json();
+    return new Set(Array.isArray(data?.codes) ? data.codes.map((code: unknown) => String(code)) : []);
+  } catch (error) {
+    console.error('Sponsored list could not be read', error);
+    return new Set();
+  }
+};
+
 const normalize = (value: string) => value.trim().toLowerCase().replace(/[_\s]+/g, ' ');
 
 // Returns null when the text is not the expected sheet (e.g. a Google sign-in page).
@@ -125,14 +149,15 @@ export default async function handler(req: any, res: any) {
       return;
     }
 
-    const profiles = buildProfiles(await response.text());
+    const [built, sponsored] = await Promise.all([response.text().then(buildProfiles), sponsoredCodes()]);
+    const profiles = built ? built.filter((profile) => !sponsored.has(profile.code)) : null;
     if (!profiles) {
       console.error('Orphan sheet did not contain the expected columns');
       res.status(502).json({ error: 'Unable to load profiles' });
       return;
     }
-    // Cache on Vercel's edge for 5 minutes so the sheet is not hit on every visit.
-    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
+    // Cache on Vercel's edge for 1 minute: an orphan marked as sponsored disappears within about a minute.
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     res.status(200).json({ profiles });
   } catch (error) {
     console.error('Orphan profiles failed', error);

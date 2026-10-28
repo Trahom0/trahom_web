@@ -10,8 +10,8 @@ export const campaigns = {
       label: 'Campaigns performed'
     },
     activeDonors: {
-      number: '3,375+',
-      label: 'Orphans sponsored'
+      number: '4,050+',
+      label: 'Families supported in winter'
     },
     peopleHelped: {
       number: '300k+',
@@ -24,15 +24,14 @@ export const campaigns = {
   },
   items: [
     {
-      id: 'orphan-sponsorship',
-      title: 'Orphan Sponsorship',
-      description: 'Provide education, healthcare, and a loving home for orphaned children.',
-      goal: '$1.25M',
-      percentage: 2,
-      primaryBadge: '3,375+ sponsored',
-      color: 'bg-[#4A90E2]',
-      category: 'Education',
-      sponsorCta: true
+      id: 'winter-campaign',
+      title: 'Winter Campaign',
+      description: 'Deliver warm clothing, blankets, and heating supplies to families in need.',
+      goal: '$120,000',
+      percentage: 56,
+      primaryBadge: '4,050+ families supported',
+      color: 'bg-[#F5A623]',
+      category: 'Emergency'
     },
     {
       id: 'water',
@@ -45,16 +44,6 @@ export const campaigns = {
       category: 'Water & Sanitation'
     },
     {
-      id: 'winter-campaign',
-      title: 'Winter Campaign',
-      description: 'Deliver warm clothing, blankets, and heating supplies to families in need.',
-      goal: '$120,000',
-      percentage: 56,
-      primaryBadge: '4,050+ families supported',
-      color: 'bg-[#F5A623]',
-      category: 'Emergency'
-    },
-    {
       id: 'food-security',
       title: 'Food Security Program',
       description: 'Providing meals and food support to families facing loss and displacement.',
@@ -63,6 +52,17 @@ export const campaigns = {
       primaryBadge: '160k+ meals served',
       color: 'bg-[#A8D5E2]',
       category: 'Food Security'
+    },
+    {
+      id: 'orphan-sponsorship',
+      title: 'Orphan Sponsorship',
+      description: 'Provide education, healthcare, and a loving home for orphaned children.',
+      goal: '$1.25M',
+      percentage: 2,
+      primaryBadge: '3,375+ sponsored',
+      color: 'bg-[#4A90E2]',
+      category: 'Education',
+      sponsorCta: true
     }
   ],
   cta: {

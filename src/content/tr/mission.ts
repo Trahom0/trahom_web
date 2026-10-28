@@ -39,11 +39,6 @@ export const mission = {
     description: 'Programlarımız, ertelenemeyen insani ihtiyaçlara odaklanır.',
     items: [
       {
-        title: 'Yetim bakımı ve sponsorluğu',
-        description: 'Yetim çocuklara düzenli takip, eğitim desteği ve sağlık yönlendirmesiyle güvenli bir çerçeve sunarız.',
-        stats: '3.375+ sponsorlu yetim · düzenli takip'
-      },
-      {
         title: 'Acil gıda desteği',
         description: 'Yerinden edilmiş ve gıdaya erişimi olmayan ailelere hızlı ve düzenli gıda desteği sağlarız.',
         stats: '22.000+ gıda paketi · 160 bin öğün'
@@ -57,6 +52,11 @@ export const mission = {
         title: 'Sağlık desteği',
         description: 'En kırılgan durumdaki aileler için acil tıbbi destek ve takip sağlar, hayatı korumaya odaklanırız.',
         stats: '68 cerrahi müdahale · sürekli sağlık desteği'
+      },
+      {
+        title: 'Yetim bakımı ve sponsorluğu',
+        description: 'Yetim çocuklara düzenli takip, eğitim desteği ve sağlık yönlendirmesiyle güvenli bir çerçeve sunarız.',
+        stats: '3.375+ sponsorlu yetim · düzenli takip'
       }
     ]
   },

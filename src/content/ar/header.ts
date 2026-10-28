@@ -37,6 +37,7 @@ export const header = {
       "label": "تواصل"
     }
   ],
+  "allCampaignsLabel": "كل الحملات",
   "topLinks": [
     {
       "key": "family-signup",

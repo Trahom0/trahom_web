@@ -3,6 +3,7 @@ import logoImage from '../../assets/logo and qr code.svg';
 import { content } from '../../content';
 import { actionPaths, getPathForPage, localizePath, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { SocialLinks } from './SocialLinks';
+import { ConsentBanner, openConsentSettings } from './ConsentBanner';
 
 type SiteFooterProps = {
   onNavigate?: (page: PageKey) => void;
@@ -76,9 +77,13 @@ export function SiteFooter({ onNavigate, language }: SiteFooterProps) {
           <div className="flex gap-6">
             <a href={getPathForPage('privacy', activeLanguage)} className="hover:text-foreground transition-colors" onClick={handleNavClick('privacy')}>{footerContent.bottom.privacy}</a>
             <a href={getPathForPage('terms', activeLanguage)} className="hover:text-foreground transition-colors" onClick={handleNavClick('terms')}>{footerContent.bottom.terms}</a>
+            <button type="button" className="hover:text-foreground transition-colors" onClick={openConsentSettings}>
+              {footerContent.bottom.privacySettings}
+            </button>
           </div>
         </div>
       </div>
+      <ConsentBanner language={activeLanguage} />
     </footer>
   );
 }

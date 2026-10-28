@@ -1,4 +1,5 @@
 import { Heart, Shield, CheckCircle, Lock, DollarSign, Users, Droplets } from 'lucide-react';
+import { rememberPendingDonation, reportCompletedDonation, trackCheckoutStarted } from '../tracking';
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import type { PageKey } from '../routes';
@@ -41,6 +42,10 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
     const status = params.get('status');
     if (status === 'success' || status === 'cancel') {
       setCheckoutStatus(status);
+      if (status === 'success') {
+        // Tells the ad account a donation was completed (amount only), if the visitor allowed it.
+        reportCompletedDonation();
+      }
       // Remove the status from the address so a refresh doesn't show the message again.
       params.delete('status');
       params.delete('session_id');
@@ -122,6 +127,8 @@ export function DonatePage({ onNavigate, language, onLanguageChange }: DonatePag
       // The server may answer with a non-JSON error page; never show its raw text to donors.
       const data = await response.json().catch(() => null);
       if (response.ok && typeof data?.url === 'string' && data.url.startsWith('https://')) {
+        trackCheckoutStarted(amount);
+        rememberPendingDonation(amount, donationType);
         window.location.href = data.url;
         return;
       }

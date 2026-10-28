@@ -51,25 +51,25 @@ export function MissionPage({ onNavigate, language, onLanguageChange }: MissionP
 
   const impactAreas = [
     {
-      icon: HandHeart,
+      icon: Users,
       title: missionContent.impactAreas.items[0].title,
       description: missionContent.impactAreas.items[0].description,
       stats: missionContent.impactAreas.items[0].stats
     },
     {
-      icon: Users,
+      icon: Droplet,
       title: missionContent.impactAreas.items[1].title,
       description: missionContent.impactAreas.items[1].description,
       stats: missionContent.impactAreas.items[1].stats
     },
     {
-      icon: Droplet,
+      icon: Heart,
       title: missionContent.impactAreas.items[2].title,
       description: missionContent.impactAreas.items[2].description,
       stats: missionContent.impactAreas.items[2].stats
     },
     {
-      icon: Heart,
+      icon: HandHeart,
       title: missionContent.impactAreas.items[3].title,
       description: missionContent.impactAreas.items[3].description,
       stats: missionContent.impactAreas.items[3].stats

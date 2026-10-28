@@ -108,9 +108,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     campaigns: {
-      title: 'Gaza Relief Campaigns | Orphan, Water & Food Aid',
+      title: 'Gaza Relief Campaigns | Winter, Water & Food Aid',
       description:
-        'Support active Gaza relief campaigns, including orphan sponsorship, clean water projects, emergency food assistance, and winter aid. Donate zakat or sadaqah.',
+        'Support active Gaza relief campaigns: winter aid, clean water projects, emergency food assistance, and orphan sponsorship. Donate zakat or sadaqah.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gaza relief campaigns',

@@ -5,7 +5,7 @@ export const privacy = {
     description:
       'İnsani çalışmalarımızı yürütürken bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu şeffaf biçimde açıklıyoruz.',
     meta: {
-      updated: 'Son güncelleme: 11 Ekim 2026',
+      updated: 'Son güncelleme: 28 Ekim 2026',
       contact: 'İletişim: info@trahom.org'
     }
   },
@@ -70,6 +70,7 @@ export const privacy = {
       title: 'Kullandığımız üçüncü taraf hizmetler',
       items: [
         'Google Analytics (Google Tag Manager aracılığıyla), siteyi geliştirmek için ziyaretleri ve sayfa görüntülemelerini ölçer. Google kendi çerezlerini kullanabilir; ayrıntılar için Google’ın gizlilik politikasına bakınız.',
+        'Meta Pixel (Facebook), yalnızca gizlilik bildiriminde izin verirseniz farkındalık kampanyalarımızı ölçer. Sayfa ziyaretlerini ve tamamlanan bağışları (yalnızca tutar) kaydeder; formlarımıza yazdıklarınızı asla görmez. Seçiminizi her sayfanın altındaki «Gizlilik ayarları» bölümünden istediğiniz zaman değiştirebilirsiniz.',
         'Stripe bağışları işler. Kart bilgileri doğrudan Stripe’a iletilir ve sunucularımızda saklanmaz.',
         'Tally, yetim kayıt formumuzu barındırır. Bu forma girilen bilgiler Tally’de saklanır ve yalnızca vakaları doğrulamak için ekibimiz tarafından incelenir.',
         'Bize WhatsApp üzerinden yazarsanız, numaranız ve mesajlarınız WhatsApp’ın (Meta) gizlilik politikasına da tabidir.',

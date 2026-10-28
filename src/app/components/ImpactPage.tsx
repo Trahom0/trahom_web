@@ -28,18 +28,18 @@ export function ImpactPage({ onNavigate, language, onLanguageChange }: ImpactPag
   const impactStats = [
     { ...impactContent.stats.items[0], icon: Users, color: 'bg-[#e1a226]' },
     { ...impactContent.stats.items[1], icon: DollarSign, color: 'bg-[#4A90E2]' },
-    { ...impactContent.stats.items[2], icon: Heart, color: 'bg-[#A8D5E2]' },
-    { ...impactContent.stats.items[3], icon: Target, color: 'bg-[#F5A623]' },
-    { ...impactContent.stats.items[4], icon: Droplets, color: 'bg-[#e1a226]' },
-    { ...impactContent.stats.items[5], icon: Building2, color: 'bg-[#4A90E2]' }
+    { ...impactContent.stats.items[2], icon: Target, color: 'bg-[#A8D5E2]' },
+    { ...impactContent.stats.items[3], icon: Droplets, color: 'bg-[#F5A623]' },
+    { ...impactContent.stats.items[4], icon: Building2, color: 'bg-[#e1a226]' },
+    { ...impactContent.stats.items[5], icon: Heart, color: 'bg-[#4A90E2]' }
   ];
 
   const impactByCategory = [
-    { ...impactContent.programs.categories[0], icon: Heart, color: 'bg-[#4A90E2]' },
-    { ...impactContent.programs.categories[1], icon: Users, color: 'bg-[#A8D5E2]' },
-    { ...impactContent.programs.categories[2], icon: Droplets, color: 'bg-[#F5A623]' },
-    { ...impactContent.programs.categories[3], icon: Building2, color: 'bg-[#e1a226]' },
-    { ...impactContent.programs.categories[4], icon: Target, color: 'bg-[#4A90E2]' }
+    { ...impactContent.programs.categories[0], icon: Building2, color: 'bg-[#4A90E2]' },
+    { ...impactContent.programs.categories[1], icon: Droplets, color: 'bg-[#A8D5E2]' },
+    { ...impactContent.programs.categories[2], icon: Users, color: 'bg-[#F5A623]' },
+    { ...impactContent.programs.categories[3], icon: Target, color: 'bg-[#e1a226]' },
+    { ...impactContent.programs.categories[4], icon: Heart, color: 'bg-[#4A90E2]' }
   ];
 
   type SuccessStory = {

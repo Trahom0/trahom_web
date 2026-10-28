@@ -36,9 +36,9 @@ export const donate = {
       title: 'Bağış alanını seçin',
       items: [
         {
-          id: 'orphan-sponsorship',
-          name: 'Yetim sponsorluğu',
-          description: 'Günlük ihtiyaçlar, eğitim ve sağlık takibini kapsayan sürekli bakım.'
+          id: 'winter-campaign',
+          name: 'Kış desteği',
+          description: 'Güvenli barınağı olmayan ve soğukla mücadele eden aileler için giysi, battaniye ve ısınma araçları.'
         },
         {
           id: 'water',
@@ -46,14 +46,14 @@ export const donate = {
           description: 'İçme suyu sağlamak için saha projeleri.'
         },
         {
-          id: 'winter-campaign',
-          name: 'Kış desteği',
-          description: 'Güvenli barınağı olmayan ve soğukla mücadele eden aileler için giysi, battaniye ve ısınma araçları.'
-        },
-        {
           id: 'food-security',
           name: 'Gıda güvenliği',
           description: 'YEtkilenen ailelere, çocuklar ve yaşlılara öncelik verilerek yemek ve gıda kolileri sağlanması.'
+        },
+        {
+          id: 'orphan-sponsorship',
+          name: 'Yetim sponsorluğu',
+          description: 'Günlük ihtiyaçlar, eğitim ve sağlık takibini kapsayan sürekli bakım.'
         }
       ]
     },
@@ -127,8 +127,8 @@ export const donate = {
     title: 'Bağışların sahadaki karşılığı',
     items: [
       { number: '300 bin+', label: 'Toplam ulaşılan kişi' },
-      { number: '3.375+', label: 'Yetim sponsorluğu' },
-      { number: '160 bin+', label: 'Dağıtılan öğün' }
+      { number: '160 bin+', label: 'Dağıtılan öğün' },
+      { number: '3.375+', label: 'Yetim sponsorluğu' }
     ]
   }
 } as const;

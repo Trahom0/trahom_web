@@ -36,9 +36,9 @@ export const donate = {
       title: 'Choose a Cause',
       items: [
         {
-          id: 'orphan-sponsorship',
-          name: 'Orphan Sponsorship',
-          description: 'Provide education, healthcare, and a loving home for orphaned children.'
+          id: 'winter-campaign',
+          name: 'Winter Campaign',
+          description: 'Deliver warm clothing, blankets, and heating supplies to families in need.'
         },
         {
           id: 'water',
@@ -46,14 +46,14 @@ export const donate = {
           description: 'Build wells and water purification systems in communities without access.'
         },
         {
-          id: 'winter-campaign',
-          name: 'Winter Campaign',
-          description: 'Deliver warm clothing, blankets, and heating supplies to families in need.'
-        },
-        {
           id: 'food-security',
           name: 'Food Security Program',
           description: 'Providing meals and food support to families facing loss and displacement.'
+        },
+        {
+          id: 'orphan-sponsorship',
+          name: 'Orphan Sponsorship',
+          description: 'Provide education, healthcare, and a loving home for orphaned children.'
         }
       ]
     },
@@ -127,8 +127,8 @@ export const donate = {
     title: 'Your Donations at Work',
     items: [
       { number: '300k+', label: 'Total Reach' },
-      { number: '3,375+', label: 'Orphan Sponsorships' },
-      { number: '160k+', label: 'Ready Meals Served' }
+      { number: '160k+', label: 'Ready Meals Served' },
+      { number: '3,375+', label: 'Orphan Sponsorships' }
     ]
   }
 } as const;

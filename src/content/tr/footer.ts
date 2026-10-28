@@ -33,6 +33,7 @@ export const footer = {
   bottom: {
     copyright: '© 2026 Trahom. Tüm hakları saklıdır.',
     privacy: 'Gizlilik Politikası',
+    privacySettings: 'Gizlilik ayarları',
     terms: 'Kullanım Şartları'
   }
 } as const;

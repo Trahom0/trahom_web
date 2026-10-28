@@ -16,6 +16,7 @@ export const header = {
     { key: 'campaigns', label: 'Kampanyalar' },
     { key: 'contact', label: 'İletişim' }
   ],
+  allCampaignsLabel: 'Tüm kampanyalar',
   topLinks: [
     { key: 'family-signup', label: 'Yetim Kaydı' },
     { key: 'sponsor-orphan', label: 'Yetim Sponsorluğu' }

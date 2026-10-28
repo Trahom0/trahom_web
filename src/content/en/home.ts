@@ -1,7 +1,7 @@
 export const home = {
   hero: {
     title: 'Human support, delivered with dignity.',
-    description: 'We work on the ground, every day, connecting people to what they need to survive and rebuild.',
+    description: 'We work on the ground in Gaza every day, bringing winter relief, clean water and food to the families who need it most.',
     ctaLabel: 'Join our mission',
     donorCount: 'Thousands choose to keep giving',
     stats: {
@@ -16,8 +16,8 @@ export const home = {
         color: 'bg-[#A8D5E2]'
       },
       communityCard: {
-        title: 'Community-Led Response',
-        description: 'Continuous care for 3,375+ sponsored orphans, built on follow-up and accountability.',
+        title: 'Clean Water',
+        description: '190k+ people reached through 450+ water distributions and 7 wells repaired or built.',
         color: 'bg-[#F5A623]'
       },
       fundsRaised: {
@@ -32,14 +32,13 @@ export const home = {
     viewAllLabel: 'View all campaigns →',
     cards: [
       {
-        id: 'orphan-sponsorship',
-        title: 'Orphan Sponsorship',
-        description: 'Provide education, healthcare, and a loving home for orphaned children.',
-        goal: '$1.25M',
-        percentage: 2,
-        primaryBadge: '3,375+ sponsored',
-        color: 'bg-[#4A90E2]',
-        sponsorLabel: 'Sponsor'
+        id: 'winter-campaign',
+        title: 'Winter Campaign',
+        description: 'Deliver warm clothing, blankets, and heating supplies to families in need.',
+        goal: '$120,000',
+        percentage: 56,
+        primaryBadge: '4,050+ families supported',
+        color: 'bg-[#F5A623]'
       },
       {
         id: 'water',
@@ -51,13 +50,13 @@ export const home = {
         color: 'bg-[#A8D5E2]'
       },
       {
-        id: 'winter-campaign',
-        title: 'Winter Campaign',
-        description: 'Deliver warm clothing, blankets, and heating supplies to families in need.',
-        goal: '$120,000',
-        percentage: 56,
-        primaryBadge: '4,050+ families supported',
-        color: 'bg-[#F5A623]'
+        id: 'food-security',
+        title: 'Food Security',
+        description: 'Providing meals and food support to families facing loss and displacement.',
+        goal: '$175,000',
+        percentage: 75,
+        primaryBadge: '160k+ meals served',
+        color: 'bg-[#4A90E2]'
       }
     ],
     supportCard: {

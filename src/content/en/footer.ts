@@ -33,6 +33,7 @@ export const footer = {
   bottom: {
     copyright: '© 2026 Trahom. All rights reserved.',
     privacy: 'Privacy Policy',
-    terms: 'Terms of Service'
+    terms: 'Terms of Service',
+    privacySettings: 'Privacy settings'
   }
 } as const;

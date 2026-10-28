@@ -177,19 +177,6 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
             style={{ overflow: 'visible' }}
           >
             <div className="max-w-[1400px] mx-auto px-8 py-3 flex items-center justify-end gap-6 text-sm">
-              <div className="hidden md:flex items-center gap-6">
-                {topLinks.map((item) => (
-                  <a
-                    key={item.key}
-                    href={item.href}
-                    className="text-[#e1a226] font-medium hover:opacity-60 transition-opacity"
-                    onClick={handleNavClick(item.key)}
-                    aria-current={activePage === item.key ? 'page' : undefined}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
               <div className="relative" ref={languageDropdownRef}>
                 <button
                   onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
@@ -250,17 +237,56 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
           <img src={logoImage} alt={content.header.logoAlt} className="h-12 w-auto" />
         </a>
         <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.key}
-              href={item.href}
-              className={getNavClassName(item.key)}
-              onClick={handleNavClick(item.key)}
-              aria-current={activePage === item.key ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) =>
+            item.key === 'campaigns' ? (
+              // "Campaigns" opens a small menu (on hover or keyboard focus) that also holds the orphan pages,
+              // so orphan sponsorship stays reachable without being the headline of every page.
+              <div key={item.key} className="relative group">
+                <a
+                  href={item.href}
+                  className={`${getNavClassName(item.key)} inline-flex items-center gap-1`}
+                  onClick={handleNavClick(item.key)}
+                  aria-current={activePage === item.key ? 'page' : undefined}
+                  aria-haspopup="true"
+                >
+                  {item.label}
+                  <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" aria-hidden="true" />
+                </a>
+                <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity absolute start-0 top-full pt-3 z-[100]">
+                  <div className="bg-white rounded-xl shadow-lg border border-black/5 py-2 min-w-[200px]">
+                    <a
+                      href={item.href}
+                      className="block px-4 py-2.5 hover:bg-[#e1a226]/10 transition-colors"
+                      onClick={handleNavClick(item.key)}
+                    >
+                      {content.header.allCampaignsLabel}
+                    </a>
+                    {topLinks.map((link) => (
+                      <a
+                        key={link.key}
+                        href={link.href}
+                        className={`block px-4 py-2.5 hover:bg-[#e1a226]/10 transition-colors${activePage === link.key ? ' text-[#e1a226] font-semibold' : ''}`}
+                        onClick={handleNavClick(link.key)}
+                        aria-current={activePage === link.key ? 'page' : undefined}
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a
+                key={item.key}
+                href={item.href}
+                className={getNavClassName(item.key)}
+                onClick={handleNavClick(item.key)}
+                aria-current={activePage === item.key ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            )
+          )}
           <PrimaryButton type="button" size="sm" onClick={handleDonateClick}>
             {content.header.donateButton}
           </PrimaryButton>
@@ -306,18 +332,35 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
 
               <nav className="flex-1 flex flex-col justify-start px-8 pt-10 pb-10 gap-8">
                 {navItems.map((item, index) => (
-                  <motion.a
+                  <motion.div
                     key={item.key}
-                    href={item.href}
-                    className="text-4xl font-semibold tracking-tight hover:text-[#e1a226] transition-colors"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 50 }}
                     transition={{ delay: 0.1 + index * 0.05, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                    onClick={handleMenuNavClick(item.key)}
                   >
-                    {item.label}
-                  </motion.a>
+                    <a
+                      href={item.href}
+                      className="text-4xl font-semibold tracking-tight hover:text-[#e1a226] transition-colors"
+                      onClick={handleMenuNavClick(item.key)}
+                    >
+                      {item.label}
+                    </a>
+                    {item.key === 'campaigns' && (
+                      <div className="flex flex-col gap-2 mt-3 ps-4 border-s-2 border-[#e1a226]/40">
+                        {topLinks.map((link) => (
+                          <a
+                            key={link.key}
+                            href={link.href}
+                            className="text-lg text-foreground/70 hover:text-[#e1a226] transition-colors"
+                            onClick={handleMenuNavClick(link.key)}
+                          >
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
                 ))}
 
                 <motion.div
@@ -332,22 +375,6 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                   </PrimaryButton>
                 </motion.div>
 
-                <div className="flex flex-col gap-3">
-                  {topLinks.map((item, index) => (
-                    <motion.a
-                      key={item.key}
-                      href={item.href}
-                      className="text-lg text-[#e1a226] hover:text-[#c78f1f] transition-colors"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 50 }}
-                      transition={{ delay: 0.45 + index * 0.05, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                      onClick={handleMenuNavClick(item.key)}
-                    >
-                      {item.label}
-                    </motion.a>
-                  ))}
-                </div>
               </nav>
 
               <motion.div

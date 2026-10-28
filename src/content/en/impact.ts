@@ -8,10 +8,10 @@ export const impact = {
     items: [
       { number: '300k+', label: 'Total Reach' },
       { number: '150+', label: 'Campaigns performed' },
-      { number: '3,375+', label: 'Orphan Sponsorship' },
       { number: '160k+', label: 'Ready Meals Served' },
       { number: '190k+', label: 'Clean Water Distribution' },
-      { number: '4,050+', label: 'Families supported in winter' }
+      { number: '4,050+', label: 'Families supported in winter' },
+      { number: '3,375+', label: 'Orphan Sponsorship' }
     ]
   },
   programs: {
@@ -19,19 +19,11 @@ export const impact = {
     description: 'Comprehensive results from our core focus areas',
     categories: [
       {
-        category: 'Ongoing Programs',
-        impact: 'Ongoing orphan sponsorships that stay present with families over the long term.',
+        category: 'Shelter & Protection',
+        impact: 'Safe shelter and immediate protection for families displaced by crisis.',
         stats: [
-          { label: 'Orphans sponsored', value: '3,375+' }
-        ]
-      },
-      {
-        category: 'Emergency Food Assistance',
-        impact: 'Rapid food response for families facing loss, displacement, and food insecurity.',
-        stats: [
-          { label: 'Food parcels distributed', value: '22,000+' },
-          { label: 'Ready meals served', value: '160k+' },
-          { label: 'Baby milk provided', value: '1,350+' }
+          { label: 'Families supported in winter', value: '4,050+' },
+          { label: 'Cash distribution', value: '20,000+' }
         ]
       },
       {
@@ -44,11 +36,12 @@ export const impact = {
         ]
       },
       {
-        category: 'Shelter & Protection',
-        impact: 'Safe shelter and immediate protection for families displaced by crisis.',
+        category: 'Emergency Food Assistance',
+        impact: 'Rapid food response for families facing loss, displacement, and food insecurity.',
         stats: [
-          { label: 'Families supported in winter', value: '4,050+' },
-          { label: 'Cash distribution', value: '20,000+' }
+          { label: 'Food parcels distributed', value: '22,000+' },
+          { label: 'Ready meals served', value: '160k+' },
+          { label: 'Baby milk provided', value: '1,350+' }
         ]
       },
       {
@@ -57,6 +50,13 @@ export const impact = {
         stats: [
           { label: 'Child psychological support', value: '9,450+' },
           { label: 'Surgical operations', value: '68' }
+        ]
+      },
+      {
+        category: 'Ongoing Programs',
+        impact: 'Ongoing orphan sponsorships that stay present with families over the long term.',
+        stats: [
+          { label: 'Orphans sponsored', value: '3,375+' }
         ]
       }
     ]

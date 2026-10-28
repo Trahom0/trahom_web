@@ -21,14 +21,15 @@ import { PageLayout } from './components/PageLayout';
 import { PrimaryButton } from './components/PrimaryButton';
 import { LazyVideo } from './components/LazyVideo';
 import { SubscribeForm } from './components/SubscribeForm';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { FieldUpdates } from './components/FieldUpdates';
 import { NotFoundPage } from './components/NotFoundPage';
-import orphanCampaignImage from '../assets/homepage-card-orphan-campaign.jpg';
 import waterCampaignImage from '../assets/homepage-card-water.png';
 import { content, setContentLanguage } from '../content';
 import { actionPaths, getPathForPage, getRouteFromPath, localizePath, pagePaths, type LanguageCode, type PageKey, isPlainLeftClick } from './routes';
 import { cloudinaryVideos } from './cloudinary';
 import { applySeo } from './seo';
+import { trackPageView } from './tracking';
 
 type AppProps = {
   initialPath?: string;
@@ -69,6 +70,8 @@ export default function App({ initialPath }: AppProps) {
 
   useEffect(() => {
     applySeo({ page: currentPage, seo: content.seo, path: getPathForPage(currentPage, language) });
+    // Reported only if the visitor accepted advertising measurement.
+    trackPageView();
   }, [currentPage, language]);
 
   useEffect(() => {
@@ -163,7 +166,11 @@ export default function App({ initialPath }: AppProps) {
       })
       .join(', ');
   const homeCampaignMedia: Record<string, { image: string; videoSrc?: string; imageSrcSet?: string; imageSizes?: string }> = {
-    'orphan-sponsorship': { image: orphanCampaignImage },
+    'food-security': {
+      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGlzdHJpYnV0aW9uJTIwaHVtYW5pdGFyaWFufGVufDF8fHx8MTc2NzUyNjE0MXww&ixlib=rb-4.1.0&q=80&w=1080',
+      imageSizes: campaignImageSizes,
+      videoSrc: cloudinaryVideos.campaignFood
+    },
     water: { image: waterCampaignImage, videoSrc: cloudinaryVideos.campaignWater },
     'winter-campaign': {
       image: 'https://images.unsplash.com/photo-1763123103565-def5bd258217?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3aW50ZXIlMjBjb2xkJTIwd2VhdGhlciUyMGh1bWFuaXRhcmlhbnxlbnwxfHx8fDE3Njc1MjU1NTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
@@ -182,6 +189,7 @@ export default function App({ initialPath }: AppProps) {
   const missionCardColors = ['bg-[#4A90E2]', 'bg-[#A8D5E2]', 'bg-[#F5A623]'];
 
   // Handle page navigation
+  const renderPage = () => {
   if (currentPage === 'family-signup') {
     return <FamilySignUpPage onNavigate={navigateTo} language={language} onLanguageChange={handleLanguageChange} />;
   }
@@ -365,9 +373,6 @@ export default function App({ initialPath }: AppProps) {
                   donateHref={`${localizePath(actionPaths.donate, language)}?cause=${campaign.id}`}
                   onDonateClick={handleDonateWithCause(campaign.id)}
                   onCardClick={handleDonateWithCause(campaign.id)}
-                  sponsorLabel={campaign.sponsorLabel}
-                  sponsorHref={campaign.sponsorLabel ? localizePath(actionPaths.sponsorOrphan, language) : undefined}
-                  onSponsorClick={campaign.sponsorLabel ? handleNavClick('sponsor-orphan') : undefined}
                 />
               </motion.div>
             ))}
@@ -687,5 +692,13 @@ export default function App({ initialPath }: AppProps) {
           </div>
         </motion.div>
     </PageLayout>
+  );
+  };
+
+  return (
+    <>
+      {renderPage()}
+      <WhatsAppButton page={currentPage} />
+    </>
   );
 }

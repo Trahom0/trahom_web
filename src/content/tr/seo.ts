@@ -107,9 +107,9 @@ export const seo = {
       schemaType: 'WebPage'
     },
     campaigns: {
-      title: 'Gazze Yardım Kampanyaları | Yetim, Su ve Gıda Yardımı',
+      title: 'Gazze Yardım Kampanyaları | Kış, Su ve Gıda Yardımı',
       description:
-        'Yetim sponsorluğu, temiz su projeleri, acil gıda yardımı ve kış desteği gibi devam eden Gazze kampanyalarına destek olun. Zekât veya sadaka bağışlayın.',
+        'Kış desteği, temiz su projeleri, acil gıda yardımı ve yetim sponsorluğu gibi devam eden Gazze kampanyalarına destek olun. Zekât veya sadaka bağışlayın.',
       keywords: joinKeywords([
         ...baseKeywords,
         'Gazze yardım kampanyaları',

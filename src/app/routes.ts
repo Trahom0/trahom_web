@@ -105,6 +105,9 @@ export const actionPaths = {
   sponsorOrphan: pagePaths['sponsor-orphan']
 } as const;
 
+// The team's official WhatsApp number (international format, digits only).
+export const whatsappNumber = '972567075706';
+
 export const socialLinks = {
   facebook: '',
   instagram: 'https://www.instagram.com/trahom.charity',

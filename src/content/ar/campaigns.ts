@@ -10,8 +10,8 @@ export const campaigns = {
       "label": "الحملات المنفذة"
     },
     "activeDonors": {
-      "number": "3,375+",
-      "label": "يتيم مكفول"
+      "number": "4,050+",
+      "label": "أسرة وصلها دعم الشتاء"
     },
     "peopleHelped": {
       "number": "300 ألف+",
@@ -24,15 +24,14 @@ export const campaigns = {
   },
   "items": [
     {
-      "id": "orphan-sponsorship",
-      "title": "كفالة الأيتام",
-      "description": "رعاية متواصلة للأطفال الذين فقدوا السند، تشمل الاحتياجات اليومية، والتعليم، والمتابعة الصحية، بما يصون الكرامة ويؤمّن الاستقرار.",
-      "goal": "$1.25M",
-      "percentage": 2,
-      "primaryBadge": "أكثر من 3,375 طفلًا تحت رعاية مباشرة",
-      "color": "bg-[#4A90E2]",
-      "category": "التعليم",
-      "sponsorCta": true
+      "id": "winter-campaign",
+      "title": "حملة الشتاء",
+      "description": "توفير الدفء للأسر التي تواجه البرد دون مأوى آمن، عبر الملابس والأغطية ووسائل التدفئة الأساسية.",
+      "goal": "$120,000",
+      "percentage": 56,
+      "primaryBadge": "دعم مباشر لأكثر من 4,050 أسرة",
+      "color": "bg-[#F5A623]",
+      "category": "إغاثة طارئة"
     },
     {
       "id": "water",
@@ -45,16 +44,6 @@ export const campaigns = {
       "category": "المياه والصرف الصحي"
     },
     {
-      "id": "winter-campaign",
-      "title": "حملة الشتاء",
-      "description": "توفير الدفء للأسر التي تواجه البرد دون مأوى آمن، عبر الملابس والأغطية ووسائل التدفئة الأساسية.",
-      "goal": "$120,000",
-      "percentage": 56,
-      "primaryBadge": "دعم مباشر لأكثر من 4,050 أسرة",
-      "color": "bg-[#F5A623]",
-      "category": "إغاثة طارئة"
-    },
-    {
       "id": "food-security",
       "title": "برنامج الأمن الغذائي",
       "description": "إيصال وجبات منتظمة وطرود غذائية للأسر التي تعيش الفقدان والنزوح، مع إعطاء الأولوية للأطفال وكبار السن.",
@@ -63,6 +52,17 @@ export const campaigns = {
       "primaryBadge": "أكثر من 160 ألف وجبة قُدّمت",
       "color": "bg-[#A8D5E2]",
       "category": "الأمن الغذائي"
+    },
+    {
+      "id": "orphan-sponsorship",
+      "title": "كفالة الأيتام",
+      "description": "رعاية متواصلة للأطفال الذين فقدوا السند، تشمل الاحتياجات اليومية، والتعليم، والمتابعة الصحية، بما يصون الكرامة ويؤمّن الاستقرار.",
+      "goal": "$1.25M",
+      "percentage": 2,
+      "primaryBadge": "أكثر من 3,375 طفلًا تحت رعاية مباشرة",
+      "color": "bg-[#4A90E2]",
+      "category": "التعليم",
+      "sponsorCta": true
     }
   ],
   "cta": {

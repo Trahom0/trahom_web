@@ -39,11 +39,6 @@ export const mission = {
     description: 'Our programs focus on four key areas of humanitarian need.',
     items: [
       {
-        title: 'Orphan Care & Sponsorship',
-        description: 'Supporting orphaned children with safe shelter, daily care, and ongoing sponsorship.',
-        stats: '3,375+ orphans sponsored · ongoing follow-up'
-      },
-      {
         title: 'Emergency Food Assistance',
         description: 'Delivering emergency food parcels and hot meals to families in crisis, plus baby milk for 1,350+ infants.',
         stats: '22,000+ parcels · 160k+ meals'
@@ -57,6 +52,11 @@ export const mission = {
         title: 'Health & Medical Support',
         description: 'Providing urgent medical care, supplies, and follow-up for vulnerable families.',
         stats: '9,450+ children · 68 surgeries'
+      },
+      {
+        title: 'Orphan Care & Sponsorship',
+        description: 'Supporting orphaned children with safe shelter, daily care, and ongoing sponsorship.',
+        stats: '3,375+ orphans sponsored · ongoing follow-up'
       }
     ]
   },

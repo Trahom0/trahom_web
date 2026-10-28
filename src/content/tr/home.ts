@@ -1,7 +1,7 @@
 export const home = {
   hero: {
     title: 'Onurla ulaşan destek, insandan insana.',
-    description: 'Gazze’de ihtiyaçlar büyürken zaman daralıyor. Biz, sahada ailelerle doğrudan temas kurarak gecikmeye tahammülü olmayanı ulaştırmaya çalışıyoruz: gıda, su, sağlık desteği ve insanı ayakta tutan dayanışma. Trahom, sahadan doğan bir inisiyatif; yardımı emanet bilir ve insana yakışır biçimde ulaştırmayı ilke edinir.',
+    description: 'Gazze’de ihtiyaçlar büyürken zaman daralıyor. Biz, sahada ailelerle doğrudan temas kurarak gecikmeye tahammülü olmayanı ulaştırmaya çalışıyoruz: kışın sıcaklık ve barınma, temiz su ve gıda. Trahom, sahadan doğan bir inisiyatif; yardımı emanet bilir ve insana yakışır biçimde ulaştırmayı ilke edinir.',
     ctaLabel: 'Dayanışmaya katıl',
     donorCount: 'Binlerce kişi düzenli destek veriyor',
     stats: {
@@ -16,8 +16,8 @@ export const home = {
         color: 'bg-[#A8D5E2]'
       },
       communityCard: {
-        title: 'Sahadan, toplumla birlikte',
-        description: '3.375+ sponsorlu yetim düzenli takip ve destek alıyor; geçici müdahale değil, süreklilik esas.',
+        title: 'Temiz su',
+        description: '450+ su dağıtımı ve onarılan ya da yeni açılan 7 kuyu ile 190 bin+ kişiye ulaşıldı.',
         color: 'bg-[#F5A623]'
       },
       fundsRaised: {
@@ -32,14 +32,13 @@ export const home = {
     viewAllLabel: 'Tüm kampanyaları gör →',
     cards: [
       {
-        id: 'orphan-sponsorship',
-        title: 'Yetim sponsorluğu',
-        description: 'Yetim çocuklara düzenli destek: temel ihtiyaçlar, eğitim takibi ve sağlık yönlendirmesiyle uzun vadeli bir güven alanı.',
-        goal: '$1.25M',
-        percentage: 2,
-        primaryBadge: '3.375+ çocuk için düzenli destek',
-        color: 'bg-[#4A90E2]',
-        sponsorLabel: 'Sponsor ol'
+        id: 'winter-campaign',
+        title: 'Kış desteği',
+        description: 'Güvenli barınağı olmayan ailelere kıyafet, battaniye ve temel ısınma desteği.',
+        goal: '$120,000',
+        percentage: 56,
+        primaryBadge: '4.050+ aileye doğrudan destek',
+        color: 'bg-[#F5A623]'
       },
       {
         id: 'water',
@@ -51,13 +50,13 @@ export const home = {
         color: 'bg-[#A8D5E2]'
       },
       {
-        id: 'winter-campaign',
-        title: 'Kış desteği',
-        description: 'Güvenli barınağı olmayan ailelere kıyafet, battaniye ve temel ısınma desteği.',
-        goal: '$120,000',
-        percentage: 56,
-        primaryBadge: '4.050+ aileye doğrudan destek',
-        color: 'bg-[#F5A623]'
+        id: 'food-security',
+        title: 'Gıda güvenliği',
+        description: 'Kayıp ve yerinden edilme koşullarında yaşayan ailelere, çocuklar ve yaşlılara öncelik verilerek düzenli öğünler ve gıda kolileri ulaştırılması.',
+        goal: '$175,000',
+        percentage: 75,
+        primaryBadge: '160 bin+ öğün ulaştırıldı',
+        color: 'bg-[#4A90E2]'
       }
     ],
     supportCard: {

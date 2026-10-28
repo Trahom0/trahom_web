@@ -10,8 +10,8 @@ export const campaigns = {
       label: 'Gerçekleştirilen kampanyalar'
     },
     activeDonors: {
-      number: '3.375+',
-      label: 'Sponsorlu yetim'
+      number: '4.050+',
+      label: 'Kış desteği alan aile'
     },
     peopleHelped: {
       number: '300 bin+',
@@ -24,15 +24,14 @@ export const campaigns = {
   },
   items: [
     {
-      id: 'orphan-sponsorship',
-      title: 'Yetim sponsorluğu',
-      description: 'Destekten yoksun kalan çocuklara sürekli bakım sağlanır; bu, günlük ihtiyaçları, eğitim ve sağlık takibini kapsar, onurları korunur ve istikrarları güvence altına alınır.',
-      goal: '$1.25M',
-      percentage: 2,
-      primaryBadge: '3.375’ten fazla çocuk doğrudan bakım altında',
-      color: 'bg-[#4A90E2]',
-      category: 'Eğitim',
-      sponsorCta: true
+      id: 'winter-campaign',
+      title: 'Kış kampanyası',
+      description: 'Güvenli barınağı olmayan ve soğukla mücadele eden ailelere; giysi, battaniye ve temel ısınma araçlarıyla sıcaklık sağlanması.',
+      goal: '$120,000',
+      percentage: 56,
+      primaryBadge: '4.050’den fazla aileye doğrudan destek',
+      color: 'bg-[#F5A623]',
+      category: 'Acil yardım'
     },
     {
       id: 'water',
@@ -45,16 +44,6 @@ export const campaigns = {
       category: 'Su ve sanitasyon'
     },
     {
-      id: 'winter-campaign',
-      title: 'Kış kampanyası',
-      description: 'Güvenli barınağı olmayan ve soğukla mücadele eden ailelere; giysi, battaniye ve temel ısınma araçlarıyla sıcaklık sağlanması.',
-      goal: '$120,000',
-      percentage: 56,
-      primaryBadge: '4.050’den fazla aileye doğrudan destek',
-      color: 'bg-[#F5A623]',
-      category: 'Acil yardım'
-    },
-    {
       id: 'food-security',
       title: 'Gıda güvenliği programı',
       description: 'Kayıp ve yerinden edilme koşullarında yaşayan ailelere, çocuklar ve yaşlılara öncelik verilerek düzenli öğünler ve gıda kolileri ulaştırılması.',
@@ -63,6 +52,17 @@ export const campaigns = {
       primaryBadge: '160.000’den fazla yemek servisi yapıldı',
       color: 'bg-[#A8D5E2]',
       category: 'Gıda güvenliği'
+    },
+    {
+      id: 'orphan-sponsorship',
+      title: 'Yetim sponsorluğu',
+      description: 'Destekten yoksun kalan çocuklara sürekli bakım sağlanır; bu, günlük ihtiyaçları, eğitim ve sağlık takibini kapsar, onurları korunur ve istikrarları güvence altına alınır.',
+      goal: '$1.25M',
+      percentage: 2,
+      primaryBadge: '3.375’ten fazla çocuk doğrudan bakım altında',
+      color: 'bg-[#4A90E2]',
+      category: 'Eğitim',
+      sponsorCta: true
     }
   ],
   cta: {

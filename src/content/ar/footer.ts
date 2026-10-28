@@ -33,6 +33,7 @@ export const footer = {
   "bottom": {
     "copyright": "© 2026 تراحم. جميع الحقوق محفوظة.",
     "privacy": "سياسة الخصوصية",
-    "terms": "شروط الاستخدام"
+    "terms": "شروط الاستخدام",
+    "privacySettings": "إعدادات الخصوصية"
   }
 } as const;

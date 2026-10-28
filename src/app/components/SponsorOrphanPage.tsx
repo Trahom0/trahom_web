@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import orphanPlaceholderImage from '../../assets/homepage-card-orphan-campaign.jpg';
 import { content } from '../../content';
 import { formatTemplate } from '../../content/utils';
-import { getPathForPage, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
+import { getPathForPage, type LanguageCode, type PageKey, isPlainLeftClick, whatsappNumber } from '../routes';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { PageLayout } from './PageLayout';
 import { PrimaryButton } from './PrimaryButton';
@@ -17,7 +17,6 @@ interface SponsorOrphanPageProps {
   onLanguageChange?: (language: string) => void;
 }
 
-const WHATSAPP_NUMBER = '972567075706';
 const ORPHANS_API_URL = '/api/orphans';
 
 type OrphanProfile = {
@@ -29,7 +28,7 @@ type OrphanProfile = {
 };
 
 const buildWhatsAppLink = (code: string) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     formatTemplate(content.sponsorOrphan.whatsapp.messageTemplate, { code })
   )}`;
 

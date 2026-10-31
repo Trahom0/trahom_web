@@ -66,6 +66,8 @@ const ERRORS: Record<string, string> = {
   'not-configured': 'اللوحة غير مُعدّة بعد على الخادم.',
   'orphan-not-found': 'لم نجد يتيمًا بهذا الرمز أو رقم الهوية في جدول الأيتام.',
   'signed-out': 'انتهت الجلسة. سجّل الدخول من جديد.',
+  'bad-store-link': 'تحقق من الروابط: رابط Google Play يبدأ بـ https://play.google.com/store/apps/details?id= ورابط App Store يبدأ بـ https://apps.apple.com/',
+  'send-failed': 'تعذّر إرسال الرسائل الآن (قد يكون حدّ الإرسال اليومي قد اكتمل). حاول لاحقًا.',
   changed: 'تم تعديل هذا المنشور بعد أن فتحته. راجعه من جديد ثم وافق عليه.'
 };
 
@@ -630,6 +632,198 @@ function OrphansPanel() {
   );
 }
 
+// ---------- Trahom app launch sign-ups ----------
+
+type AppSignup = { id: string; email: string; language: string; at: string; sentAt: string };
+
+const LANGUAGE_NAMES: Record<string, string> = { AR: 'العربية', EN: 'English', TR: 'Türkçe' };
+
+const downloadCsv = (rows: AppSignup[]) => {
+  const escape = (value: string) => `"${value.replace(/"/g, '""')}"`;
+  const lines = [['email', 'language', 'signed_up_at', 'sent_at'], ...rows.map((row) => [row.email, row.language, row.at, row.sentAt])]
+    .map((line) => line.map(escape).join(','))
+    .join('\r\n');
+  const blob = new Blob(['﻿' + lines], { type: 'text/csv;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `trahom-app-signups-${today()}.csv`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
+
+function AppSignupsPanel() {
+  const [signups, setSignups] = useState<AppSignup[]>([]);
+  const [playUrl, setPlayUrl] = useState('');
+  const [appStoreUrl, setAppStoreUrl] = useState('');
+  const [batchSize, setBatchSize] = useState(90);
+  const [loaded, setLoaded] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+
+  const load = useCallback(async () => {
+    try {
+      const data = await call('app-signups');
+      setSignups(data.signups ?? []);
+      setPlayUrl((current) => current || data.playUrl || '');
+      setAppStoreUrl((current) => current || data.appStoreUrl || '');
+      setBatchSize(data.batchSize ?? 90);
+    } catch (loadError) {
+      setError(messageFor(loadError));
+    } finally {
+      setLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const waiting = signups.filter((item) => !item.sentAt).length;
+
+  const send = async () => {
+    const count = Math.min(waiting, batchSize);
+    if (!window.confirm(`سيتم إرسال رابط التطبيق إلى ${count} شخصًا الآن، كلٌّ بلغته. لا يمكن التراجع عن الإرسال. متابعة؟`)) {
+      return;
+    }
+    setBusy(true);
+    setError('');
+    setMessage('');
+    try {
+      const result = await call('app-launch-send', { playUrl: playUrl.trim(), appStoreUrl: appStoreUrl.trim() });
+      setMessage(
+        result.remaining > 0
+          ? `تم الإرسال إلى ${result.sent} شخصًا. بقي ${result.remaining}؛ اضغط «إرسال» مرة أخرى غدًا (حدّ الإرسال اليومي).`
+          : `تم الإرسال إلى ${result.sent} شخصًا. وصل الرابط للجميع.`
+      );
+      await load();
+    } catch (sendError) {
+      setError(messageFor(sendError));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const remove = async (item: AppSignup | null) => {
+    const question = item
+      ? `حذف ${item.email} من القائمة نهائيًا؟`
+      : `حذف القائمة كاملة (${signups.length} بريدًا) نهائيًا؟ يُنصح بذلك بعد إرسال رابط التطبيق للجميع.`;
+    if (!window.confirm(question)) {
+      return;
+    }
+    setBusy(true);
+    setError('');
+    setMessage('');
+    try {
+      await call('app-signup-delete', item ? { id: item.id } : { all: true });
+      setMessage(item ? 'تم الحذف.' : 'تم حذف القائمة كاملة.');
+      if (!item) {
+        setPlayUrl('');
+        setAppStoreUrl('');
+      }
+      await load();
+    } catch (deleteError) {
+      setError(messageFor(deleteError));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-white rounded-2xl shadow-sm p-6 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-xl">المهتمون بتطبيق تراحم</h2>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" className={secondaryButton} disabled={!signups.length} onClick={() => downloadCsv(signups)}>
+              تنزيل CSV
+            </button>
+          </div>
+        </div>
+        <p className="text-foreground/70 text-sm leading-relaxed">
+          من سجّلوا بريدهم في قسم «قريبًا على Google Play و App Store» على الصفحة الرئيسية. هذه القائمة تظهر هنا فقط، ولا تظهر لزوار الموقع.
+        </p>
+        <div className="flex flex-wrap gap-3 text-sm">
+          <span className="rounded-full bg-[#103b51]/10 text-[#103b51] px-3 py-1">المجموع: {signups.length}</span>
+          <span className="rounded-full bg-amber-100 text-amber-900 px-3 py-1">بانتظار رابط التطبيق: {waiting}</span>
+          <span className="rounded-full bg-emerald-100 text-emerald-800 px-3 py-1">وصلهم الرابط: {signups.length - waiting}</span>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-sm p-6 space-y-4">
+        <h3 className="font-medium">يوم الإطلاق: أرسل رابط التطبيق</h3>
+        <p className="text-foreground/70 text-sm leading-relaxed">
+          ضع رابط التطبيق على المتجرين (أو أحدهما)، ثم اضغط «إرسال». تصل لكل شخص رسالة واحدة بلغته فيها الرابط. يُرسَل حتى {batchSize} رسالة في كل مرة بسبب حدّ الإرسال اليومي؛ إن بقي أحد، اضغط مرة أخرى في اليوم التالي، ولن تصل الرسالة لأحد مرتين.
+        </p>
+        <label className="block space-y-1">
+          <span className="text-sm text-foreground/70">رابط Google Play</span>
+          <input
+            dir="ltr"
+            value={playUrl}
+            onChange={(event) => setPlayUrl(event.target.value)}
+            placeholder="https://play.google.com/store/apps/details?id=…"
+            className={inputClass}
+          />
+        </label>
+        <label className="block space-y-1">
+          <span className="text-sm text-foreground/70">رابط App Store</span>
+          <input
+            dir="ltr"
+            value={appStoreUrl}
+            onChange={(event) => setAppStoreUrl(event.target.value)}
+            placeholder="https://apps.apple.com/app/…"
+            className={inputClass}
+          />
+        </label>
+        <button
+          type="button"
+          className={primaryButton}
+          disabled={busy || waiting === 0 || (!playUrl.trim() && !appStoreUrl.trim())}
+          onClick={send}
+        >
+          {busy ? 'جارٍ…' : waiting === 0 ? 'لا يوجد من ينتظر الرابط' : `إرسال إلى ${Math.min(waiting, batchSize)} شخصًا`}
+        </button>
+        {message && <p className="rounded-xl bg-emerald-50 text-emerald-800 p-3 text-sm">{message}</p>}
+        {error && <p className="rounded-xl bg-rose-50 text-rose-700 p-3 text-sm">{error}</p>}
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-sm">
+        <div className="p-5 pb-3 flex flex-wrap items-center justify-between gap-3">
+          <h3 className="font-medium">القائمة ({signups.length})</h3>
+          {signups.length > 0 && (
+            <button type="button" disabled={busy} className="text-sm rounded-lg text-rose-700 px-3 py-1.5 hover:bg-rose-50" onClick={() => remove(null)}>
+              حذف القائمة كاملة
+            </button>
+          )}
+        </div>
+        {!loaded ? (
+          <p className="px-5 pb-5 text-foreground/60 text-sm">جارٍ التحميل…</p>
+        ) : signups.length === 0 ? (
+          <p className="px-5 pb-5 text-foreground/60 text-sm">لم يسجّل أحد بعد.</p>
+        ) : (
+          <div className="divide-y divide-black/5">
+            {signups.map((item) => (
+              <div key={item.id} className="px-5 py-3 flex flex-wrap items-center justify-between gap-3 text-sm">
+                <div className="flex flex-wrap gap-x-4 gap-y-1 items-center">
+                  <span className="font-medium" dir="ltr">
+                    {item.email}
+                  </span>
+                  <span className="text-foreground/60">{LANGUAGE_NAMES[item.language] ?? item.language}</span>
+                  <span className="text-foreground/50">{formatDate(item.at)}</span>
+                  {item.sentAt && <span className="text-xs rounded-full bg-emerald-100 text-emerald-800 px-2 py-0.5">وصله الرابط</span>}
+                </div>
+                <button type="button" disabled={busy} className="rounded-lg bg-black/5 px-3 py-1.5" onClick={() => remove(item)}>
+                  حذف
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ---------- main ----------
 
 export function AdminApp() {
@@ -641,7 +835,7 @@ export function AdminApp() {
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const [busyId, setBusyId] = useState('');
-  const [view, setView] = useState<'posts' | 'orphans' | 'audit'>('posts');
+  const [view, setView] = useState<'posts' | 'orphans' | 'app' | 'audit'>('posts');
   const [auditEntries, setAuditEntries] = useState<AuditEntry[]>([]);
 
   const loadPosts = useCallback(async () => {
@@ -800,6 +994,15 @@ export function AdminApp() {
             {isAdmin && (
               <button
                 type="button"
+                onClick={() => setView('app')}
+                className={`rounded-lg px-4 py-2 ${view === 'app' ? 'bg-white shadow-sm' : 'text-foreground/60'}`}
+              >
+                المهتمون بالتطبيق
+              </button>
+            )}
+            {isAdmin && (
+              <button
+                type="button"
                 onClick={openAudit}
                 className={`rounded-lg px-4 py-2 ${view === 'audit' ? 'bg-white shadow-sm' : 'text-foreground/60'}`}
               >
@@ -826,6 +1029,8 @@ export function AdminApp() {
 
         {view === 'orphans' ? (
           <OrphansPanel />
+        ) : view === 'app' ? (
+          <AppSignupsPanel />
         ) : view === 'audit' ? (
           <div className="bg-white rounded-2xl shadow-sm divide-y divide-black/5">
             {auditEntries.length === 0 && <p className="p-6 text-foreground/60">لا يوجد نشاط بعد.</p>}

@@ -21,6 +21,10 @@
 //   used/<nonce>-<random>      marks sign-in links that were already used
 //   orphans/sponsored.json     codes of orphans that now have a sponsor; the sponsorship page hides them.
 //                              Only codes are stored here, never names or ID numbers.
+//   app-signups/<hash>.json    people who asked to be told when the Trahom app launches (written by
+//                              api/subscribe.ts). Each address is encrypted with a key made from the store's
+//                              token, and the file name is a keyed hash, so the list can only be read here.
+//   app-launch/sent.json       which of them were already sent the store links, and the links used.
 //
 // Required environment variables (Vercel → Settings → Environment Variables, Production):
 //   ADMIN_SECRET   a long random string (at least 32 characters). Changing it signs everyone out.
@@ -29,7 +33,7 @@
 //   ADMIN_PASSWORDS  one entry per person, separated by ";": email=scrypt$… (the line printed by
 //                    scripts/admin-password.mjs). People without an entry can only use the emailed link.
 //   RESEND_API_KEY / RESEND_FROM_EMAIL — already set for the contact form; used for sign-in links and notices.
-import { createHmac, randomBytes, scrypt, timingSafeEqual } from 'crypto';
+import { createDecipheriv, createHash, createHmac, randomBytes, scrypt, timingSafeEqual } from 'crypto';
 import { del, list, put } from '@vercel/blob';
 
 const ADMIN_SECRET = process.env.ADMIN_SECRET ?? '';
@@ -893,6 +897,216 @@ const setSponsoredAction = async (req: any, res: any, user: { email: string; rol
   res.status(200).json({ ok: true });
 };
 
+// ---------- Trahom app launch sign-ups ----------
+
+const SIGNUP_FILE = /^app-signups\/([a-f0-9]{32})\.json$/;
+const LAUNCH_FILE = 'app-launch/sent.json';
+// Resend's free plan sends at most 100 emails a day, so each press sends a batch at most this big.
+const LAUNCH_BATCH = 90;
+
+type Signup = { id: string; email: string; language: string; at: string };
+type LaunchState = { playUrl: string; appStoreUrl: string; sent: Record<string, string> };
+
+const signupSecret = () => createHash('sha256').update(`trahom-app-signups:${process.env.BLOB_READ_WRITE_TOKEN ?? ''}`).digest();
+
+const openSignup = (raw: any): Omit<Signup, 'id'> | null => {
+  try {
+    const decipher = createDecipheriv('aes-256-gcm', signupSecret(), Buffer.from(String(raw?.iv ?? ''), 'base64'));
+    decipher.setAuthTag(Buffer.from(String(raw?.tag ?? ''), 'base64'));
+    const plain = Buffer.concat([decipher.update(Buffer.from(String(raw?.data ?? ''), 'base64')), decipher.final()]).toString('utf8');
+    const value = JSON.parse(plain);
+    return typeof value?.email === 'string' ? { email: value.email, language: String(value.language ?? ''), at: String(value.at ?? '') } : null;
+  } catch {
+    return null;
+  }
+};
+
+const loadSignups = async () => {
+  const files = (await listAll('app-signups/')).filter((file) => SIGNUP_FILE.test(file.pathname));
+  const signups: Signup[] = [];
+  // A few at a time, to stay gentle on the store.
+  for (let index = 0; index < files.length; index += 20) {
+    const chunk = files.slice(index, index + 20);
+    const opened = await Promise.all(
+      chunk.map(async (file) => {
+        const data = openSignup(await readJsonUrl(`${file.url}?v=${Date.now()}`).catch(() => null));
+        return data ? { id: SIGNUP_FILE.exec(file.pathname)![1], ...data } : null;
+      })
+    );
+    signups.push(...opened.filter((item): item is Signup => Boolean(item)));
+  }
+  signups.sort((a, b) => b.at.localeCompare(a.at));
+  return { signups, files };
+};
+
+const readLaunchState = async (): Promise<LaunchState> => {
+  const file = (await listAll(LAUNCH_FILE)).find((item) => item.pathname === LAUNCH_FILE);
+  if (!file) {
+    return { playUrl: '', appStoreUrl: '', sent: {} };
+  }
+  const data = await readJsonUrl(`${file.url}?v=${Date.now()}`).catch(() => null);
+  return {
+    playUrl: String(data?.playUrl ?? ''),
+    appStoreUrl: String(data?.appStoreUrl ?? ''),
+    sent: data?.sent && typeof data.sent === 'object' ? data.sent : {}
+  };
+};
+
+const writeLaunchState = async (state: LaunchState) => {
+  await put(LAUNCH_FILE, JSON.stringify(state), {
+    access: 'public',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: 'application/json',
+    cacheControlMaxAge: 60
+  });
+};
+
+const isStoreLink = (value: string, kind: 'play' | 'apple') => {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:') {
+      return false;
+    }
+    return kind === 'play'
+      ? url.hostname === 'play.google.com' && url.pathname.startsWith('/store/apps/details') && Boolean(url.searchParams.get('id'))
+      : url.hostname === 'apps.apple.com' && /\/app\//.test(url.pathname);
+  } catch {
+    return false;
+  }
+};
+
+const LAUNCH_TEXT: Record<string, { subject: string; heading: string; body: string; play: string; apple: string; footer: string; dir: 'rtl' | 'ltr' }> = {
+  AR: {
+    subject: 'تطبيق تراحم متاح الآن',
+    heading: 'تطبيق تراحم متاح الآن',
+    body: 'طلبت منّا أن نخبرك عند إطلاق تطبيق تراحم، وها هو متاح للتحميل:',
+    play: 'حمّله من Google Play',
+    apple: 'حمّله من App Store',
+    footer: 'وصلتك هذه الرسالة لأنك سجّلت بريدك على trahom.org لتعرف موعد إطلاق التطبيق. هذه رسالة واحدة فقط، ولن نراسلك بخصوصها مرة أخرى.',
+    dir: 'rtl'
+  },
+  EN: {
+    subject: 'The Trahom app is now available',
+    heading: 'The Trahom app is here',
+    body: 'You asked us to let you know when the Trahom app launched. It is now available to download:',
+    play: 'Get it on Google Play',
+    apple: 'Download on the App Store',
+    footer: 'You are receiving this because you left your email on trahom.org to hear about the app launch. This is a one-time message; we will not email you about it again.',
+    dir: 'ltr'
+  },
+  TR: {
+    subject: 'Trahom uygulaması artık yayında',
+    heading: 'Trahom uygulaması yayında',
+    body: 'Trahom uygulaması yayınlandığında size haber vermemizi istemiştiniz. Uygulama artık indirilebilir:',
+    play: 'Google Play’den indirin',
+    apple: 'App Store’dan indirin',
+    footer: 'Bu e-postayı, uygulamanın yayın tarihinden haberdar olmak için trahom.org’da adresinizi bıraktığınız için aldınız. Bu tek seferlik bir mesajdır; bu konuda size tekrar yazmayacağız.',
+    dir: 'ltr'
+  }
+};
+
+const launchEmail = (language: string, playUrl: string, appStoreUrl: string) => {
+  const copy = LAUNCH_TEXT[language.toUpperCase()] ?? LAUNCH_TEXT.AR;
+  const button = (href: string, label: string) =>
+    `<a href="${escapeHtml(href)}" style="display:inline-block;margin:6px 4px;padding:12px 22px;border-radius:10px;background:#103b51;color:#ffffff;text-decoration:none;font-weight:600">${escapeHtml(label)}</a>`;
+  const buttons = [playUrl ? button(playUrl, copy.play) : '', appStoreUrl ? button(appStoreUrl, copy.apple) : ''].join('');
+  const html = `<div dir="${copy.dir}" style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;padding:24px;color:#1a1a1a;line-height:1.7">
+<h1 style="font-size:22px;color:#103b51;margin:0 0 12px">${escapeHtml(copy.heading)}</h1>
+<p style="margin:0 0 16px">${escapeHtml(copy.body)}</p>
+<p style="margin:0 0 24px">${buttons}</p>
+<p style="font-size:12px;color:#777">${escapeHtml(copy.footer)}</p>
+</div>`;
+  const plain = [copy.heading, '', copy.body, playUrl ? `${copy.play}: ${playUrl}` : '', appStoreUrl ? `${copy.apple}: ${appStoreUrl}` : '', '', copy.footer]
+    .filter((line, index, all) => line || all[index - 1])
+    .join('\n');
+  return { subject: copy.subject, html, plain };
+};
+
+const appSignupsAction = async (res: any, user: { email: string; role: Role }) => {
+  if (user.role !== 'admin') {
+    res.status(403).json({ error: 'forbidden' });
+    return;
+  }
+  const [{ signups }, state] = await Promise.all([loadSignups(), readLaunchState()]);
+  res.status(200).json({
+    signups: signups.map((item) => ({ ...item, sentAt: state.sent[item.id] ?? '' })),
+    playUrl: state.playUrl,
+    appStoreUrl: state.appStoreUrl,
+    batchSize: LAUNCH_BATCH
+  });
+};
+
+const appLaunchSendAction = async (req: any, res: any, user: { email: string; role: Role }) => {
+  if (user.role !== 'admin') {
+    res.status(403).json({ error: 'forbidden' });
+    return;
+  }
+  const body = await readJsonBody(req, MAX_JSON_BYTES);
+  const playUrl = text(body?.playUrl, 300);
+  const appStoreUrl = text(body?.appStoreUrl, 300);
+  if ((!playUrl && !appStoreUrl) || (playUrl && !isStoreLink(playUrl, 'play')) || (appStoreUrl && !isStoreLink(appStoreUrl, 'apple'))) {
+    res.status(400).json({ error: 'bad-store-link' });
+    return;
+  }
+  if (!RESEND_API_KEY || !RESEND_FROM_EMAIL) {
+    res.status(503).json({ error: 'not-configured' });
+    return;
+  }
+  const [{ signups }, state] = await Promise.all([loadSignups(), readLaunchState()]);
+  const waiting = signups.filter((item) => !state.sent[item.id]);
+  const batch = waiting.slice(0, LAUNCH_BATCH);
+  if (batch.length) {
+    const response = await fetch('https://api.resend.com/emails/batch', {
+      signal: AbortSignal.timeout(25_000),
+      method: 'POST',
+      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(
+        batch.map((item) => {
+          const message = launchEmail(item.language, playUrl, appStoreUrl);
+          return { from: RESEND_FROM_EMAIL, to: [item.email], subject: message.subject, html: message.html, text: message.plain };
+        })
+      )
+    });
+    if (!response.ok) {
+      console.error('Launch emails failed', response.status, await response.text().catch(() => ''));
+      res.status(502).json({ error: 'send-failed' });
+      return;
+    }
+    const sentAt = new Date().toISOString();
+    for (const item of batch) {
+      state.sent[item.id] = sentAt;
+    }
+  }
+  await writeLaunchState({ ...state, playUrl, appStoreUrl });
+  await audit(user.email, 'app-launch:sent', '', `${batch.length}`);
+  res.status(200).json({ sent: batch.length, remaining: waiting.length - batch.length });
+};
+
+const appSignupDeleteAction = async (req: any, res: any, user: { email: string; role: Role }) => {
+  if (user.role !== 'admin') {
+    res.status(403).json({ error: 'forbidden' });
+    return;
+  }
+  const body = await readJsonBody(req, MAX_JSON_BYTES);
+  const id = text(body?.id, 40);
+  const all = body?.all === true;
+  if (!all && !/^[a-f0-9]{32}$/.test(id)) {
+    res.status(400).json({ error: 'invalid' });
+    return;
+  }
+  const { files } = await loadSignups();
+  const targets = files.filter((file) => all || file.pathname === `app-signups/${id}.json`).map((file) => file.url);
+  if (targets.length) {
+    await del(targets);
+  }
+  if (all) {
+    await del((await listAll(LAUNCH_FILE)).map((file) => file.url)).catch(() => undefined);
+  }
+  await audit(user.email, all ? 'app-signups:cleared' : 'app-signups:deleted', '', `${targets.length}`);
+  res.status(200).json({ deleted: targets.length });
+};
+
 const auditAction = async (res: any, user: { email: string; role: Role }) => {
   if (user.role !== 'admin') {
     res.status(403).json({ error: 'forbidden' });
@@ -970,6 +1184,18 @@ export default async function handler(req: any, res: any) {
     }
     if (req.method === 'POST' && action === 'orphan-available') {
       await setSponsoredAction(req, res, user, false);
+      return;
+    }
+    if (req.method === 'GET' && action === 'app-signups') {
+      await appSignupsAction(res, user);
+      return;
+    }
+    if (req.method === 'POST' && action === 'app-launch-send') {
+      await appLaunchSendAction(req, res, user);
+      return;
+    }
+    if (req.method === 'POST' && action === 'app-signup-delete') {
+      await appSignupDeleteAction(req, res, user);
       return;
     }
     if (req.method === 'GET' && action === 'audit') {

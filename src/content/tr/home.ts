@@ -143,6 +143,22 @@ export const home = {
       rafah: 'Refah'
     }
   },
+  app: {
+    badge: 'Yakında Google Play ve App Store’da',
+    title: 'Trahom uygulaması',
+    description: 'Bağışlarınızı telefonunuzdan takip edin: destek olduğunuz yetimler, onlara ulaşan yardım ve Gazze’deki son çalışmalarımız.',
+    features: [
+      { title: 'Yetim sponsorluğu', text: 'Bir çocuk seçin ve sponsorluğunuzu tek yerden takip edin.' },
+      { title: 'Teslim onayı', text: 'Yardımın aileye gerçekten ne zaman teslim edildiğini görün.' },
+      { title: 'Sahadan', text: 'Projelerimizden fotoğraflar ve güncel haberler.' }
+    ],
+    formTitle: 'Yayınlandığında haber ver',
+    inputPlaceholder: 'E-posta adresiniz',
+    buttonLabel: 'Haber ver',
+    helperText: 'Uygulama yayınlandığında size bir kez yazarız; adresinizi başka bir amaçla kullanmayız.',
+    successMessage: 'Tamam. Uygulama Google Play ve App Store’da yayınlanır yayınlanmaz size haber vereceğiz.',
+    errorMessage: 'Şu anda kaydınızı alamadık. Lütfen biraz sonra tekrar deneyin.'
+  },
   subscribe: {
     title: 'Haberdar olun',
     description: 'Sahadan gelişmeler, kampanyalar ve güvenilir destek yolları—gereksiz mesajlar olmadan.',

@@ -23,6 +23,7 @@ import { LazyVideo } from './components/LazyVideo';
 import { SubscribeForm } from './components/SubscribeForm';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { FieldUpdates } from './components/FieldUpdates';
+import { AppComingSoon } from './components/AppComingSoon';
 import { NotFoundPage } from './components/NotFoundPage';
 import waterCampaignImage from '../assets/homepage-card-water.png';
 import { content, setContentLanguage } from '../content';
@@ -672,6 +673,9 @@ export default function App({ initialPath }: AppProps) {
 
         {/* "From the field": posts approved in the website admin (hidden while there are none) */}
         <FieldUpdates language={language} labels={homeContent.fieldUpdates} />
+
+        {/* Trahom app: coming soon to Google Play and the App Store, with a "tell me when it launches" sign-up */}
+        <AppComingSoon language={language} labels={homeContent.app} />
 
         {/* Subscribe Section */}
         <motion.div 

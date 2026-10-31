@@ -9,9 +9,14 @@ type SubscribeFormProps = {
     successMessage: string;
     errorMessage: string;
   };
+  // 'app' = "tell me when the Trahom app is on Google Play"; omitted = newsletter.
+  topic?: 'app';
+  inputId?: string;
+  // Field above the button, for narrow boxes.
+  stacked?: boolean;
 };
 
-export function SubscribeForm({ language, labels }: SubscribeFormProps) {
+export function SubscribeForm({ language, labels, topic, inputId = 'subscribe-email', stacked = false }: SubscribeFormProps) {
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -30,7 +35,7 @@ export function SubscribeForm({ language, labels }: SubscribeFormProps) {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, website, language, elapsedMs: startedAt ? Date.now() - startedAt : undefined })
+        body: JSON.stringify({ email, website, language, topic, elapsedMs: startedAt ? Date.now() - startedAt : undefined })
       });
       if (!response.ok) {
         throw new Error('subscribe failed');
@@ -52,18 +57,18 @@ export function SubscribeForm({ language, labels }: SubscribeFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex flex-col sm:flex-row gap-3">
-        <label htmlFor="subscribe-email" className="sr-only">
+      <div className={`flex flex-col gap-3 ${stacked ? '' : 'sm:flex-row'}`}>
+        <label htmlFor={inputId} className="sr-only">
           {labels.inputPlaceholder}
         </label>
         <input
-          id="subscribe-email"
+          id={inputId}
           type="email"
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder={labels.inputPlaceholder}
-          className="flex-1 px-5 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e1a226] focus:border-transparent"
+          className="flex-1 min-w-0 px-5 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#e1a226] focus:border-transparent"
         />
         {/* Hidden from people; bots that fill it are ignored by the server. */}
         <input

@@ -1,4 +1,4 @@
-// Newsletter sign-up: emails the subscriber's address to the team inbox (RESEND_TO_EMAIL)
+// Newsletter and app-launch sign-ups: emails the subscriber's address to the team inbox (RESEND_TO_EMAIL)
 // so it can be added to the mailing list. Uses the same Resend settings as the contact form.
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESEND_FROM_EMAIL = process.env.RESEND_FROM_EMAIL;
@@ -103,6 +103,8 @@ export default async function handler(req: any, res: any) {
   }
   const email = clean(body.email, 200);
   const language = clean(body.language, 5);
+  // "Tell me when the app launches" sign-ups are sent with their own subject so they can be kept apart.
+  const isAppSignup = clean(body.topic, 10) === 'app';
 
   // Honeypot field, or a form sent faster than a person can type: pretend it worked and drop it.
   const elapsedMs = Number(body.elapsedMs);
@@ -128,9 +130,9 @@ export default async function handler(req: any, res: any) {
       body: JSON.stringify({
         from: RESEND_FROM_EMAIL,
         to: RESEND_TO_EMAIL.split(',').map((item) => item.trim()).filter(Boolean),
-        subject: 'Newsletter sign-up',
+        subject: isAppSignup ? 'Trahom app launch sign-up' : 'Newsletter sign-up',
         reply_to: email,
-        text: `New newsletter subscriber\nEmail: ${email}${language ? `\nLanguage: ${language}` : ''}`
+        text: `${isAppSignup ? 'Asked to be told when the Trahom app is on Google Play / App Store' : 'New newsletter subscriber'}\nEmail: ${email}${language ? `\nLanguage: ${language}` : ''}`
       })
     });
     if (!response.ok) {

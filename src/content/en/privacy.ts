@@ -4,7 +4,7 @@ export const privacy = {
     title: 'Your privacy matters.',
     description: 'We are committed to transparency about how we collect, use, and protect your information while supporting our humanitarian work.',
     meta: {
-      updated: 'Last updated: Oct 28, 2026',
+      updated: 'Last updated: Oct 31, 2026',
       contact: 'Contact: info@trahom.org'
     }
   },
@@ -45,7 +45,8 @@ export const privacy = {
       items: [
         'Process donations, respond to inquiries, and deliver requested services.',
         'Send program updates, receipts, and organizational news.',
-        'Analyze site performance and improve accessibility and security.'
+        'Analyze site performance and improve accessibility and security.',
+        'If you leave your email to hear when the Trahom app launches, we store it encrypted, only the Trahom team can see it, and we use it only to send you the app link once at launch; the list is then deleted. You can ask us to remove your email before then.'
       ]
     },
     {

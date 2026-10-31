@@ -5,7 +5,7 @@ export const privacy = {
     description:
       'İnsani çalışmalarımızı yürütürken bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu şeffaf biçimde açıklıyoruz.',
     meta: {
-      updated: 'Son güncelleme: 28 Ekim 2026',
+      updated: 'Son güncelleme: 31 Ekim 2026',
       contact: 'İletişim: info@trahom.org'
     }
   },
@@ -47,7 +47,8 @@ export const privacy = {
       items: [
         'Bağışları işlemek, sorulara yanıt vermek ve talep edilen hizmetleri sunmak.',
         'Program güncellemeleri, makbuzlar ve kurum haberleri göndermek.',
-        'Site performansını analiz etmek, erişilebilirliği ve güvenliği iyileştirmek.'
+        'Site performansını analiz etmek, erişilebilirliği ve güvenliği iyileştirmek.',
+        'Trahom uygulamasının yayın tarihinden haberdar olmak için e-postanızı bırakırsanız, adresiniz şifreli olarak saklanır ve yalnızca Trahom ekibi tarafından görülebilir; yalnızca uygulama yayınlandığında bağlantıyı size bir kez göndermek için kullanılır, ardından liste silinir. Daha önce silinmesini bize yazarak isteyebilirsiniz.'
       ]
     },
     {

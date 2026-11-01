@@ -13,6 +13,8 @@
 //   (amount and currency, no personal details) are reported.
 
 export const META_PIXEL_ID = '1607316087532710';
+// Google Ads conversion "Orphan sponsorship request" (Ad Grants account Trahom).
+const GOOGLE_ADS_SPONSOR_CONVERSION = 'AW-18499696410/Fzd7CO6QmLAdEJruq_VE';
 
 const CONSENT_KEY = 'trahom-consent';
 const PENDING_DONATION_KEY = 'trahom-pending-donation';
@@ -38,6 +40,10 @@ export const setConsent = (value: 'accepted' | 'declined') => {
   } catch {
     // Private mode: the choice lasts for this visit only.
   }
+  // Google's advertising storage follows the same choice (see the Consent Mode defaults in index.html).
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+  const state = value === 'accepted' ? 'granted' : 'denied';
+  w.gtag?.('consent', 'update', { ad_storage: state, ad_user_data: state, ad_personalization: state });
   window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: value }));
 };
 
@@ -86,6 +92,7 @@ const gaEvent = (name: string, params: Record<string, string | number>) => {
 // "Request documents" on an orphan's card: the main result of the orphan sponsorship campaigns.
 export const trackSponsorRequest = (orphanCode: string, language: string) => {
   gaEvent('sponsor_request', { orphan_code: orphanCode, language });
+  gaEvent('conversion', { send_to: GOOGLE_ADS_SPONSOR_CONVERSION });
 };
 
 export const trackWhatsAppClick = (page: string) => {

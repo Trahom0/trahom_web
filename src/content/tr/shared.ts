@@ -26,7 +26,7 @@ export const shared = {
   },
   consent: {
     title: 'Gizlilik tercihleri',
-    text: 'İzninizle, farkındalık kampanyalarımızı ölçmek için Meta’yı (Facebook) kullanıyoruz. Formlarımıza yazdıklarınızı asla görmez.',
+    text: 'İzninizle, farkındalık kampanyalarımızı ölçmek için Meta (Facebook) ve Google’ı kullanıyoruz. Formlarımıza yazdıklarınızı asla görmezler.',
     policyLink: 'Gizlilik politikası',
     accept: 'İzin ver',
     decline: 'Hayır, teşekkürler'

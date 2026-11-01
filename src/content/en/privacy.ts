@@ -4,7 +4,7 @@ export const privacy = {
     title: 'Your privacy matters.',
     description: 'We are committed to transparency about how we collect, use, and protect your information while supporting our humanitarian work.',
     meta: {
-      updated: 'Last updated: Oct 31, 2026',
+      updated: 'Last updated: Nov 1, 2026',
       contact: 'Contact: info@trahom.org'
     }
   },
@@ -69,6 +69,7 @@ export const privacy = {
       title: 'Third-party services we use',
       items: [
         'Google Analytics (through Google Tag Manager) measures visits and page views so we can improve the site. Google may set its own cookies; see Google’s privacy policy.',
+        'Google Ads counts the orphan sponsorship requests that come from our Google ads. It only records that a request happened, with no name, number or email, and stores advertising cookies only if you allow them in the privacy banner.',
         'Meta Pixel (Facebook) measures our awareness campaigns, only if you allow it in the privacy banner. It records page visits and completed donations (amount only), never what you type in our forms. You can change your choice any time under "Privacy settings" at the bottom of every page.',
         'Stripe processes donations. Card details go directly to Stripe and are never stored on our servers.',
         'Tally hosts our orphan registration form. Information submitted there is stored by Tally and reviewed only by our team to verify cases.',

@@ -21,17 +21,20 @@ const sizeStyles = {
 const baseLinkClassName =
   'bg-foreground/5 hover:bg-[#e1a226] hover:text-white flex items-center justify-center transition-all';
 
+// The team's social pages, in the order they are shown everywhere on the site (footer, contact page, header menu).
+export const socialItems = [
+  { key: 'facebook', href: socialLinks.facebook, label: 'Facebook', Icon: FacebookIcon },
+  { key: 'twitter', href: socialLinks.twitter, label: 'X', Icon: XIcon },
+  { key: 'instagram', href: socialLinks.instagram, label: 'Instagram', Icon: InstagramIcon },
+  { key: 'linkedin', href: socialLinks.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
+  { key: 'tiktok', href: socialLinks.tiktok, label: 'TikTok', Icon: TikTokIcon },
+  { key: 'telegram', href: socialLinks.telegram, label: 'Telegram', Icon: TelegramIcon }
+].filter((item) => item.href);
+
 export function SocialLinks({ size = 'sm', shape = 'circle', className }: SocialLinksProps) {
   const { wrapper, icon } = sizeStyles[size];
   const radiusClassName = shape === 'rounded' ? 'rounded-xl' : 'rounded-full';
-  const links = [
-    { key: 'facebook', href: socialLinks.facebook, label: 'Facebook', Icon: FacebookIcon },
-    { key: 'twitter', href: socialLinks.twitter, label: 'X', Icon: XIcon },
-    { key: 'instagram', href: socialLinks.instagram, label: 'Instagram', Icon: InstagramIcon },
-    { key: 'linkedin', href: socialLinks.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
-    { key: 'tiktok', href: socialLinks.tiktok, label: 'TikTok', Icon: TikTokIcon },
-    { key: 'telegram', href: socialLinks.telegram, label: 'Telegram', Icon: TelegramIcon }
-  ].filter((item) => item.href);
+  const links = socialItems;
 
   return (
     <div className={`flex gap-3${className ? ` ${className}` : ''}`}>

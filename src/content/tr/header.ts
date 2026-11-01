@@ -17,6 +17,7 @@ export const header = {
     { key: 'contact', label: 'İletişim' }
   ],
   allCampaignsLabel: 'Tüm kampanyalar',
+  socialMenuLabel: 'Sosyal medya',
   topLinks: [
     { key: 'family-signup', label: 'Yetim Kaydı' },
     { key: 'sponsor-orphan', label: 'Yetim Sponsorluğu' }

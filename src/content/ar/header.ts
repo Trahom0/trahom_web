@@ -38,6 +38,7 @@ export const header = {
     }
   ],
   "allCampaignsLabel": "كل الحملات",
+  "socialMenuLabel": "صفحاتنا على السوشيال ميديا",
   "topLinks": [
     {
       "key": "family-signup",

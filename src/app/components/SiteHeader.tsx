@@ -5,6 +5,7 @@ import logoImage from '../../assets/logo and qr code.svg';
 import { content } from '../../content';
 import { getPathForPage, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { PrimaryButton } from './PrimaryButton';
+import { socialItems } from './SocialLinks';
 
 type SiteHeaderProps = {
   onNavigate?: (page: PageKey) => void;
@@ -236,7 +237,7 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
         >
           <img src={logoImage} alt={content.header.logoAlt} className="h-12 w-auto" />
         </a>
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8 whitespace-nowrap">
           {navItems.map((item) =>
             item.key === 'campaigns' ? (
               // "Campaigns" opens a small menu (on hover or keyboard focus) that also holds the orphan pages,
@@ -287,12 +288,39 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
               </a>
             )
           )}
+          {/* "Our social media": opens a small menu with the team's pages (on hover or keyboard focus). */}
+          <div className="relative group">
+            <button
+              type="button"
+              className="font-semibold hover:opacity-60 transition-opacity inline-flex items-center gap-1 whitespace-nowrap"
+              aria-haspopup="true"
+            >
+              {content.header.socialMenuLabel}
+              <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" aria-hidden="true" />
+            </button>
+            <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity absolute start-0 top-full pt-3 z-[100]">
+              <div className="bg-white rounded-xl shadow-lg border border-black/5 py-2 min-w-[200px]">
+                {socialItems.map(({ key, href, label, Icon }) => (
+                  <a
+                    key={key}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-2.5 hover:bg-[#e1a226]/10 transition-colors"
+                  >
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span dir="ltr">{label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
           <PrimaryButton type="button" size="sm" onClick={handleDonateClick}>
             {content.header.donateButton}
           </PrimaryButton>
         </nav>
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? content.header.menuAria.close : content.header.menuAria.open}
         >
@@ -307,7 +335,7 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
             animate={{ x: 0 }}
             exit={{ x: activeLanguage === 'AR' ? '-100%' : '100%' }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 bg-white z-50 md:hidden overflow-y-auto"
+            className="fixed inset-0 bg-white z-50 lg:hidden overflow-y-auto"
           >
             <div className="flex flex-col min-h-full">
               <motion.div
@@ -362,6 +390,29 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                     )}
                   </motion.div>
                 ))}
+
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ delay: 0.3, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  <p className="text-lg font-semibold mb-3">{content.header.socialMenuLabel}</p>
+                  <div className="flex flex-wrap gap-3">
+                    {socialItems.map(({ key, href, label, Icon }) => (
+                      <a
+                        key={key}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={label}
+                        className="w-11 h-11 rounded-full bg-foreground/5 hover:bg-[#e1a226] hover:text-white flex items-center justify-center transition-all"
+                      >
+                        <Icon className="w-5 h-5" />
+                      </a>
+                    ))}
+                  </div>
+                </motion.div>
 
                 <motion.div
                   className="mt-8 self-start"

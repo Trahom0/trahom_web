@@ -1,3 +1,10 @@
+// Measurement.
+//
+// Google Analytics (already on every page, see index.html) receives the actions that matter for the
+// Google Ads (Ad Grants) campaigns: a sponsorship request for an orphan, a WhatsApp chat, a contact message,
+// a sign-up and a completed donation. No names, emails or phone numbers are ever sent, only the orphan's
+// public code, the page and the amount.
+//
 // Advertising measurement (Meta Pixel), loaded only after the visitor agrees in the consent banner.
 //
 // - Nothing is sent to Meta before consent, and nothing at all if the visitor declines.
@@ -66,6 +73,33 @@ const loadMetaPixel = () => {
   w.fbq?.('init', META_PIXEL_ID);
 };
 
+const gaEvent = (name: string, params: Record<string, string | number>) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+  if (typeof w.gtag === 'function') {
+    w.gtag('event', name, params);
+  }
+};
+
+// "Request documents" on an orphan's card: the main result of the orphan sponsorship campaigns.
+export const trackSponsorRequest = (orphanCode: string, language: string) => {
+  gaEvent('sponsor_request', { orphan_code: orphanCode, language });
+};
+
+export const trackWhatsAppClick = (page: string) => {
+  gaEvent('whatsapp_click', { page_key: page });
+};
+
+export const trackContactSent = (language: string) => {
+  gaEvent('generate_lead', { form: 'contact', language });
+};
+
+export const trackSignUp = (topic: string, language: string) => {
+  gaEvent('sign_up', { method: topic, language });
+};
+
 const fbq = (...args: unknown[]) => {
   const w = window as unknown as { fbq?: Fbq };
   w.fbq?.(...args);
@@ -110,6 +144,7 @@ export const reportCompletedDonation = () => {
   if (!pending || typeof pending.amount !== 'number' || Date.now() - (pending.at ?? 0) > 2 * 60 * 60 * 1000) {
     return;
   }
+  gaEvent('donation_completed', { value: pending.amount, currency: 'USD', frequency: pending.frequency === 'monthly' ? 'monthly' : 'one-time' });
   if (getConsent() !== 'accepted') {
     return;
   }

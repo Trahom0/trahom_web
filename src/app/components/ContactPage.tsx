@@ -8,6 +8,7 @@ import { PrimaryButton } from './PrimaryButton';
 import { SocialLinks } from './SocialLinks';
 import { SiteHeader } from './SiteHeader';
 import { SiteFooter } from './SiteFooter';
+import { trackContactSent } from '../tracking';
 
 interface ContactPageProps {
   onNavigate?: (page: PageKey) => void;
@@ -74,6 +75,7 @@ export function ContactPage({ onNavigate, language, onLanguageChange }: ContactP
       }
 
       setFormStatus('success');
+      trackContactSent(language ?? 'EN');
       setFormData({
         firstName: '',
         lastName: '',

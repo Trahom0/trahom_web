@@ -8,6 +8,7 @@ import { getPathForPage, type LanguageCode, type PageKey, isPlainLeftClick, what
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { PageLayout } from './PageLayout';
 import { PrimaryButton } from './PrimaryButton';
+import { trackSponsorRequest } from '../tracking';
 import { SiteHeader } from './SiteHeader';
 import { SiteFooter } from './SiteFooter';
 
@@ -272,6 +273,7 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
                         href={buildWhatsAppLink(orphan.code)}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackSponsorRequest(orphan.code, currentLanguage)}
                         className="inline-flex items-center justify-between gap-2 rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-foreground hover:border-[#e1a226] hover:bg-[#e1a226] hover:text-white transition-colors"
                       >
                         {sponsorContent.profile.requestLabel}

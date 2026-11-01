@@ -2,6 +2,7 @@ import { MessageCircle } from 'lucide-react';
 import type { PageKey } from '../routes';
 import { whatsappNumber } from '../routes';
 import { content } from '../../content';
+import { trackWhatsAppClick } from '../tracking';
 
 type WhatsAppButtonProps = {
   page: PageKey;
@@ -34,6 +35,7 @@ export function WhatsAppButton({ page }: WhatsAppButtonProps) {
         // Lets Google Tag Manager count chat starts per page, if a tag is set up for it.
         const layer = (window as unknown as { dataLayer?: unknown[] }).dataLayer;
         layer?.push({ event: 'whatsapp_click', page });
+        trackWhatsAppClick(page);
       }}
       className="fixed bottom-4 end-4 sm:bottom-6 sm:end-6 z-40 inline-flex items-center gap-2 rounded-full bg-[#128C4A] text-white shadow-lg shadow-black/20 px-4 py-3 sm:px-5 hover:bg-[#0f7a40] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#128C4A]/40 transition-colors print:hidden"
     >

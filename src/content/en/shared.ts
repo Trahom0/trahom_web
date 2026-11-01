@@ -26,7 +26,7 @@ export const shared = {
   },
   consent: {
     title: 'Privacy choices',
-    text: 'With your permission we use Meta (Facebook) to measure our awareness campaigns. It never sees what you type in our forms.',
+    text: 'With your permission we use Meta (Facebook) and Google to measure our awareness campaigns. They never see what you type in our forms.',
     policyLink: 'Privacy policy',
     accept: 'Allow',
     decline: 'No thanks'

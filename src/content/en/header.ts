@@ -17,6 +17,7 @@ export const header = {
     { key: 'contact', label: 'Contact' }
   ],
   allCampaignsLabel: 'All campaigns',
+  socialMenuLabel: 'Our social media',
   topLinks: [
     { key: 'family-signup', label: 'Orphan Registration' },
     { key: 'sponsor-orphan', label: 'Sponsor an Orphan' }

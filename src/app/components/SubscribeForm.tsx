@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { trackSignUp } from '../tracking';
 
 type SubscribeFormProps = {
   language: string;
@@ -41,6 +42,7 @@ export function SubscribeForm({ language, labels, topic, inputId = 'subscribe-em
         throw new Error('subscribe failed');
       }
       setStatus('success');
+      trackSignUp(topic === 'app' ? 'app-launch' : 'newsletter', language);
       setEmail('');
     } catch {
       setStatus('error');

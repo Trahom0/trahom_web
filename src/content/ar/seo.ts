@@ -53,6 +53,7 @@ export const seo = {
     areaServed: ['غزة', 'فلسطين'],
     email: 'info@trahom.org',
     sameAs: [
+      'https://www.facebook.com/Trahom0',
       'https://www.instagram.com/trahom.charity',
       'https://www.linkedin.com/company/trahomorg/',
       'https://x.com/TrahomGaza',

@@ -109,7 +109,7 @@ export const actionPaths = {
 export const whatsappNumber = '972567075706';
 
 export const socialLinks = {
-  facebook: '',
+  facebook: 'https://www.facebook.com/Trahom0',
   instagram: 'https://www.instagram.com/trahom.charity',
   linkedin: 'https://www.linkedin.com/company/trahomorg/',
   twitter: 'https://x.com/TrahomGaza',

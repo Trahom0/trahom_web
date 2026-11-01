@@ -21,7 +21,7 @@ export const sponsorOrphan = {
       },
       {
         title: 'Sponsorluğu başlatın',
-        description: 'Doğrulama tamamlandıktan sonra destek süreci sizinle birlikte başlatılır.'
+        description: 'Doğrulamanın ardından sponsorluğu birlikte başlatırız; yetimle ve ailesiyle doğrudan iletişim kurarak onun nasıl olduğunu takip edersiniz.'
       }
     ]
   },

@@ -21,7 +21,7 @@ export const sponsorOrphan = {
       },
       {
         title: 'Start sponsorship',
-        description: 'After verification, we will guide you through next steps to begin support.'
+        description: 'After verification, we guide you to start the sponsorship, and you stay in direct contact with the child and their family to see how they are doing.'
       }
     ]
   },

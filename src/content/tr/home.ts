@@ -143,8 +143,15 @@ export const home = {
       rafah: 'Refah'
     }
   },
+  appBanner: {
+    label: 'Yeni',
+    title: 'Trahom uygulaması artık Google Play’de',
+    text: 'Bir yetime sponsor olun, sponsorluğunuzu takip edin ve telefonunuzdan iletişimde kalın.',
+    cta: 'Uygulamayı indir',
+    note: 'iPhone sürümü: birkaç gün içinde App Store’da'
+  },
   app: {
-    badge: 'Yakında Google Play ve App Store’da',
+    badge: 'Şimdi Google Play’de',
     title: 'Trahom uygulaması',
     description: 'Bağışlarınızı telefonunuzdan takip edin: destek olduğunuz yetimler, onlara ulaşan yardım ve Gazze’deki son çalışmalarımız.',
     features: [
@@ -152,11 +159,13 @@ export const home = {
       { title: 'Teslim onayı', text: 'Yardımın aileye gerçekten ne zaman teslim edildiğini görün.' },
       { title: 'Sahadan', text: 'Projelerimizden fotoğraflar ve güncel haberler.' }
     ],
-    formTitle: 'Yayınlandığında haber ver',
+    downloadLabel: 'Google Play’den indirin',
+    appStoreSoon: 'Birkaç gün içinde App Store’da',
+    formTitle: 'iPhone mu kullanıyorsunuz? App Store’a geldiğinde haber verelim',
     inputPlaceholder: 'E-posta adresiniz',
     buttonLabel: 'Haber ver',
-    helperText: 'Uygulama yayınlandığında size bir kez yazarız; adresinizi başka bir amaçla kullanmayız.',
-    successMessage: 'Tamam. Uygulama Google Play ve App Store’da yayınlanır yayınlanmaz size haber vereceğiz.',
+    helperText: 'Uygulama App Store’a geldiğinde size bir kez yazarız; adresinizi başka bir amaçla kullanmayız.',
+    successMessage: 'Tamam. Uygulama App Store’a gelir gelmez size haber vereceğiz.',
     errorMessage: 'Şu anda kaydınızı alamadık. Lütfen biraz sonra tekrar deneyin.'
   },
   subscribe: {

@@ -24,6 +24,7 @@ import { SubscribeForm } from './components/SubscribeForm';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { FieldUpdates } from './components/FieldUpdates';
 import { AppComingSoon } from './components/AppComingSoon';
+import { AppBanner } from './components/AppBanner';
 import { NotFoundPage } from './components/NotFoundPage';
 import waterCampaignImage from '../assets/homepage-card-water.png';
 import { content, setContentLanguage } from '../content';
@@ -251,6 +252,8 @@ export default function App({ initialPath }: AppProps) {
       }
       footer={<SiteFooter onNavigate={navigateTo} language={language} />}
     >
+      <AppBanner language={language} labels={homeContent.appBanner} />
+
       {/* Hero Section */}
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12 mb-12 sm:mb-16">
           <motion.div 

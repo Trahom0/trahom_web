@@ -148,8 +148,15 @@ export const home = {
       "rafah": "رفح"
     }
   },
+  "appBanner": {
+    "label": "جديد",
+    "title": "تطبيق تراحم متاح الآن على Google Play",
+    "text": "اكفل يتيمًا وتابع كفالته وتواصل معه من هاتفك.",
+    "cta": "حمّل التطبيق",
+    "note": "نسخة الآيفون: سيتوفر على App Store خلال أيام"
+  },
   "app": {
-    "badge": "قريبًا على Google Play و App Store",
+    "badge": "متاح الآن على Google Play",
     "title": "تطبيق تراحم",
     "description": "تابع عطاءك من هاتفك: الأيتام الذين تكفلهم، وما يصلهم من دعم، وآخر مشاريعنا في غزة.",
     "features": [
@@ -157,11 +164,13 @@ export const home = {
       { "title": "تأكيد التسليم", "text": "ترى متى يُسلَّم الدعم فعليًا للأسرة." },
       { "title": "من الميدان", "text": "صور ومستجدات مشاريعنا أولًا بأول." }
     ],
-    "formTitle": "أخبرني عند إطلاق التطبيق",
+    "downloadLabel": "حمّله من Google Play",
+    "appStoreSoon": "سيتوفر على App Store خلال أيام",
+    "formTitle": "تستخدم آيفون؟ نخبرك عند توفّره على App Store",
     "inputPlaceholder": "بريدك الإلكتروني",
     "buttonLabel": "أبلغني",
-    "helperText": "نراسلك مرة واحدة عند إطلاقه، ولا نستخدم بريدك لغير ذلك.",
-    "successMessage": "تم، سنخبرك فور توفّر التطبيق على Google Play و App Store.",
+    "helperText": "نراسلك مرة واحدة عند توفّره، ولا نستخدم بريدك لغير ذلك.",
+    "successMessage": "تم، سنخبرك فور توفّر التطبيق على App Store.",
     "errorMessage": "تعذّر التسجيل الآن. حاول مرة أخرى بعد قليل."
   },
   "subscribe": {

@@ -1,11 +1,15 @@
 import { motion } from 'motion/react';
-import { BellRing, HandHeart, Images, ShieldCheck, Smartphone } from 'lucide-react';
+import { BellRing, Download, HandHeart, Images, ShieldCheck, Smartphone } from 'lucide-react';
+import { appLinks } from '../appLinks';
+import { trackAppDownload } from '../tracking';
 import { SubscribeForm } from './SubscribeForm';
 
 type AppComingSoonProps = {
   language: string;
   labels: {
     badge: string;
+    downloadLabel: string;
+    appStoreSoon: string;
     title: string;
     description: string;
     features: ReadonlyArray<{ title: string; text: string }>;
@@ -20,8 +24,8 @@ type AppComingSoonProps = {
 
 const FEATURE_ICONS = [HandHeart, ShieldCheck, Images];
 
-// "Trahom app, coming soon to Google Play and the App Store": a short description and a sign-up to be told when it launches.
-// When the app is live, swap the form for the official Google Play and App Store links.
+// "Trahom app": live on Google Play, coming soon to the App Store. The Google Play link, and a sign-up
+// for iPhone users to be told when the App Store version is out.
 export function AppComingSoon({ language, labels }: AppComingSoonProps) {
   return (
     <motion.section
@@ -56,11 +60,22 @@ export function AppComingSoon({ language, labels }: AppComingSoonProps) {
           </ul>
         </div>
         <div className="md:col-span-2 bg-white text-foreground rounded-2xl p-6 sm:p-8">
-          <div className="flex items-center gap-3 mb-5">
+          <a
+            href={appLinks.googlePlay}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackAppDownload('google-play', 'home-app-section', language)}
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#e1a226] text-white px-6 py-3.5 text-lg font-medium hover:bg-[#c78f1f] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#103b51]"
+          >
+            <Download className="w-5 h-5" aria-hidden="true" />
+            {labels.downloadLabel}
+          </a>
+          <p className="mt-3 mb-6 text-center text-sm text-foreground/60">{labels.appStoreSoon}</p>
+          <div className="border-t border-black/10 pt-6 flex items-center gap-3 mb-5">
             <span className="w-10 h-10 rounded-xl bg-[#e1a226]/15 flex items-center justify-center shrink-0">
               <BellRing className="w-5 h-5 text-[#b07a10]" aria-hidden="true" />
             </span>
-            <p className="text-lg font-medium text-[#103b51]">{labels.formTitle}</p>
+            <p className="text-base font-medium text-[#103b51]">{labels.formTitle}</p>
           </div>
           <SubscribeForm language={language} labels={labels} topic="app" inputId="app-notify-email" stacked />
         </div>

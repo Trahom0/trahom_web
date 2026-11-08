@@ -99,6 +99,11 @@ export const trackWhatsAppClick = (page: string) => {
   gaEvent('whatsapp_click', { page_key: page });
 };
 
+// A tap on a "get the app" link. placement says where on the site it was (hero banner or app section).
+export const trackAppDownload = (store: 'google-play', placement: string, language: string) => {
+  gaEvent('app_download_click', { store, placement, language });
+};
+
 export const trackContactSent = (language: string) => {
   gaEvent('generate_lead', { form: 'contact', language });
 };

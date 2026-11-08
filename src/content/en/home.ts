@@ -143,8 +143,15 @@ export const home = {
       rafah: 'Rafah'
     }
   },
+  appBanner: {
+    label: 'New',
+    title: 'The Trahom app is now on Google Play',
+    text: 'Sponsor an orphan, follow the sponsorship and stay in touch, from your phone.',
+    cta: 'Get the app',
+    note: 'iPhone version: coming to the App Store in a few days'
+  },
   app: {
-    badge: 'Coming soon to Google Play and the App Store',
+    badge: 'Now available on Google Play',
     title: 'The Trahom app',
     description: 'Follow your giving from your phone: the orphans you sponsor, the support that reaches them, and our latest work in Gaza.',
     features: [
@@ -152,11 +159,13 @@ export const home = {
       { title: 'Delivery confirmed', text: 'See when support has actually been handed to the family.' },
       { title: 'From the field', text: 'Photos and updates from our projects as they happen.' }
     ],
-    formTitle: 'Tell me when it launches',
+    downloadLabel: 'Get it on Google Play',
+    appStoreSoon: 'Coming to the App Store in a few days',
+    formTitle: 'On iPhone? We will tell you when it reaches the App Store',
     inputPlaceholder: 'Your email address',
     buttonLabel: 'Notify me',
-    helperText: 'We will email you once when it launches, and use your address for nothing else.',
-    successMessage: 'Done. We will let you know as soon as the app is on Google Play and the App Store.',
+    helperText: 'We will email you once when it is available, and use your address for nothing else.',
+    successMessage: 'Done. We will let you know as soon as the app is on the App Store.',
     errorMessage: 'We could not sign you up right now. Please try again shortly.'
   },
   subscribe: {

@@ -122,10 +122,6 @@ export const home = {
       description: 'Soykırımdan etkilenen topluluklara acil müdahale ve temel ihtiyaç desteği.'
     },
     {
-      title: 'Topluluk geliştirme',
-      description: 'Altyapıyı güçlendiren, istihdam oluşturan ve yerel ekonomileri destekleyen uzun vadeli programlar.'
-    },
-    {
       title: 'Yerel iş birlikleri',
       description: 'Desteği etkin biçimde ulaştırmak için Gazze’deki yerel komiteler ve kuruluşlarla birlikte çalışıyoruz.'
     }

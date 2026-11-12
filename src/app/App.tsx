@@ -187,8 +187,8 @@ export default function App({ initialPath }: AppProps) {
     ...card,
     ...homeCampaignMedia[card.id]
   }));
-  const missionCardIcons = [Heart, Users, Globe];
-  const missionCardColors = ['bg-[#4A90E2]', 'bg-[#A8D5E2]', 'bg-[#F5A623]'];
+  const missionCardIcons = [Heart, Globe];
+  const missionCardColors = ['bg-[#4A90E2]', 'bg-[#F5A623]'];
 
   // Handle page navigation
   const renderPage = () => {
@@ -651,7 +651,7 @@ export default function App({ initialPath }: AppProps) {
 
         {/* Mission Cards */}
         <div className="mb-16">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {homeContent.missionCards.map((card, index) => {
               const Icon = missionCardIcons[index];
               return (

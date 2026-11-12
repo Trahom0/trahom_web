@@ -122,10 +122,6 @@ export const home = {
       description: 'Emergency response and essential supplies to communities affected by genocide.'
     },
     {
-      title: 'Community Development',
-      description: 'Long-term programs that build infrastructure, create jobs, and strengthen local economies.'
-    },
-    {
       title: 'Local Partnerships',
       description: 'Working hand in hand with local committees and organizations in Gaza to deliver support efficiently.'
     }

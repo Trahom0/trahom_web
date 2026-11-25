@@ -11,6 +11,14 @@ export const shared = {
     "title": "اكتشف المزيد",
     "description": "تعرّف على رسالتنا وأثرنا والحملات الجارية في غزة."
   },
+  "appPromo": {
+    "title": "حمّل تطبيق تراحم",
+    "text": "اكفل يتيمًا وتابع كفالته من هاتفك.",
+    "googlePlay": "Google Play",
+    "appStore": "App Store",
+    "appStoreSoon": "نسخة الآيفون: سيتوفر على App Store خلال أيام",
+    "close": "إغلاق"
+  },
   "whatsapp": {
     "label": "تواصل معنا",
     "ariaLabel": "تواصل مع فريق تراحم عبر واتساب",

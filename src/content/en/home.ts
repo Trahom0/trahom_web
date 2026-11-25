@@ -141,13 +141,11 @@ export const home = {
   },
   appBanner: {
     label: 'New',
-    title: 'The Trahom app is now on Google Play',
-    text: 'Sponsor an orphan, follow the sponsorship and stay in touch, from your phone.',
-    cta: 'Get the app',
-    note: 'iPhone version: coming to the App Store in a few days'
+    title: 'The Trahom app is now on Google Play and the App Store',
+    text: 'Sponsor an orphan, follow the sponsorship and stay in touch, from your phone.'
   },
   app: {
-    badge: 'Now available on Google Play',
+    badge: 'Now on Google Play and the App Store',
     title: 'The Trahom app',
     description: 'Follow your giving from your phone: the orphans you sponsor, the support that reaches them, and our latest work in Gaza.',
     features: [
@@ -156,7 +154,8 @@ export const home = {
       { title: 'From the field', text: 'Photos and updates from our projects as they happen.' }
     ],
     downloadLabel: 'Get it on Google Play',
-    appStoreSoon: 'Coming to the App Store in a few days',
+    appStoreLabel: 'Download on the App Store',
+    storesNote: 'For iPhone and Android, free.',
     formTitle: 'On iPhone? We will tell you when it reaches the App Store',
     inputPlaceholder: 'Your email address',
     buttonLabel: 'Notify me',

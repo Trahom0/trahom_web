@@ -22,6 +22,7 @@ import { PrimaryButton } from './components/PrimaryButton';
 import { LazyVideo } from './components/LazyVideo';
 import { SubscribeForm } from './components/SubscribeForm';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { AppPromo } from './components/AppPromo';
 import { FieldUpdates } from './components/FieldUpdates';
 import { AppComingSoon } from './components/AppComingSoon';
 import { AppBanner } from './components/AppBanner';
@@ -706,6 +707,7 @@ export default function App({ initialPath }: AppProps) {
     <>
       {renderPage()}
       <WhatsAppButton page={currentPage} />
+      <AppPromo page={currentPage} language={language} />
     </>
   );
 }

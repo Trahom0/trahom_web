@@ -146,13 +146,11 @@ export const home = {
   },
   "appBanner": {
     "label": "جديد",
-    "title": "تطبيق تراحم متاح الآن على Google Play",
-    "text": "اكفل يتيمًا وتابع كفالته وتواصل معه من هاتفك.",
-    "cta": "حمّل التطبيق",
-    "note": "نسخة الآيفون: سيتوفر على App Store خلال أيام"
+    "title": "تطبيق تراحم متاح الآن على Google Play وApp Store",
+    "text": "اكفل يتيمًا وتابع كفالته وتواصل معه من هاتفك."
   },
   "app": {
-    "badge": "متاح الآن على Google Play",
+    "badge": "متاح الآن على Google Play وApp Store",
     "title": "تطبيق تراحم",
     "description": "تابع عطاءك من هاتفك: الأيتام الذين تكفلهم، وما يصلهم من دعم، وآخر مشاريعنا في غزة.",
     "features": [
@@ -161,7 +159,8 @@ export const home = {
       { "title": "من الميدان", "text": "صور ومستجدات مشاريعنا أولًا بأول." }
     ],
     "downloadLabel": "حمّله من Google Play",
-    "appStoreSoon": "سيتوفر على App Store خلال أيام",
+    "appStoreLabel": "حمّله من App Store",
+    "storesNote": "للآيفون والأندرويد، مجانًا.",
     "formTitle": "تستخدم آيفون؟ نخبرك عند توفّره على App Store",
     "inputPlaceholder": "بريدك الإلكتروني",
     "buttonLabel": "أبلغني",

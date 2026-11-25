@@ -1,14 +1,17 @@
 import { motion } from 'motion/react';
-import { Clock, Download, Smartphone } from 'lucide-react';
+import { Download, Smartphone } from 'lucide-react';
 import { appLinks } from '../appLinks';
 import { trackAppDownload } from '../tracking';
 
 type AppBannerProps = {
   language: string;
-  labels: { label: string; title: string; text: string; cta: string; note: string };
+  labels: { label: string; title: string; text: string };
 };
 
-// "The Trahom app is now on Google Play": a strip at the very top of the home page, above the hero.
+const BUTTON =
+  'inline-flex flex-1 sm:flex-none items-center justify-center gap-2 rounded-full bg-white text-[#103b51] px-5 py-3 font-medium hover:bg-[#fbf1dc] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e1a226]';
+
+// "The Trahom app is now on Google Play and the App Store": a strip at the very top of the home page, above the hero.
 export function AppBanner({ language, labels }: AppBannerProps) {
   return (
     <motion.aside
@@ -35,21 +38,29 @@ export function AppBanner({ language, labels }: AppBannerProps) {
             {labels.title}
           </p>
           <p className="mt-1 text-sm sm:text-base text-white/75">{labels.text}</p>
-          <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-[#f3c35a]">
-            <Clock className="w-4 h-4 shrink-0" aria-hidden="true" />
-            {labels.note}
-          </p>
         </div>
-        <a
-          href={appLinks.googlePlay}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackAppDownload('google-play', 'home-banner', language)}
-          className="inline-flex items-center justify-center gap-2 shrink-0 rounded-full bg-white text-[#103b51] px-6 py-3 font-medium hover:bg-[#fbf1dc] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#e1a226]"
-        >
-          <Download className="w-5 h-5" aria-hidden="true" />
-          {labels.cta}
-        </a>
+        <div className="flex flex-wrap gap-2 shrink-0">
+          <a
+            href={appLinks.googlePlay}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackAppDownload('google-play', 'home-banner', language)}
+            className={BUTTON}
+          >
+            <Download className="w-5 h-5" aria-hidden="true" />
+            Google Play
+          </a>
+          <a
+            href={appLinks.appStore}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackAppDownload('app-store', 'home-banner', language)}
+            className={BUTTON}
+          >
+            <Download className="w-5 h-5" aria-hidden="true" />
+            App Store
+          </a>
+        </div>
       </div>
     </motion.aside>
   );

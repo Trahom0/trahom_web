@@ -11,6 +11,14 @@ export const shared = {
     title: 'Explore more',
     description: 'Learn about our mission, impact, and active campaigns in Gaza.'
   },
+  appPromo: {
+    title: 'Get the Trahom app',
+    text: 'Sponsor an orphan and follow the sponsorship from your phone.',
+    googlePlay: 'Google Play',
+    appStore: 'App Store',
+    appStoreSoon: 'iPhone version: coming to the App Store in a few days',
+    close: 'Close'
+  },
   whatsapp: {
     label: 'Chat with us',
     ariaLabel: 'Chat with the Trahom team on WhatsApp',

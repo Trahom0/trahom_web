@@ -141,13 +141,11 @@ export const home = {
   },
   appBanner: {
     label: 'Yeni',
-    title: 'Trahom uygulaması artık Google Play’de',
-    text: 'Bir yetime sponsor olun, sponsorluğunuzu takip edin ve telefonunuzdan iletişimde kalın.',
-    cta: 'Uygulamayı indir',
-    note: 'iPhone sürümü: birkaç gün içinde App Store’da'
+    title: 'Trahom uygulaması artık Google Play ve App Store’da',
+    text: 'Bir yetime sponsor olun, sponsorluğunuzu takip edin ve telefonunuzdan iletişimde kalın.'
   },
   app: {
-    badge: 'Şimdi Google Play’de',
+    badge: 'Şimdi Google Play ve App Store’da',
     title: 'Trahom uygulaması',
     description: 'Bağışlarınızı telefonunuzdan takip edin: destek olduğunuz yetimler, onlara ulaşan yardım ve Gazze’deki son çalışmalarımız.',
     features: [
@@ -156,7 +154,8 @@ export const home = {
       { title: 'Sahadan', text: 'Projelerimizden fotoğraflar ve güncel haberler.' }
     ],
     downloadLabel: 'Google Play’den indirin',
-    appStoreSoon: 'Birkaç gün içinde App Store’da',
+    appStoreLabel: 'App Store’dan indirin',
+    storesNote: 'iPhone ve Android için, ücretsiz.',
     formTitle: 'iPhone mu kullanıyorsunuz? App Store’a geldiğinde haber verelim',
     inputPlaceholder: 'E-posta adresiniz',
     buttonLabel: 'Haber ver',

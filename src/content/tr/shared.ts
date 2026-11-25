@@ -11,6 +11,14 @@ export const shared = {
     title: 'Daha fazlasını keşfedin',
     description: 'Gazze’deki misyonumuz, etkimiz ve devam eden kampanyalarımız hakkında bilgi alın.'
   },
+  appPromo: {
+    title: 'Trahom uygulamasını indirin',
+    text: 'Bir yetime sponsor olun ve sponsorluğunuzu telefonunuzdan takip edin.',
+    googlePlay: 'Google Play',
+    appStore: 'App Store',
+    appStoreSoon: 'iPhone sürümü: birkaç gün içinde App Store’da',
+    close: 'Kapat'
+  },
   whatsapp: {
     label: 'Bize yazın',
     ariaLabel: 'Trahom ekibiyle WhatsApp üzerinden yazışın',

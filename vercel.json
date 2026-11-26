@@ -19,6 +19,26 @@
       "source": "/:lang(ar|tr)/terms",
       "destination": "/:lang/terms-of-service",
       "permanent": true
+    },
+    {
+      "source": "/signup",
+      "destination": "/ar/family-signup",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(ar|tr)/signup",
+      "destination": "/:lang/family-signup",
+      "permanent": false
+    },
+    {
+      "source": "/sponsorships",
+      "destination": "/sponsor-orphan",
+      "permanent": false
+    },
+    {
+      "source": "/:lang(ar|tr)/sponsorships",
+      "destination": "/:lang/sponsor-orphan",
+      "permanent": false
     }
   ],
   "rewrites": [

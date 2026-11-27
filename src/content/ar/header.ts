@@ -35,6 +35,10 @@ export const header = {
     {
       "key": "contact",
       "label": "تواصل"
+    },
+    {
+      "key": "app",
+      "label": "التطبيق"
     }
   ],
   "allCampaignsLabel": "كل الحملات",

@@ -11,6 +11,7 @@ import { PrimaryButton } from './PrimaryButton';
 import { trackSponsorRequest } from '../tracking';
 import { SiteHeader } from './SiteHeader';
 import { SiteFooter } from './SiteFooter';
+import { AppStoreLinks } from './AppStoreLinks';
 
 interface SponsorOrphanPageProps {
   onNavigate?: (page: PageKey) => void;
@@ -112,6 +113,14 @@ export function SponsorOrphanPage({ onNavigate, language, onLanguageChange }: Sp
       }
       footer={<SiteFooter onNavigate={onNavigate} language={language} />}
     >
+        {/* The app, at the top of the most visited page. */}
+        <aside className="mb-10 rounded-2xl bg-[#103b51] text-white px-5 py-4 sm:px-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+          <div className="flex-1 min-w-0">
+            <p className="font-medium leading-snug">{content.shared.appPromo.stripTitle}</p>
+            <p className="text-sm text-white/70">{content.shared.appPromo.stripText}</p>
+          </div>
+          <AppStoreLinks placement="sponsor-page-strip" language={currentLanguage} tone="dark" size="sm" />
+        </aside>
         <section className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

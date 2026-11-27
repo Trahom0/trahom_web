@@ -17,7 +17,9 @@ export const shared = {
     googlePlay: 'Google Play',
     appStore: 'App Store',
     appStoreSoon: 'iPhone sürümü: birkaç gün içinde App Store’da',
-    close: 'Kapat'
+    close: 'Kapat',
+    stripTitle: 'Trahom uygulamasıyla bir yetime sponsor olun ve takip edin',
+    stripText: 'Android ve iPhone’da ücretsiz.'
   },
   whatsapp: {
     label: 'Bize yazın',

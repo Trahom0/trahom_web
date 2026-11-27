@@ -14,7 +14,8 @@ export const header = {
     { key: 'mission', label: 'Mission' },
     { key: 'impact', label: 'Impact' },
     { key: 'campaigns', label: 'Campaigns' },
-    { key: 'contact', label: 'Contact' }
+    { key: 'contact', label: 'Contact' },
+    { key: 'app', label: 'App' }
   ],
   allCampaignsLabel: 'All campaigns',
   socialMenuLabel: 'Our social media',

@@ -17,7 +17,9 @@ export const shared = {
     googlePlay: 'Google Play',
     appStore: 'App Store',
     appStoreSoon: 'iPhone version: coming to the App Store in a few days',
-    close: 'Close'
+    close: 'Close',
+    stripTitle: 'Sponsor an orphan and follow the sponsorship in the Trahom app',
+    stripText: 'Free on Android and iPhone.'
   },
   whatsapp: {
     label: 'Chat with us',

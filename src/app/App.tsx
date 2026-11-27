@@ -9,6 +9,7 @@ import { DonatePage } from './components/DonatePage';
 import { ImpactPage } from './components/ImpactPage';
 import { FamilySignUpPage } from './components/FamilySignUpPage';
 import { SponsorOrphanPage } from './components/SponsorOrphanPage';
+import { AppPage } from './components/AppPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { GalleryPage } from './components/GalleryPage';
@@ -195,6 +196,10 @@ export default function App({ initialPath }: AppProps) {
   const renderPage = () => {
   if (currentPage === 'family-signup') {
     return <FamilySignUpPage onNavigate={navigateTo} language={language} onLanguageChange={handleLanguageChange} />;
+  }
+
+  if (currentPage === 'app') {
+    return <AppPage onNavigate={navigateTo} language={language} onLanguageChange={handleLanguageChange} />;
   }
 
   if (currentPage === 'sponsor-orphan') {

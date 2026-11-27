@@ -9,6 +9,7 @@ export const pagePaths = {
   careers: '/careers',
   'family-signup': '/family-signup',
   'sponsor-orphan': '/sponsor-orphan',
+  app: '/app',
   privacy: '/privacy-policy',
   terms: '/terms-of-service',
   'not-found': '/404'
@@ -42,6 +43,7 @@ const pathPageMap: Record<string, PageKey> = {
   '/careers': 'careers',
   '/family-signup': 'family-signup',
   '/sponsor-orphan': 'sponsor-orphan',
+  '/app': 'app',
   '/privacy': 'privacy',
   '/privacy-policy': 'privacy',
   '/terms': 'terms',

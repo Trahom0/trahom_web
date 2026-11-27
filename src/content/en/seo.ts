@@ -207,6 +207,13 @@ export const seo = {
       ]),
       schemaType: 'WebPage'
     },
+    app: {
+      title: 'Trahom App | Sponsor a Gaza Orphan From Your Phone',
+      description:
+        'Download the Trahom app on Google Play or the App Store: browse orphans in Gaza waiting for a sponsor, choose a child and follow your sponsorship.',
+      keywords: joinKeywords([...baseKeywords, 'orphan sponsorship app', 'sponsor an orphan app', 'Trahom app']),
+      schemaType: 'WebPage'
+    },
     'sponsor-orphan': {
       title: 'Sponsor a Gaza Orphan | Secure, Verified Support',
       description:

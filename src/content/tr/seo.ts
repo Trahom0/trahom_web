@@ -206,6 +206,13 @@ export const seo = {
       ]),
       schemaType: 'WebPage'
     },
+    app: {
+      title: 'Trahom Uygulaması | Gazze’de Bir Yetime Telefonunuzdan Sponsor Olun',
+      description:
+        'Trahom uygulamasını Google Play veya App Store’dan indirin: Gazze’de sponsor bekleyen yetimlere göz atın, bir çocuk seçin ve sponsorluğunuzu takip edin.',
+      keywords: joinKeywords([...baseKeywords, 'yetim sponsorluğu uygulaması', 'Trahom uygulaması']),
+      schemaType: 'WebPage'
+    },
     'sponsor-orphan': {
       title: 'Gazze’de Bir Yetime Sponsor Olun | Güvenli ve Doğrulanmış Destek',
       description:

@@ -1,4 +1,4 @@
-import { ChevronDown, Languages, Menu, Snowflake, X } from 'lucide-react';
+import { ChevronDown, Languages, Menu, Smartphone, Snowflake, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import logoImage from '../../assets/logo and qr code.svg';
@@ -276,6 +276,18 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                   </div>
                 </div>
               </div>
+            ) : item.key === 'app' ? (
+              // "App": a highlighted link to the app page, so every visitor notices there is an app.
+              <a
+                key={item.key}
+                href={item.href}
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#e1a226]/12 text-[#b07a10] font-semibold px-3 py-1.5 hover:bg-[#e1a226]/20 transition-colors"
+                onClick={handleNavClick(item.key)}
+                aria-current={activePage === item.key ? 'page' : undefined}
+              >
+                <Smartphone className="w-4 h-4" aria-hidden="true" />
+                {item.label}
+              </a>
             ) : (
               <a
                 key={item.key}
@@ -369,9 +381,10 @@ export function SiteHeader({ onNavigate, activePage, language, onLanguageChange 
                   >
                     <a
                       href={item.href}
-                      className="text-4xl font-semibold tracking-tight hover:text-[#e1a226] transition-colors"
+                      className={`text-4xl font-semibold tracking-tight hover:text-[#e1a226] transition-colors${item.key === 'app' ? ' inline-flex items-center gap-3 text-[#b07a10]' : ''}`}
                       onClick={handleMenuNavClick(item.key)}
                     >
+                      {item.key === 'app' && <Smartphone className="w-8 h-8" aria-hidden="true" />}
                       {item.label}
                     </a>
                     {item.key === 'campaigns' && (

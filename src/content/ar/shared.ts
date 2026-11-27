@@ -17,7 +17,9 @@ export const shared = {
     "googlePlay": "Google Play",
     "appStore": "App Store",
     "appStoreSoon": "نسخة الآيفون: سيتوفر على App Store خلال أيام",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "stripTitle": "اكفل يتيمًا وتابع كفالته من تطبيق تراحم",
+    "stripText": "مجاني على أندرويد وآيفون."
   },
   "whatsapp": {
     "label": "تواصل معنا",

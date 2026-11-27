@@ -14,7 +14,8 @@ export const header = {
     { key: 'mission', label: 'Misyon' },
     { key: 'impact', label: 'Etki' },
     { key: 'campaigns', label: 'Kampanyalar' },
-    { key: 'contact', label: 'İletişim' }
+    { key: 'contact', label: 'İletişim' },
+    { key: 'app', label: 'Uygulama' }
   ],
   allCampaignsLabel: 'Tüm kampanyalar',
   socialMenuLabel: 'Sosyal medya',

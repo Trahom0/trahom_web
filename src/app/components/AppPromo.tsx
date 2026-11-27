@@ -11,11 +11,11 @@ type AppPromoProps = {
 };
 
 // Pages where the card would get in the way of what the visitor came to do.
-const HIDDEN_ON: PageKey[] = ['donate', 'family-signup'];
+const HIDDEN_ON: PageKey[] = ['donate', 'family-signup', 'app'];
 const STORAGE_KEY = 'trahom-app-promo';
-const DISMISS_DAYS = 14; // after "close"
+const DISMISS_DAYS = 7; // after "close"
 const DOWNLOADED_DAYS = 60; // after tapping a store button
-const SHOW_AFTER_MS = 8000;
+const SHOW_AFTER_MS = 3000;
 
 type Platform = 'android' | 'ios' | 'other';
 
@@ -49,7 +49,7 @@ const hideFor = (days: number) => {
 
 // "Get the Trahom app": a small card in the corner of every page (a strip above the WhatsApp button on
 // phones). It appears after a few seconds or once the visitor scrolls, never while the privacy banner is
-// open, and stays away for two weeks after it is closed. Shown only in the browser, after load, so the
+// open, and stays away for a week after it is closed. Shown only in the browser, after load, so the
 // prerendered pages stay the same for everyone.
 export function AppPromo({ page, language }: AppPromoProps) {
   const [platform, setPlatform] = useState<Platform | null>(null);

@@ -3,6 +3,7 @@ import logoImage from '../../assets/logo and qr code.svg';
 import { content } from '../../content';
 import { actionPaths, getPathForPage, localizePath, type LanguageCode, type PageKey, isPlainLeftClick } from '../routes';
 import { SocialLinks } from './SocialLinks';
+import { AppStoreLinks } from './AppStoreLinks';
 import { ConsentBanner, openConsentSettings } from './ConsentBanner';
 
 type SiteFooterProps = {
@@ -36,6 +37,8 @@ export function SiteFooter({ onNavigate, language }: SiteFooterProps) {
             <p className="text-sm text-foreground/60 leading-relaxed">
               {footerContent.tagline}
             </p>
+            <p className="mt-6 mb-3 text-sm font-medium">{content.shared.appPromo.title}</p>
+            <AppStoreLinks placement="footer" language={activeLanguage} size="sm" />
           </div>
           <div>
             <h4 className="mb-4">{footerContent.sections.about.title}</h4>

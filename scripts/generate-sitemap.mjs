@@ -20,6 +20,7 @@ const pages = [
   '/careers',
   '/family-signup',
   '/sponsor-orphan',
+  '/app',
   '/privacy-policy',
   '/terms-of-service'
 ];

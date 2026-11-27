@@ -13,6 +13,7 @@ import { privacy } from './privacy';
 import { seo } from './seo';
 import { shared } from './shared';
 import { sponsorOrphan } from './sponsorOrphan';
+import { appPage } from './appPage';
 import { terms } from './terms';
 
 export const arContent = {
@@ -31,6 +32,7 @@ export const arContent = {
   seo,
   shared,
   sponsorOrphan,
+  appPage,
   terms
 } as const;
 

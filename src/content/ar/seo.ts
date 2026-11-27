@@ -197,6 +197,13 @@ export const seo = {
       ]),
       schemaType: 'WebPage'
     },
+    app: {
+      title: 'تطبيق تراحم | اكفل يتيمًا في غزة من هاتفك',
+      description:
+        'حمّل تطبيق تراحم من Google Play أو App Store: تصفّح حالات الأيتام في غزة، واختر الطفل الذي تود كفالته، وتابع كفالتك.',
+      keywords: joinKeywords([...baseKeywords, 'تطبيق كفالة يتيم', 'تطبيق كفالة الأيتام', 'تطبيق تراحم']),
+      schemaType: 'WebPage'
+    },
     'sponsor-orphan': {
       title: 'كفالة يتيم في غزة | دعم موثّق وآمن',
       description:
